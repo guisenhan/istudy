@@ -2,6 +2,7 @@ package hise.hznu.istudy.api;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -17,10 +18,14 @@ public class ApiJsonRequest extends JsonObjectRequest{
 
     private Map<String,String> mheaders = new HashMap<String,String>();
     private Response.Listener<JSONObject> mListener;
-    public ApiJsonRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+
+
+        public ApiJsonRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
         this.mListener = listener;
     }
+
+
     public ApiJsonRequest(String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         super(url, jsonRequest, listener, errorListener);
     }

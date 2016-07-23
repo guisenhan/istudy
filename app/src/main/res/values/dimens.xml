@@ -5,7 +5,12 @@
 
     <dimen name="divider_height">0.5dp</dimen>
     <dimen name="divider_width">0.5dp</dimen>
+
+    <!-- widgets-->
+    <dimen name="rectangle_radius">8dp</dimen>
+    <dimen name="button_padding_vertical">8dp</dimen>
     <!-- Login Activity-->
-    <dimen name="login_margin_top">30dp</dimen>
+    <dimen name="login_margin_top">50dp</dimen>
     <dimen name="login_margin_horizontal">30dp</dimen>
+    <dimen name="login_drawable_padding">5dp</dimen>
 </resources>
