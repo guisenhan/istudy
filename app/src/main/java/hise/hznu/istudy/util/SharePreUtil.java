@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * Created by PC on 2016/7/23.
  */
@@ -27,6 +30,30 @@ public class SharePreUtil {
         }else{
             editor.putString(key,object.toString());
         }
-        editor.commit();
+        SharePreferenceCompat.apply(editor);
+    }
+    public static class SharePreferenceCompat{
+        private static final Method sApplyMethod = findApplyMethod();
+        private static Method findApplyMethod() {
+            try {
+                Class clz = SharedPreferences.Editor.class;
+                return clz.getMethod("apply");
+            } catch (NoSuchMethodException e) {
+            }
+
+            return null;
+        }
+        public static void apply(SharedPreferences.Editor editor) {
+            try {
+                if (sApplyMethod != null) {
+                    sApplyMethod.invoke(editor);
+                    return;
+                }
+            } catch (IllegalArgumentException e) {
+            } catch (IllegalAccessException e) {
+            } catch (InvocationTargetException e) {
+            }
+            editor.commit();
+        }
     }
 }
