@@ -5,7 +5,8 @@
 
     <dimen name="divider_height">0.5dp</dimen>
     <dimen name="divider_width">0.5dp</dimen>
-
+    <!-- tv_size-->
+    <dimen name="tv_title_size">18sp</dimen>
     <!-- widgets-->
     <dimen name="rectangle_radius">8dp</dimen>
     <dimen name="button_padding_vertical">8dp</dimen>
@@ -13,4 +14,7 @@
     <dimen name="login_margin_top">50dp</dimen>
     <dimen name="login_margin_horizontal">30dp</dimen>
     <dimen name="login_drawable_padding">5dp</dimen>
+
+    <!-- course fragment-->
+
 </resources>

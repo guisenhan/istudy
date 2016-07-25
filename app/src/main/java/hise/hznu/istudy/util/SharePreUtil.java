@@ -13,6 +13,12 @@ import java.lang.reflect.Method;
 public class SharePreUtil {
     public static final String SP_BASE_NAME = "hise.hznu.istudy.sp";
     public static final String SP_FILE_NAME = "hise.hznu.istudy.sp.base";
+    public static class SP_NAME{
+        public static final String AUTHOR_TOKEN="hise.hznu.istudy.base.token";
+    }
+    public static void saveAuthorToken (Context context,String authorToken){
+        put(context,SP_FILE_NAME,SP_NAME.AUTHOR_TOKEN,authorToken);
+    }
     public static void put(Context context ,String name,String key,Object object){
         SharedPreferences sp = context.getSharedPreferences(name, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();

@@ -1,6 +1,6 @@
 package hise.hznu.istudy.activity;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,29 +11,39 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
+import hise.hznu.istudy.app.AppManager;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.LoginModel;
+import hise.hznu.istudy.util.SharePreUtil;
 import hise.hznu.istudy.util.UIUtils;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+/**
+ *  Create by GuisenHan on 2016/7/25
+ */
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    @BindView(R.id.ed_username)
     EditText edUsername;
-
+    @BindView(R.id.ed_password)
     EditText edPassword;
+    @BindView(R.id.tv_login)
     TextView tvLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        AppManager.getInstance().addActivity(this);
         initViews();
     }
 
@@ -42,9 +52,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void initViews() {
-        edUsername = (EditText)findViewById(R.id.ed_username);
-        edPassword=(EditText)findViewById(R.id.ed_password);
-        tvLogin=(TextView)findViewById(R.id.tv_login);
         tvLogin.setOnClickListener(this);
     }
 
@@ -52,7 +59,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
-               loginAction(edUsername.getText().toString(), edPassword.getText().toString());
+                loginAction(edUsername.getText().toString(), edPassword.getText().toString());
                 break;
             default:
                 break;
@@ -68,10 +75,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             UIUtils.showToast("请输入密码");
             return;
         }
-        HashMap<String,String> params = new HashMap<String,String>();
-        params.put("username",username);
-        params.put("password",password);
-        params.put("clienttype","1");
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("username", username);
+        params.put("password", password);
+        params.put("clienttype", "1");
         RequestManager.getmInstance().apiPostData(AppConstant.LOGIN_ACTION, params, this, AppConstant.POST_LOGIN_ACTION);
     }
 
@@ -80,13 +87,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
         UIUtils.showToast(errorMsg);
     }
+
     @Override
-    public void onRequest(){}
+    public void onRequest() {
+    }
+
     @Override
     public void onSuccess(JSONObject response, int actionId) {
         Log.e("response", response.toString());
-       // LoginModel login = new Gson().toJson(response,new TypeToken<LoginModel>(){}.getType());
-        LoginModel login = new Gson().fromJson(response.toString(),new TypeToken<LoginModel>(){}.getType());
+        switch (actionId) {
+            case AppConstant.POST_LOGIN_ACTION:
+                LoginModel login = new Gson().fromJson(response.toString(), new TypeToken<LoginModel>() {
+                }.getType());
+                SharePreUtil.saveAuthorToken(this, login.getAuthtoken());
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                AppManager.getInstance().finishActivty();
+
+                break;
+        }
 
     }
 }
