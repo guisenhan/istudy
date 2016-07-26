@@ -17,4 +17,7 @@
 
     <!-- course fragment-->
 
+    <!-- mine fragment-->
+    <dimen name="mine_options_padding_vertical">5dp</dimen>
+    <dimen name="mine_options_margin_horizontal">10dp</dimen>
 </resources>

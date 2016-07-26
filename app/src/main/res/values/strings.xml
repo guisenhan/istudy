@@ -19,4 +19,9 @@
 
     <!-- indoor email -->
     <string name="email_email">站内信</string>
+
+    <!-- mine fragment-->
+    <string name="mine_person_info">个人资料</string>
+    <string name="mine_safe_setting">安全设置</string>
+    <string name="mine_safe_exit">安全退出</string>
 </resources>
