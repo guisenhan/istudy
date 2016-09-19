@@ -9,15 +9,19 @@ import android.view.Window;
 import org.json.JSONObject;
 
 import hise.hznu.istudy.api.RequestManager;
+import hise.hznu.istudy.app.AppManager;
 
 /**
  * Created by PC on 2016/7/20.
  */
 public class BaseActivity extends FragmentActivity implements RequestManager.ApiRequestListener{
+    private AppManager appManager ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        appManager = AppManager.getInstance();
+        appManager.addActivity(this);
     }
     public void initData(){
 
@@ -28,6 +32,7 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        appManager.removeActivty(this);
     }
 
     @Override

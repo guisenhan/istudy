@@ -15,6 +15,10 @@ import com.shizhefei.view.indicator.IndicatorViewPager;
 import java.util.zip.Inflater;
 
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.fragment.main.CourseFragment;
+import hise.hznu.istudy.activity.fragment.main.EmailFragment;
+import hise.hznu.istudy.activity.fragment.main.ExamFragment;
+import hise.hznu.istudy.activity.fragment.main.MineFragment;
 
 /**
  * Created by GuisenHan on 2016/7/25.
@@ -44,12 +48,17 @@ public class MainFragmentAdapter extends IndicatorViewPager.IndicatorFragmentPag
         Fragment fragment = new Fragment();
         switch (position){
             case 0:
+               CourseFragment course = new CourseFragment();
+                fragment = course;
                 break;
             case 1:
+                fragment = new ExamFragment();
                 break;
             case 2:
+                fragment = new EmailFragment();
                 break;
             case 3:
+                fragment = new MineFragment();
                 break;
         }
         return fragment;
