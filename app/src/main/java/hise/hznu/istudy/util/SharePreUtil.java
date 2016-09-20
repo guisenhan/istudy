@@ -19,6 +19,9 @@ public class SharePreUtil {
     public static void saveAuthorToken (Context context,String authorToken){
         put(context,SP_FILE_NAME,SP_NAME.AUTHOR_TOKEN,authorToken);
     }
+    public static String getAuthorToken(Context context,String authorToken){
+        return context.getSharedPreferences(SP_FILE_NAME,Activity.MODE_PRIVATE).getString(authorToken,"");
+    }
     public static void put(Context context ,String name,String key,Object object){
         SharedPreferences sp = context.getSharedPreferences(name, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();

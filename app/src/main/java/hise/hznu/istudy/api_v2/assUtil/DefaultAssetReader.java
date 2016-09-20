@@ -20,7 +20,7 @@ public class DefaultAssetReader implements AssertReader{
     private DefaultAssetReader(Context context){
         this.context = context;
     }
-    private Drawable getCachedDrawable(Map<String,WeakReference<Drawable>> map,String key>){
+    private Drawable getCachedDrawable(Map<String,WeakReference<Drawable>> map,String key){
         WeakReference wr =(WeakReference) map.get(key);
         if(wr != null){
             Drawable entry = (Drawable) wr.get();
@@ -35,23 +35,23 @@ public class DefaultAssetReader implements AssertReader{
     public Drawable getDrawableOfAssets(String var1) {
         return null;
     }
-    private Drawable loadAndCacheIfNeed(String filePath,Map<String,WeakReference<Drawable>> map ){
-       Object dr = this.getCachedDrawable(map,filePath);
-        if(dr!=null){
-            return (Drawable) dr;
-        }else{
-            InputStream is = null ;
-            Object usedWidth;
-            try {
-                DisplayMetrics ex =
-            }catch (Exception var){
-                var.printStackTrace();
-                return (Drawable) dr;
-            }finally {
-
-            }
-        }
-
-        return  null;
-    }
+//    private Drawable loadAndCacheIfNeed(String filePath,Map<String,WeakReference<Drawable>> map ){
+//       Object dr = this.getCachedDrawable(map,filePath);
+//        if(dr!=null){
+//            return (Drawable) dr;
+//        }else{
+//            InputStream is = null ;
+//            Object usedWidth;
+//            try {
+//                DisplayMetrics ex =
+//            }catch (Exception var){
+//                var.printStackTrace();
+//                return (Drawable) dr;
+//            }finally {
+//
+//            }
+//        }
+//
+//        return  null;
+//    }
 }

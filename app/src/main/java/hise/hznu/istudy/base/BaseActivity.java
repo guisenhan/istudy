@@ -6,7 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 
-import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppManager;

@@ -8,16 +8,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.app.AppManager;
@@ -75,7 +74,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             UIUtils.showToast("请输入密码");
             return;
         }
-        HashMap<String, String> params = new HashMap<String, String>();
+        JSONObject params = new JSONObject();
         params.put("username", username);
         params.put("password", password);
         params.put("clienttype", "1");
@@ -97,12 +96,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Log.e("response", response.toString());
         switch (actionId) {
             case AppConstant.POST_LOGIN_ACTION:
-                LoginModel login = new Gson().fromJson(response.toString(), new TypeToken<LoginModel>() {
-                }.getType());
-                SharePreUtil.saveAuthorToken(this, login.getAuthtoken());
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                AppManager.getInstance().finishActivty();
+                Log.e("response"," " +response);
+                ApiResponse apiResponse = new ApiResponse(response);
+//                LoginModel login = new Gson().fromJson(response.toString(), new TypeToken<LoginModel>() {
+//                }.getType());
+                if(apiResponse.getAuthtoken()!=null && apiResponse.getRetcode()==0){
+                    SharePreUtil.saveAuthorToken(this, apiResponse.getAuthtoken());
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    AppManager.getInstance().finishActivty();
+                }else{
+                    UIUtils.showToast("登录出错！");
+                }
+
 
                 break;
         }

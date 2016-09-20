@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseFragment;
 
 /**
@@ -22,14 +25,26 @@ public class CourseFragment extends BaseFragment {
     @BindView(R.id.lv_course)
     ListView lvCourse;
 
+    @Override
+    protected int initLayout() {
+        return R.layout.fragment_course;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = inflater.inflate(R.layout.fragment_course,container,false);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    protected void initView(View view) {
+        super.initView(view);
     }
+
+    @Override
+    protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
+        super.onApiResponseSuccess(apiResponse, actionId);
+    }
+
+    @Override
+    public void onSuccess(JSONObject response, int actionId) {
+        super.onSuccess(response, actionId);
+    }
+
 
     @OnClick(R.id.iv_search)
     public void onClick() {

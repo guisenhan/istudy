@@ -4,14 +4,14 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -20,6 +20,8 @@ import java.util.Map;
 
 import hise.hznu.istudy.app.AppConfig;
 import hise.hznu.istudy.app.AppConstant;
+import hise.hznu.istudy.app.IStudyApplication;
+import hise.hznu.istudy.util.SharePreUtil;
 
 /**
  * Created by PC on 2016/7/21.
@@ -29,7 +31,7 @@ public class RequestManager {
     private static final int RETRY_TIMES = 1 ; //重试次数
     private volatile static RequestManager mInstance = null;
     private static RequestQueue mRequestQueus = null;
-
+    private IStudyApplication context = new IStudyApplication();
     /**
      * Request result callBack
      */
@@ -64,29 +66,32 @@ public class RequestManager {
         }
         return mInstance;
     }
-    public ApiJsonLoadController apiPostData(String url,HashMap jsonObject,final ApiRequestListener requestListener,int actionId){
+
+    public ApiJsonLoadControler apiPostData(String url,JSONObject jsonObject,final ApiRequestListener requestListener,int actionId){
        // Log.e("jsonobject"," "+jsonObject.toString());
 
        // String url1 = AppConstant.SERVER_URL +url;
         /*
         * 在这里根据接口的要求规范进行相应的处理 ，比如添加head 和map的字符串化
         * */
-        return this.postJsonRequest(url,jsonObject,null,new ApiListenerHolder(requestListener),false,TIMEOUT_COUNT,RETRY_TIMES,actionId);
+        String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
+        jsonObject.put("authtoken", authenToken);
+        return this.postJsonRequest(url,JSONObject.toJSONString(jsonObject),jsonObject,null,new ApiListenerHolder(requestListener),false,TIMEOUT_COUNT,RETRY_TIMES,actionId);
     }
 
-    public <T>ApiJsonLoadController postJsonRequest(String url,HashMap params,final Map<String,String > headers,final ApiLoadListener requestListener
+    public <T>ApiJsonLoadControler postJsonRequest(String url,String params,JSONObject params1,final Map<String,String > headers,final ApiLoadListener requestListener
             ,boolean shouleCacher,int timeoutCount,int retryTimes,int actionId){
         if(requestListener == null){
             throw  new NullPointerException();
         }
         ApiJsonRequest request;
-
-        final ApiJsonLoadController loadContrller = new ApiJsonLoadController(requestListener,actionId);
+        final ApiJsonLoadControler loadContrller = new ApiJsonLoadControler(requestListener,actionId);
         if(params!=null){
-            request = new ApiJsonRequest(Request.Method.GET,generateGetUrl(url,params),null,loadContrller,loadContrller);
+            request = new ApiJsonRequest(Request.Method.GET,generateGetUrl(url,params1),params,loadContrller,loadContrller);
         }else{
-            request =new ApiJsonRequest(Request.Method.GET,url,generatePostParams(params),loadContrller,loadContrller);
+            request =new ApiJsonRequest(Request.Method.GET,url,params,loadContrller,loadContrller);
         }
+
         request.setShouldCache(shouleCacher);
         if(headers!=null && !headers.isEmpty()){
             request.setHeaders(headers);
@@ -102,13 +107,14 @@ public class RequestManager {
         mRequestQueus.add(request);
         return  loadContrller;
     }
-    public String generateGetUrl(String url,HashMap<String,String> params){
+    public String generateGetUrl(String url,JSONObject params){
         StringBuilder builder = new StringBuilder("?");
-        for(HashMap.Entry<String,String> entity:params.entrySet()){
+
+        for(JSONObject.Entry<String,Object> entity:params.entrySet()){
             try {
                 builder.append(URLEncoder.encode(entity.getKey(), "UTF-8"));
                 builder.append("=");
-                builder.append(URLEncoder.encode(entity.getValue(), "UTF-8"));
+                builder.append(URLEncoder.encode((String)entity.getValue(), "UTF-8"));
                 builder.append("&");
             }catch (UnsupportedEncodingException e){
 
@@ -116,15 +122,15 @@ public class RequestManager {
         }
         return AppConstant.SERVER_URL + url+builder;
     }
-    public JSONObject generatePostParams(HashMap<String,String> params){
+    public String generatePostParams(JSONObject params){
         JSONObject jsonObject = new JSONObject();
         try{
-            for(HashMap.Entry<String,String> entry:params.entrySet()){
-                jsonObject.put(entry.getKey(),entry.getValue());
+            for(JSONObject.Entry<String,Object> entry:params.entrySet()){
+                jsonObject.put(entry.getKey(),(String)entry.getValue());
             }
         }catch (JSONException e){
 
         }
-        return jsonObject;
+        return JSONObject.toJSONString(jsonObject);
     }
 }

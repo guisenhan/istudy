@@ -2,7 +2,8 @@ package hise.hznu.istudy.api;
 
 import android.app.Activity;
 
-import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 
 import java.lang.ref.WeakReference;
 

@@ -18,6 +18,7 @@ public class IStudyApplication extends Application{
     private static int widthDp;
     private static int widthPix;
     private static int heightPix;
+
     private RefWatcher refWatcher;
     @Override
     public void onCreate() {

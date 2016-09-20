@@ -26,7 +26,7 @@ public class AlaConfig {
     public static void init(Application application){
         localBroadcastManager = LocalBroadcastManager.getInstance(application);
         es = Executors.newFixedThreadPool(10);
-        assertReader = new DefaultaSS
+        //assertReader = new DefaultaSS
     }
     public static Application getContext() {
         return application;
