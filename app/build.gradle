@@ -34,11 +34,13 @@ dependencies {
     // butterKnife
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    // viewPager indicator
-    compile 'com.shizhefei:ViewPagerIndicator:1.0.7'
+
 
 //    //网络框架Volley
 //    compile 'com.android.volley:volley:1.0.0'
     compile 'com.makeramen:roundedimageview:2.2.1'
+
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+
 
 }

@@ -269,6 +269,16 @@ public class ApiResponse {
         this.retcode = retcode;
     }
 
+
+
+    public <T>List<T> getListData(Class<T> cls){
+        List<T> dataList = new ArrayList<T>();
+        if(items.size()>0){
+            for(int i=0 ; i <items.size();i++)
+                dataList.add(JSON.parseObject(items.getJSONObject(i).toJSONString(),cls));
+        }
+        return dataList;
+    }
     //    public JSONObject getJsonObject() {
 //        return jsonObject;
 //    }

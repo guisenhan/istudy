@@ -46,6 +46,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initViews();
     }
 
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+    }
+
+    @Override
+    public void onApiresponseSuccess(ApiResponse response, int actionId) {
+        super.onApiresponseSuccess(response, actionId);
+    }
+
     public void initData() {
 
     }

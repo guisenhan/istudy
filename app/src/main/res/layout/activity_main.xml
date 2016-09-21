@@ -3,17 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/window_background_color"
     tools:context=".activity.MainActivity">
-    <com.shizhefei.view.indicator.FixedIndicatorView
+    <hise.hznu.istudy.shizhefei.view.indicator.FixedIndicatorView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/fiv_main"
         android:layout_alignParentBottom="true"
         />
-   <com.shizhefei.view.viewpager.SViewPager
+   <hise.hznu.istudy.shizhefei.view.viewpager.SViewPager
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/svp_main"
        android:layout_above="@+id/fiv_main"
+       android:background="@color/unit_background_color"
        />
 </RelativeLayout>

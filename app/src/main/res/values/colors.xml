@@ -29,4 +29,5 @@
     <color name="view_white_color">#dedede</color>
     <color name="text_red_color">#ffe00000</color>
     <color name="city_press_color">#dedede</color>
+    <color name="light_blue">#C0E6FF</color>
 </resources>
