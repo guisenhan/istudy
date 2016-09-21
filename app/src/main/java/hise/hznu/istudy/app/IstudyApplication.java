@@ -8,6 +8,8 @@ import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
+import hise.hznu.istudy.api.RequestManager;
+
 /**
  * Created by PC on 2016/7/20.
  */
@@ -16,10 +18,12 @@ public class IStudyApplication extends Application{
     private static int widthDp;
     private static int widthPix;
     private static int heightPix;
+
     private RefWatcher refWatcher;
     @Override
     public void onCreate() {
         super.onCreate();
+        init();
     }
 
     private void init(){
@@ -27,7 +31,7 @@ public class IStudyApplication extends Application{
         widthDp = getResources().getDisplayMetrics().widthPixels;
         heightPix = getResources().getDisplayMetrics().heightPixels;
         widthDp = (int)(widthPix/scale);
-
+        RequestManager.init(this);
         AppConfig.init(this);
     }
 

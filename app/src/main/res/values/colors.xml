@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorPrimary">#008fee</color>
+    <color name="colorPrimaryDark">#008fee</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="login_background">#f4f4f4</color>
     <color name="divider_color">#e4e4e4</color>
+    <color name="white">#ffffff</color>
+    <color name="line_color">#bcbcbc</color>
+
+    <color name="window_background_color">#f5f5f5</color>
+    <color name="unit_background_color">#ffffff</color>
+    <color name="background_color">#ececec</color>
+
+    <!-- 分隔线主要颜色（标签描边颜色） -->
+    <color name="default_divider_color">#cfcfcf</color>
+    <!-- 分隔线次要颜色 -->
+    <color name="default_divider_other_color">#dedede</color>
+
+    <!-- 正常文字 -->
+    <color name="text_normal_color">#ff666666</color>
+    <!-- 重要文字 -->
+    <color name="text_important_color">#ff111111</color>
+    <!-- 辅助文字 -->
+    <color name="text_other_color">#ff999999</color>
+    <color name="text_white_color">#ffffffff</color>
+    <color name="edit_white_color">#cfcfcf</color>
+    <color name="view_white_color">#dedede</color>
+    <color name="text_red_color">#ffe00000</color>
+    <color name="city_press_color">#dedede</color>
 </resources>
