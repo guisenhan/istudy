@@ -19,6 +19,8 @@ public class AppConstant {
     public static final int POST_GET_NOTICE_ACTION = 3; //获取公告信息ID
     public static final String GET_NOTIFY_INFO_ACTION = "notifyinfo"; //获取单个公告信息
     public static final int POST_GET_NOTIFY_INFO = 4 ;//获取单个公告信息
-    public static final String GET_COURSE_NOTICE_ACTION = "courseinfo";
+    public static final String GET_COURSE_NOTICE_ACTION = "courseinfo"; //获取课程的公告信息
     public static final int POST_GET_CORSE_NOTICE_ACTION = 5 ;
+    public static final String GET_STUDY_DATUM_ACTION = "courseresoure"; //获取学习资料
+    public static final int POST_GET_STUDY_DATUM = 6;
 }

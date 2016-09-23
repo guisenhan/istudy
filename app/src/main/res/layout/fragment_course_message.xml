@@ -8,8 +8,29 @@
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="课程公告"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/text_other_color"
+            android:textSize="15sp"
 
-        ></LinearLayout>
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="系统公告"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/text_other_color"
+            android:textSize="15sp"
+
+            />
+    </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

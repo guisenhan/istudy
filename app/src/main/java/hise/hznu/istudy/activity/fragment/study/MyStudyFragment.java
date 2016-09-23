@@ -1,5 +1,6 @@
 package hise.hznu.istudy.activity.fragment.study;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.course.StudyDatumActivity;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseFragment;
+import hise.hznu.istudy.model.course.CourseEntity;
 
 /**
  * Created by PC on 2016/9/21.
@@ -32,9 +35,11 @@ public class MyStudyFragment extends BaseFragment {
     @BindView(R.id.ll_talk_zone)
     LinearLayout llTalkZone;
 
+    private CourseEntity courseEntity;
     @Override
     protected void initData() {
         super.initData();
+        courseEntity =(CourseEntity) getArguments().getSerializable("course");
     }
 
     @Override
@@ -52,18 +57,13 @@ public class MyStudyFragment extends BaseFragment {
         super.onApiResponseSuccess(apiResponse, actionId);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
     @OnClick({R.id.ll_study_info, R.id.ll_my_homework, R.id.icon_comment_each, R.id.ll_my_experiment, R.id.ll_practice, R.id.ll_talk_zone})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_study_info:
+                Intent datum = new Intent(getActivity(), StudyDatumActivity.class);
+                datum.putExtra("courseId",courseEntity.getId());
+                startActivity(datum);
                 break;
             case R.id.ll_my_homework:
                 break;

@@ -39,7 +39,12 @@ public class StudyActivity extends BaseActivity implements View.OnClickListener{
 
         indicator = new IndicatorViewPager(fivStudy,svpStudy);
         indicator.setAdapter(new StudyFragmentAdapter(this,getSupportFragmentManager(),courseEntity));
-
+        tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
