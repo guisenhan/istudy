@@ -13,6 +13,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.Volley;
 
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -107,6 +108,8 @@ public class RequestManager {
         mRequestQueus.add(request);
         return  loadContrller;
     }
+
+
     public String generateGetUrl(String url,JSONObject params){
         StringBuilder builder = new StringBuilder("?");
 

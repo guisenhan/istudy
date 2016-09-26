@@ -23,4 +23,10 @@ public class AppConstant {
     public static final int POST_GET_CORSE_NOTICE_ACTION = 5 ;
     public static final String GET_STUDY_DATUM_ACTION = "courseresoure"; //获取学习资料
     public static final int POST_GET_STUDY_DATUM = 6;
+    public static final String GET_EXAM_LIST_ACTION = "testquery"; //获取学生的考试信息
+    public static final int POST_EXAM_LIST_ACTION = 7 ;
+    public static final String GET_EXAM_DETAI_INFO_ACTION = "testinfo" ; //获取考试的详细信息
+    public static final int POST_EXAM_DETAIL_INFO = 8;
+    public static final String GET_EMAIL_ACTION = "messagereceivequery";
+    public static final int POST_GET_EMAIL_ACTION = 9;
 }
