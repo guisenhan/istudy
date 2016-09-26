@@ -10,18 +10,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
-import hise.hznu.istudy.model.exam.ExamEntity;
+import hise.hznu.istudy.model.course.HomeWorkEntity;
 
 /**
  * Created by PC on 2016/9/21.
  */
-public class ExamAdapter extends BaseAdapter {
+public class HomeWorkAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<ExamEntity> _dataList = new ArrayList<ExamEntity>();
+    private ArrayList<HomeWorkEntity> _dataList = new ArrayList<HomeWorkEntity>();
 
-    public ExamAdapter(Context context) {
+    public HomeWorkAdapter(Context context) {
         this.context = context;
     }
 
@@ -40,7 +42,7 @@ public class ExamAdapter extends BaseAdapter {
         }
     }
 
-    public void UpdateView(List<ExamEntity> newList) {
+    public void UpdateView(List<HomeWorkEntity> newList) {
         if (_dataList != null) {
             _dataList.clear();
             this.notifyDataSetChanged();
@@ -59,27 +61,23 @@ public class ExamAdapter extends BaseAdapter {
         ViewHolder view = null;
         if (convertView == null) {
             view = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_exam, null);
-            view.tvExamName = (TextView) convertView.findViewById(R.id.tv_exam_name);
-            view.tvTeacherName = (TextView) convertView.findViewById(R.id.tv_teacher_name);
-            view.tvDate = (TextView) convertView.findViewById(R.id.tv_date);
-            view.tvLocation = (TextView) convertView.findViewById(R.id.tv_location);
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_home_work, null);
+            view.tvHomeworkName = (TextView) convertView.findViewById(R.id.tv_homework_name);
+            view.tvHomeworkInfo = (TextView) convertView.findViewById(R.id.tv_homework_info);
+            view.tvSeeDetail = (TextView) convertView.findViewById(R.id.tv_see_detail);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-       view.tvDate.setText(_dataList.get(position).getDatestart());
-        view.tvLocation.setText(_dataList.get(position).getKsdd()+_dataList.get(position).getKszw());
-        view.tvExamName.setText(_dataList.get(position).getTitle());
-        view.tvTeacherName.setText(_dataList.get(position).getTeacher());
+        view.tvHomeworkName.setText(_dataList.get(position).getTitle());
+        view.tvHomeworkInfo.setText(_dataList.get(position).getMemo() + _dataList.get(position).getTeacher());
         return convertView;
     }
 
+    static class ViewHolder {
+        TextView tvHomeworkName;
+        TextView tvHomeworkInfo;
+        TextView tvSeeDetail;
 
-    final class ViewHolder {
-        TextView tvExamName;
-        TextView tvDate;
-        TextView tvLocation;
-        TextView tvTeacherName;
     }
 }

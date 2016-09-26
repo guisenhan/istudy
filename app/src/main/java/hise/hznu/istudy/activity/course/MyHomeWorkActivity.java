@@ -1,0 +1,66 @@
+package hise.hznu.istudy.activity.course;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSONObject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import hise.hznu.istudy.R;
+import hise.hznu.istudy.api.ApiResponse;
+import hise.hznu.istudy.api.RequestManager;
+import hise.hznu.istudy.app.AppConstant;
+import hise.hznu.istudy.base.BaseActivity;
+
+public class MyHomeWorkActivity extends BaseActivity implements View.OnClickListener {
+
+    @BindView(R.id.tv_back)
+    TextView tvBack;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.exam_name)
+    TextView examName;
+    @BindView(R.id.exam_teacher)
+    TextView examTeacher;
+    @BindView(R.id.exam_start_time)
+    TextView examStartTime;
+    @BindView(R.id.exam_end_time)
+    TextView examEndTime;
+    @BindView(R.id.lv_homework)
+    ListView lvHomework;
+
+    private String courseId;
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_my_home_work;
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        courseId = getIntent().getExtras().getString("courseid");
+        JSONObject params = new JSONObject();
+        params.put("courseid",courseId);
+        RequestManager.getmInstance().apiPostData(AppConstant.GET_HOMEWORK_ACTION,params,this,AppConstant.POST_HOMEWORK_ACTION);
+    }
+
+    @Override
+    public void onApiresponseSuccess(ApiResponse response, int actionId) {
+        super.onApiresponseSuccess(response, actionId);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+}

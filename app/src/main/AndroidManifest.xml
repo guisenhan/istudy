@@ -64,7 +64,8 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.course.StudyActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.course.StudyDatumActivity"></activity>
+        <activity android:name=".activity.course.StudyDatumActivity" />
+        <activity android:name=".activity.course.MyHomeWorkActivity"></activity>
     </application>
 
 </manifest>

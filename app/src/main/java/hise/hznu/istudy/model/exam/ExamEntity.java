@@ -27,12 +27,22 @@ public class ExamEntity implements Serializable{
     private String teacher;
     private String kscc;
     private String kszw;
+    private String ksdd;
+
     private String xq;
     private String xy;
     private String datestart;
     private String dateend;
     private String score;
     private String title;
+
+    public String getKsdd() {
+        return ksdd;
+    }
+
+    public void setKsdd(String ksdd) {
+        this.ksdd = ksdd;
+    }
 
     public String getDateend() {
         return dateend;

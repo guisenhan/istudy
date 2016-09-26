@@ -27,6 +27,8 @@ public class AppConstant {
     public static final int POST_EXAM_LIST_ACTION = 7 ;
     public static final String GET_EXAM_DETAI_INFO_ACTION = "testinfo" ; //获取考试的详细信息
     public static final int POST_EXAM_DETAIL_INFO = 8;
-    public static final String GET_EMAIL_ACTION = "messagereceivequery";
+    public static final String GET_EMAIL_ACTION = "messagereceivequery"; //获取站内信
     public static final int POST_GET_EMAIL_ACTION = 9;
+    public static final String GET_HOMEWORK_ACTION = "homeworkquery"; //查询课程作业
+    public static final int POST_HOMEWORK_ACTION = 10;
 }

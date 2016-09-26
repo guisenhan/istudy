@@ -1,50 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:padding="11dp"
-    >
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="vertical"
-        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计算机科学导论"
+            android:text="computer techlogy"
             android:textSize="15sp"
             android:textColor="@color/text_important_color"
-            android:id="@+id/tv_exam_name"
+            android:id="@+id/tv_homework_name"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016-9-22"
+            android:text="iunfio"
             android:textColor="@color/text_other_color"
             android:textSize="13sp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/tv_date"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2-804"
-            android:textColor="@color/text_other_color"
-            android:textSize="13sp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/tv_location"
+            android:id="@+id/tv_homework_info"
+            android:layout_marginTop="10dp"
             />
     </LinearLayout>
     <TextView
         android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:text="XX老师"
+        android:text="查看"
+        android:textColor="@color/text_important_color"
+        android:textSize="15sp"
+        android:id="@+id/tv_see_detail"
         android:layout_alignParentRight="true"
         android:gravity="center"
-        android:padding="5dp"
-        android:id="@+id/tv_teacher_name"
+        android:background="@color/colorPrimary"
         />
 </RelativeLayout>

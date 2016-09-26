@@ -1,27 +1,32 @@
 package hise.hznu.istudy.activity.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
-import hise.hznu.istudy.model.exam.ExamEntity;
+import hise.hznu.istudy.model.email.EmailEntity;
 
 /**
  * Created by PC on 2016/9/21.
  */
-public class ExamAdapter extends BaseAdapter {
+public class EmailAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<ExamEntity> _dataList = new ArrayList<ExamEntity>();
+    private ArrayList<EmailEntity> _dataList = new ArrayList<EmailEntity>();
 
-    public ExamAdapter(Context context) {
+    public EmailAdapter(Context context) {
         this.context = context;
     }
 
@@ -40,7 +45,7 @@ public class ExamAdapter extends BaseAdapter {
         }
     }
 
-    public void UpdateView(List<ExamEntity> newList) {
+    public void UpdateView(List<EmailEntity> newList) {
         if (_dataList != null) {
             _dataList.clear();
             this.notifyDataSetChanged();
@@ -59,27 +64,36 @@ public class ExamAdapter extends BaseAdapter {
         ViewHolder view = null;
         if (convertView == null) {
             view = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_exam, null);
-            view.tvExamName = (TextView) convertView.findViewById(R.id.tv_exam_name);
-            view.tvTeacherName = (TextView) convertView.findViewById(R.id.tv_teacher_name);
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_email, null);
+            view.tvRedLabel = (TextView) convertView.findViewById(R.id.tv_red_label);
+            view.ivEmail = (ImageView)convertView.findViewById(R.id.iv_email);
+
+            view.tvEmailSender = (TextView) convertView.findViewById(R.id.tv_email_sender);
             view.tvDate = (TextView) convertView.findViewById(R.id.tv_date);
-            view.tvLocation = (TextView) convertView.findViewById(R.id.tv_location);
+            view.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-       view.tvDate.setText(_dataList.get(position).getDatestart());
-        view.tvLocation.setText(_dataList.get(position).getKsdd()+_dataList.get(position).getKszw());
-        view.tvExamName.setText(_dataList.get(position).getTitle());
-        view.tvTeacherName.setText(_dataList.get(position).getTeacher());
+        view.tvDate.setText(_dataList.get(position).getDate());
+        view.tvContent.setText(_dataList.get(position).getSubject());
+        view.tvEmailSender.setText(_dataList.get(position).getSendername());
+        if(_dataList.get(position).isread()){
+            view.ivEmail.setImageResource(R.mipmap.icon_email_readed);
+        }else{
+            view.ivEmail.setImageResource(R.mipmap.icon_emali_unread);
+        }
+        view.tvRedLabel.setVisibility(View.GONE);
         return convertView;
     }
 
 
     final class ViewHolder {
-        TextView tvExamName;
+        TextView tvRedLabel;
+        ImageView ivEmail;
+        TextView tvEmailSender;
+        TextView tvContent;
         TextView tvDate;
-        TextView tvLocation;
-        TextView tvTeacherName;
+
     }
 }
