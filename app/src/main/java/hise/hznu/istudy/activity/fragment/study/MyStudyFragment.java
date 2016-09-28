@@ -11,6 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.course.CommentEachActivity;
+import hise.hznu.istudy.activity.course.MyHomeWorkActivity;
 import hise.hznu.istudy.activity.course.StudyDatumActivity;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseFragment;
@@ -66,8 +68,14 @@ public class MyStudyFragment extends BaseFragment {
                 startActivity(datum);
                 break;
             case R.id.ll_my_homework:
+                Intent homework = new Intent(getActivity(), MyHomeWorkActivity.class);
+                homework.putExtra("courseId",courseEntity.getId());
+                startActivity(homework);
                 break;
             case R.id.icon_comment_each:
+                Intent comment = new Intent(getActivity(), CommentEachActivity.class);
+                comment.putExtra("courseId",courseEntity.getId());
+                startActivity(comment);
                 break;
             case R.id.ll_my_experiment:
                 break;

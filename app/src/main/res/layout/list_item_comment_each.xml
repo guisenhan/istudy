@@ -15,7 +15,7 @@
             android:text="computer techlogy"
             android:textSize="15sp"
             android:textColor="@color/text_important_color"
-            android:id="@+id/tv_homework_name"
+            android:id="@+id/tv_title"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             android:text="iunfio"
             android:textColor="@color/text_other_color"
             android:textSize="13sp"
-            android:id="@+id/tv_homework_info"
+            android:id="@+id/tv_info"
             android:layout_marginTop="10dp"
             />
     </LinearLayout>

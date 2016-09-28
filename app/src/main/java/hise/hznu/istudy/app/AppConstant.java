@@ -31,4 +31,6 @@ public class AppConstant {
     public static final int POST_GET_EMAIL_ACTION = 9;
     public static final String GET_HOMEWORK_ACTION = "homeworkquery"; //查询课程作业
     public static final int POST_HOMEWORK_ACTION = 10;
+    public static final String GET_COMMENT_EACH = "hupingquery" ;//查询互评任务
+    public static final int POST_COMMENT_EACH = 11 ;
 }

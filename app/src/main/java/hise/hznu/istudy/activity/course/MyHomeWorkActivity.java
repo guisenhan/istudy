@@ -7,13 +7,18 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.adapter.HomeWorkAdapter;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
+import hise.hznu.istudy.model.course.HomeWorkEntity;
 
 public class MyHomeWorkActivity extends BaseActivity implements View.OnClickListener {
 
@@ -33,15 +38,25 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
     ListView lvHomework;
 
     private String courseId;
+    private HomeWorkAdapter adapter;
+    private List<HomeWorkEntity> _dataList = new ArrayList<HomeWorkEntity>();
     @Override
     protected int initLayout() {
         return R.layout.activity_my_home_work;
     }
 
     @Override
+    protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+        tvBack.setOnClickListener(this);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
-        courseId = getIntent().getExtras().getString("courseid");
+        adapter = new HomeWorkAdapter(this);
+        lvHomework.setAdapter(adapter);
+        courseId = getIntent().getExtras().getString("courseId");
         JSONObject params = new JSONObject();
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_HOMEWORK_ACTION,params,this,AppConstant.POST_HOMEWORK_ACTION);
@@ -50,11 +65,17 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        _dataList = response.getListData(HomeWorkEntity.class);
+        adapter.UpdateView(_dataList);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.tv_back:
+                finish();
+                break;
+        }
     }
 
     @Override
