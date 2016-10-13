@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,7 @@ import butterknife.BindView;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.course.StudyActivity;
 import hise.hznu.istudy.model.course.CourseEntity;
+import hise.hznu.istudy.util.ImageLoaderUtils;
 
 /**
  * Created by PC on 2016/9/21.
@@ -76,6 +80,7 @@ public class CourseAdapter extends BaseAdapter {
             view.tvCourseDetail = (TextView) convertView.findViewById(R.id.tv_course_detail);
             view.ivArrow =(ImageView)convertView.findViewById(R.id.iv_arrow);
             view.tvPicTitle = (TextView)convertView.findViewById(R.id.tv_pic_title);
+            view.rivImageView = (RoundedImageView)convertView.findViewById(R.id.riv_user_photo);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
@@ -107,6 +112,7 @@ public class CourseAdapter extends BaseAdapter {
                 context.startActivity(study);
             }
         });
+        ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getPic(),view.rivImageView);
         return convertView;
     }
 
@@ -119,5 +125,6 @@ public class CourseAdapter extends BaseAdapter {
         TextView tvCourseDetail;
         ImageView ivArrow;
         TextView tvPicTitle;
+        RoundedImageView rivImageView;
     }
 }

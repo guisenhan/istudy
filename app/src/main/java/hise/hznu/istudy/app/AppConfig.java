@@ -50,6 +50,13 @@ public class AppConfig {
         return application;
     }
 
+    public static void setCurrentActivity(Activity activity) {
+        currentActivity = new WeakReference(activity);
+    }
+
+    public static Activity getCurrentActivity() {
+        return currentActivity != null?(Activity)currentActivity.get():null;
+    }
     public static boolean isMainProcess(){
         return  mainProcess;
     }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.shizhefei.view.indicator.IndicatorViewPager;
+
 import java.util.zip.Inflater;
 
 import hise.hznu.istudy.R;
@@ -17,7 +19,7 @@ import hise.hznu.istudy.activity.fragment.main.CourseFragment;
 import hise.hznu.istudy.activity.fragment.main.EmailFragment;
 import hise.hznu.istudy.activity.fragment.main.ExamFragment;
 import hise.hznu.istudy.activity.fragment.main.MineFragment;
-import hise.hznu.istudy.shizhefei.view.indicator.IndicatorViewPager;
+
 
 /**
  * Created by GuisenHan on 2016/7/25.

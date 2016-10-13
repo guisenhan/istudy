@@ -1,16 +1,14 @@
 package hise.hznu.istudy.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import hise.hznu.istudy.*;
-import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
-import hise.hznu.istudy.util.MiscuUtil;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.SharePreUtil;
 
 public class StartActivity extends BaseActivity {
@@ -25,7 +23,7 @@ public class StartActivity extends BaseActivity {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                if(!MiscuUtil.isEmpty(SharePreUtil.getAuthorToken(StartActivity.this, SharePreUtil.SP_NAME.AUTHOR_TOKEN))){
+                if(!MiscUtils.isEmpty(SharePreUtil.getAuthorToken(StartActivity.this, SharePreUtil.SP_NAME.AUTHOR_TOKEN))){
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

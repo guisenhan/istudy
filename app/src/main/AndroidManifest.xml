@@ -66,7 +66,14 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.course.StudyDatumActivity" />
         <activity android:name=".activity.course.MyHomeWorkActivity" />
-        <activity android:name=".activity.course.CommentEachActivity"></activity>
+        <activity android:name=".activity.course.CommentEachActivity" />
+        <activity
+            android:name=".activity.mine.PersonInfoActivity"
+            android:label="@string/title_activity_person_info"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.mine.pickimg.MultiImageSelectorActivity" />
+        <activity android:name=".util.clip.ClipActivity" />
+        <activity android:name=".util.clip.ClipHeaderActivity"></activity>
     </application>
 
 </manifest>

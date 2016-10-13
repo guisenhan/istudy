@@ -33,13 +33,13 @@
             android:textStyle="bold"
             />
     </RelativeLayout>
-    <hise.hznu.istudy.shizhefei.view.indicator.FixedIndicatorView
+    <com.shizhefei.view.indicator.FixedIndicatorView
         android:layout_width="match_parent"
         android:layout_height="@dimen/topbar_height"
         android:background="@color/light_blue"
         android:id="@+id/fiv_study"
         />
-    <hise.hznu.istudy.shizhefei.view.viewpager.SViewPager
+    <com.shizhefei.view.viewpager.SViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/svp_study"

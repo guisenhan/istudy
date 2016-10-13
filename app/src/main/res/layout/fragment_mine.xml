@@ -9,15 +9,6 @@
         android:layout_weight="1"
         android:background="@color/colorPrimary"
         >
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@mipmap/icon_setting"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:id="@+id/iv_setting"
-            />
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="60dp"
             android:layout_height="60dp"

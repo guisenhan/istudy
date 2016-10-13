@@ -24,4 +24,6 @@
     <string name="mine_person_info">个人资料</string>
     <string name="mine_safe_setting">安全设置</string>
     <string name="mine_safe_exit">安全退出</string>
+    <string name="title_activity_person_info">PersonInfoActivity</string>
+    <string name="mis_permission_rationale">mis_permission_rationale</string>
 </resources>

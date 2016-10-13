@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/text_important_color"
+                android:textColor="@color/text_white_color"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:text="面向对象程序设计"
@@ -58,6 +58,7 @@
                     android:src="@mipmap/icon_user_photo"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     app:riv_corner_radius="10dp"
+                    android:id="@+id/riv_user_photo"
                     />
                 <TextView
                     android:layout_width="wrap_content"

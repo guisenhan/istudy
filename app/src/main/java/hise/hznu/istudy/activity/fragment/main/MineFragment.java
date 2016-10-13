@@ -1,16 +1,38 @@
 package hise.hznu.istudy.activity.fragment.main;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.makeramen.roundedimageview.RoundedImageView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.mine.PersonInfoActivity;
+import hise.hznu.istudy.app.AppManager;
 import hise.hznu.istudy.base.BaseFragment;
 
 /**
  * Created by GuisenHan on 2016/7/25.
  */
-public class MineFragment extends BaseFragment{
+public class MineFragment extends BaseFragment {
+    @BindView(R.id.riv_user_photo)
+    RoundedImageView rivUserPhoto;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
+    @BindView(R.id.tv_person_info)
+    TextView tvPersonInfo;
+    @BindView(R.id.tv_safe_setting)
+    TextView tvSafeSetting;
+    @BindView(R.id.tv_exit)
+    TextView tvExit;
+
     @Override
     protected void initData() {
         super.initData();
@@ -34,5 +56,25 @@ public class MineFragment extends BaseFragment{
     @Override
     public void onFailure(String errorMsg, int actionId) {
         super.onFailure(errorMsg, actionId);
+    }
+
+
+    @OnClick({R.id.tv_user_name, R.id.tv_person_info, R.id.tv_safe_setting, R.id.tv_exit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_user_name:
+
+                break;
+            case R.id.tv_person_info:
+                Intent intent =new Intent(getActivity(), PersonInfoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_safe_setting:
+
+                break;
+            case R.id.tv_exit:
+                AppManager.getInstance().finishAllActivity();
+                break;
+        }
     }
 }

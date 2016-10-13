@@ -60,7 +60,6 @@ public class CourseFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
-//        apiResponse.get
         _dataList = apiResponse.getListData(CourseEntity.class);
         adapter.UpdateView(_dataList);
     }

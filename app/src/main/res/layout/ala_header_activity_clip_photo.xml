@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!--<View-->
+    <!--android:id="@+id/clip_cover_top"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="136dp"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:background="#99000000" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_below="@+id/clip_cover_top"-->
+    <!--android:background="#CCFFFFFF" />-->
+
+    <!--<View-->
+    <!--android:id="@+id/clip_cover_bottom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="136dp"-->
+    <!--android:layout_above="@+id/clip_control"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:background="#99000000" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_above="@+id/clip_cover_bottom"-->
+    <!--android:background="#CCFFFFFF" />-->
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/clip_control"
+        android:layout_alignParentTop="true"
+        >
+        <ImageView
+            android:id="@+id/src_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
+        <hise.hznu.istudy.util.clip.ClipView
+            android:id="@+id/clip_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/clip_control"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/user__title_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#141414" />
+
+        <TextView
+            android:id="@+id/user__tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/user__center_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="图片裁剪"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/user__tv_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="使用"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout><!-- From: file:/C:/himalaya/githubwork/android/android-core/core/src/main/res/layout/ala__header_activity_clip_photo.xml -->

@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/window_background_color"
     tools:context=".activity.MainActivity">
-    <hise.hznu.istudy.shizhefei.view.indicator.FixedIndicatorView
+    <com.shizhefei.view.indicator.FixedIndicatorView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/fiv_main"
         android:layout_alignParentBottom="true"
         />
-   <hise.hznu.istudy.shizhefei.view.viewpager.SViewPager
+   <com.shizhefei.view.viewpager.SViewPager
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/svp_main"

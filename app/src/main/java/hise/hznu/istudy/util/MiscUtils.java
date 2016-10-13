@@ -9,16 +9,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -32,14 +29,12 @@ import android.graphics.BitmapFactory.Options;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Build.VERSION;
-import android.provider.CallLog.Calls;
 import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -49,7 +44,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.DownloadListener;
 import android.webkit.WebView;
 import android.widget.Toast;
 import java.io.File;
@@ -79,11 +73,11 @@ import org.json.JSONObject;
 
 import hise.hznu.istudy.app.AppConfig;
 
-public class MiscuUtil {
+public class MiscUtils {
     public static final String GLOBAL_TAG = "core";
     public static final int MAX_GRPS_RETRY_COUNT = 5;
 
-    public MiscuUtil() {
+    public MiscUtils() {
     }
 
     public static String sayHello(String name) {
@@ -1160,7 +1154,7 @@ public class MiscuUtil {
 
     public static Map<String, Object> sortMapByKey(Map<String, Object> map) {
         if(map != null && !map.isEmpty()) {
-            TreeMap sortMap = new TreeMap(new MiscuUtil.MapKeyComparator());
+            TreeMap sortMap = new TreeMap(new MiscUtils.MapKeyComparator());
             sortMap.putAll(map);
             return sortMap;
         } else {

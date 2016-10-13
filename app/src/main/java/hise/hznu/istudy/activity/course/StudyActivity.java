@@ -6,6 +6,11 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.shizhefei.view.indicator.FixedIndicatorView;
+import com.shizhefei.view.indicator.IndicatorViewPager;
+import com.shizhefei.view.indicator.slidebar.ColorBar;
+import com.shizhefei.view.viewpager.SViewPager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
@@ -14,10 +19,7 @@ import hise.hznu.istudy.activity.fragment.fragmentAdpater.StudyFragmentAdapter;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CourseEntity;
-import hise.hznu.istudy.shizhefei.view.indicator.FixedIndicatorView;
-import hise.hznu.istudy.shizhefei.view.indicator.IndicatorViewPager;
-import hise.hznu.istudy.shizhefei.view.indicator.slidebar.ColorBar;
-import hise.hznu.istudy.shizhefei.view.viewpager.SViewPager;
+
 
 public class StudyActivity extends BaseActivity implements View.OnClickListener{
 

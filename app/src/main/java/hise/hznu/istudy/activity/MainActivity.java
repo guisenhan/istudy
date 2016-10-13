@@ -3,14 +3,16 @@ package hise.hznu.istudy.activity;
 import android.os.Bundle;
 
 
+import com.shizhefei.view.indicator.FixedIndicatorView;
+import com.shizhefei.view.indicator.IndicatorViewPager;
+import com.shizhefei.view.viewpager.SViewPager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.fragment.fragmentAdpater.MainFragmentAdapter;
 import hise.hznu.istudy.base.BaseActivity;
-import hise.hznu.istudy.shizhefei.view.indicator.FixedIndicatorView;
-import hise.hznu.istudy.shizhefei.view.indicator.IndicatorViewPager;
-import hise.hznu.istudy.shizhefei.view.viewpager.SViewPager;
+
 
 /**
  *  Create by GuisenHan on 2016/7/25
