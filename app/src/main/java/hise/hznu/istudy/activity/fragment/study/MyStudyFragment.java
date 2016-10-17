@@ -12,6 +12,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.course.CommentEachActivity;
+import hise.hznu.istudy.activity.course.MyExerciseActivity;
+import hise.hznu.istudy.activity.course.MyExperimentActivity;
 import hise.hznu.istudy.activity.course.MyHomeWorkActivity;
 import hise.hznu.istudy.activity.course.StudyDatumActivity;
 import hise.hznu.istudy.api.ApiResponse;
@@ -78,8 +80,14 @@ public class MyStudyFragment extends BaseFragment {
                 startActivity(comment);
                 break;
             case R.id.ll_my_experiment:
+                Intent experiment = new Intent(getActivity(),MyExperimentActivity.class);
+                experiment.putExtra("courseId",courseEntity.getId());
+                startActivity(experiment);
                 break;
             case R.id.ll_practice:
+                Intent exercise = new Intent(getActivity(),MyExerciseActivity.class);
+                exercise.putExtra("courseId",courseEntity.getId());
+                startActivity(exercise);
                 break;
             case R.id.ll_talk_zone:
                 break;

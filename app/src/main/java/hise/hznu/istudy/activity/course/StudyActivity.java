@@ -2,6 +2,7 @@ package hise.hznu.istudy.activity.course;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,7 +39,6 @@ public class StudyActivity extends BaseActivity implements View.OnClickListener{
         super.initData();
         courseEntity = (CourseEntity)getIntent().getExtras().get("course");
         fivStudy.setScrollBar(new ColorBar(getApplicationContext(), Color.WHITE,5));
-
         indicator = new IndicatorViewPager(fivStudy,svpStudy);
         indicator.setAdapter(new StudyFragmentAdapter(this,getSupportFragmentManager(),courseEntity));
         tvBack.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,9 @@
 package hise.hznu.istudy.activity.course;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -60,6 +62,12 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
         JSONObject params = new JSONObject();
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_HOMEWORK_ACTION,params,this,AppConstant.POST_HOMEWORK_ACTION);
+        lvHomework.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("testId",_dataList.get(i).getId());
+            }
+        });
     }
 
     @Override
@@ -78,10 +86,4 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

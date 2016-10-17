@@ -73,7 +73,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.mine.pickimg.MultiImageSelectorActivity" />
         <activity android:name=".util.clip.ClipActivity" />
-        <activity android:name=".util.clip.ClipHeaderActivity"></activity>
+        <activity android:name=".util.clip.ClipHeaderActivity" />
+        <activity android:name=".activity.course.MyExperimentActivity" />
+        <activity android:name=".activity.course.MyExerciseActivity"></activity>
     </application>
 
 </manifest>

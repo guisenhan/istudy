@@ -40,6 +40,7 @@ public class StudyDatumActivity extends BaseActivity {
         lvDatum.setAdapter(adapter);
         courseId = getIntent().getExtras().getString("courseId");
         JSONObject params = new JSONObject();
+        Log.e("courseId",""+courseId);
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_STUDY_DATUM_ACTION,params,this,AppConstant.POST_GET_STUDY_DATUM);
     }

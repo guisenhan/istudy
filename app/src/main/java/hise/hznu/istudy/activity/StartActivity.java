@@ -2,11 +2,13 @@ package hise.hznu.istudy.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import hise.hznu.istudy.*;
+import hise.hznu.istudy.app.AppConfig;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.SharePreUtil;
@@ -19,7 +21,8 @@ public class StartActivity extends BaseActivity {
     protected void initData() {
         super.initData();
         timer= new Timer(true);
-
+        String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
+        Log.e("authtoken",""+authenToken);
         timerTask = new TimerTask() {
             @Override
             public void run() {

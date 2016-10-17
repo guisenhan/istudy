@@ -10,21 +10,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.model.course.ExprementEntity;
 import hise.hznu.istudy.model.course.HomeWorkEntity;
 import hise.hznu.istudy.util.AppUtils;
 
 /**
  * Created by PC on 2016/9/21.
  */
-public class HomeWorkAdapter extends BaseAdapter {
+public class ExperimentAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HomeWorkEntity> _dataList = new ArrayList<HomeWorkEntity>();
+    private ArrayList<ExprementEntity> _dataList = new ArrayList<ExprementEntity>();
 
-    public HomeWorkAdapter(Context context) {
+    public ExperimentAdapter(Context context) {
         this.context = context;
     }
 
@@ -43,7 +42,7 @@ public class HomeWorkAdapter extends BaseAdapter {
         }
     }
 
-    public void UpdateView(List<HomeWorkEntity> newList) {
+    public void UpdateView(List<ExprementEntity> newList) {
         if (_dataList != null) {
             _dataList.clear();
             this.notifyDataSetChanged();

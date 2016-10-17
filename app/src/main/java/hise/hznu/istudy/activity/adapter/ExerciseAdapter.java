@@ -10,21 +10,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
-import hise.hznu.istudy.model.course.HomeWorkEntity;
+import hise.hznu.istudy.model.course.ExerciseEntity;
+import hise.hznu.istudy.model.course.ExprementEntity;
 import hise.hznu.istudy.util.AppUtils;
 
 /**
  * Created by PC on 2016/9/21.
  */
-public class HomeWorkAdapter extends BaseAdapter {
+public class ExerciseAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<HomeWorkEntity> _dataList = new ArrayList<HomeWorkEntity>();
+    private ArrayList<ExerciseEntity> _dataList = new ArrayList<ExerciseEntity>();
 
-    public HomeWorkAdapter(Context context) {
+    public ExerciseAdapter(Context context) {
         this.context = context;
     }
 
@@ -43,7 +42,7 @@ public class HomeWorkAdapter extends BaseAdapter {
         }
     }
 
-    public void UpdateView(List<HomeWorkEntity> newList) {
+    public void UpdateView(List<ExerciseEntity> newList) {
         if (_dataList != null) {
             _dataList.clear();
             this.notifyDataSetChanged();
@@ -62,10 +61,9 @@ public class HomeWorkAdapter extends BaseAdapter {
         ViewHolder view = null;
         if (convertView == null) {
             view = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_home_work, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_exercise, null);
             view.tvHomeworkName = (TextView) convertView.findViewById(R.id.tv_homework_name);
             view.tvHomeworkInfo = (TextView) convertView.findViewById(R.id.tv_homework_info);
-            view.tvSeeDetail = (TextView) convertView.findViewById(R.id.tv_see_detail);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();

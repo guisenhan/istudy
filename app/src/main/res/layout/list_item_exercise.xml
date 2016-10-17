@@ -27,15 +27,4 @@
             android:layout_marginTop="10dp"
             />
     </LinearLayout>
-    <TextView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:text="查看"
-        android:textColor="@color/text_important_color"
-        android:textSize="15sp"
-        android:id="@+id/tv_see_detail"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:background="@color/colorPrimary"
-        />
 </RelativeLayout>

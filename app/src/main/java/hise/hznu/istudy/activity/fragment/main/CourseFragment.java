@@ -1,12 +1,9 @@
 package hise.hznu.istudy.activity.fragment.main;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -20,7 +17,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.adapter.CourseAdapter;
-import hise.hznu.istudy.activity.course.StudyActivity;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
@@ -31,18 +27,20 @@ import hise.hznu.istudy.model.course.CourseEntity;
  * Created by Guisen Han on 2016/7/25.
  */
 public class CourseFragment extends BaseFragment {
+
+
     @BindView(R.id.iv_search)
     ImageView ivSearch;
     @BindView(R.id.lv_course)
     ListView lvCourse;
-
     private List<CourseEntity> _dataList = new ArrayList<CourseEntity>();
     private CourseAdapter adapter;
+
     @Override
     protected void initData() {
         super.initData();
         JSONObject params = new JSONObject();
-        RequestManager.getmInstance().apiPostData(AppConstant.GET_COURSE_ACTION,params,this,AppConstant.POST_GET_COURSE_ACTION);
+        RequestManager.getmInstance().apiPostData(AppConstant.GET_COURSE_ACTION, params, this, AppConstant.POST_GET_COURSE_ACTION);
     }
 
     @Override
@@ -63,8 +61,6 @@ public class CourseFragment extends BaseFragment {
         _dataList = apiResponse.getListData(CourseEntity.class);
         adapter.UpdateView(_dataList);
     }
-    @OnClick(R.id.iv_search)
-    public void onClick() {
 
-    }
+
 }

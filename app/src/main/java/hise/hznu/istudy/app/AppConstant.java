@@ -33,4 +33,8 @@ public class AppConstant {
     public static final int POST_HOMEWORK_ACTION = 10;
     public static final String GET_COMMENT_EACH = "hupingquery" ;//查询互评任务
     public static final int POST_COMMENT_EACH = 11 ;
+    public static final String GET_MY_EXPERIMENT = "exprementquery"; //查询实验
+    public static final int POST_GET_MY_EXPERIMENT = 12 ;
+    public static final String GET_MY_EXERCISE = "exercisequery"; //查询练习
+    public static final int POST_GET_MY_EXERCISE = 13;
 }

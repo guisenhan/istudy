@@ -76,6 +76,7 @@ public class RequestManager {
         * 在这里根据接口的要求规范进行相应的处理 ，比如添加head 和map的字符串化
         * */
         String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
+        Log.e("authtoken",""+authenToken);
         jsonObject.put("authtoken", authenToken);
         return this.postJsonRequest(url,JSONObject.toJSONString(jsonObject),jsonObject,null,new ApiListenerHolder(requestListener),false,TIMEOUT_COUNT,RETRY_TIMES,actionId);
     }
