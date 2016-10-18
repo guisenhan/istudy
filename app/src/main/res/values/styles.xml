@@ -14,4 +14,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="radio_button" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:drawableLeft">@drawable/radio_yellow_circle_selector</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
 </resources>

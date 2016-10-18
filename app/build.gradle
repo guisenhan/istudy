@@ -24,6 +24,7 @@ android {
     }
 }
 repositories {
+    jcenter()
     maven { url "https://jitpack.io" }
 }
 dependencies {
@@ -46,4 +47,7 @@ dependencies {
     //动态权限申请
     compile 'pub.devrel:easypermissions:0.1.7'
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
+
+    //富文本编辑器
+    compile 'jp.wasabeef:richeditor-android:1.2.1'
 }

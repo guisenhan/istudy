@@ -37,4 +37,8 @@ public class AppConstant {
     public static final int POST_GET_MY_EXPERIMENT = 12 ;
     public static final String GET_MY_EXERCISE = "exercisequery"; //查询练习
     public static final int POST_GET_MY_EXERCISE = 13;
+    public static final String GET_TEST_DETAIL = "testinfo"; //获取作业，试卷，练习详细试题
+    public static final int POST_GET_TEST_DETAIL = 14;
+    public static final String COMMIT_TEST_RESULE = "submitquestion" ;//提交练习数据
+    public static final int POST_COMMIT_TEST_RESULT = 15;
 }

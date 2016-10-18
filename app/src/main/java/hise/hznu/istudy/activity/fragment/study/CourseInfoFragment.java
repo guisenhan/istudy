@@ -1,6 +1,7 @@
 package hise.hznu.istudy.activity.fragment.study;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class CourseInfoFragment extends BaseFragment {
     protected void initData() {
         super.initData();
         courseEntity = (CourseEntity)getArguments().getSerializable("course");
-        tvCourseInfo.setText(courseEntity.getMemo());
+        tvCourseInfo.setText(Html.fromHtml(courseEntity.getMemo()));
         tvCourseTitle.setText(courseEntity.getTitle());
     }
 

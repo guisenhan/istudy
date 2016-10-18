@@ -1,5 +1,6 @@
 package hise.hznu.istudy.activity.course;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -65,7 +66,10 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
         lvHomework.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("testId",_dataList.get(i).getId());
+                Intent intent = new Intent(MyHomeWorkActivity.this,TestDetailActivity.class);
+                intent.putExtra("testId",_dataList.get(i).getId());
+                startActivity(intent);
+                //Log.e("testId",);
             }
         });
     }
