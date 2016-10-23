@@ -22,9 +22,9 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.HomeWorkEntity;
+import hise.hznu.istudy.util.AppUtils;
 
 public class MyHomeWorkActivity extends BaseActivity implements View.OnClickListener {
-
     @BindView(R.id.tv_back)
     TextView tvBack;
     @BindView(R.id.tv_title)
@@ -68,6 +68,14 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MyHomeWorkActivity.this,TestDetailActivity.class);
                 intent.putExtra("testId",_dataList.get(i).getId());
+                intent.putExtra("enableClientJudge",_dataList.get(i).isEnableClientJudge()); //是否开启客户端阅卷
+                intent.putExtra("keyVisible",_dataList.get(i).isKeyVisible()); //阅卷时参考答案是否可见
+                intent.putExtra("viewOneWithAnswerKey",_dataList.get(i).isViewOneWithAnswerKey()); //查卷时参考答案是否可见
+                Log.e("time",""+System.currentTimeMillis()+"   "+AppUtils.DateFormat(_dataList.get(i).getDateend()));
+                if(System.currentTimeMillis()> AppUtils.DateFormat(_dataList.get(i).getDateend()))
+                    intent.putExtra("paperModel",1); //查模式
+                else
+                    intent.putExtra("paperModel",2); //答题模式
                 startActivity(intent);
                 //Log.e("testId",);
             }

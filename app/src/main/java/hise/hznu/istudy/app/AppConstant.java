@@ -41,4 +41,7 @@ public class AppConstant {
     public static final int POST_GET_TEST_DETAIL = 14;
     public static final String COMMIT_TEST_RESULE = "submitquestion" ;//提交练习数据
     public static final int POST_COMMIT_TEST_RESULT = 15;
+    public static final String UPLOAD_FILE = "upfile"; //上传文件
+    public static final int POST_UPLOAD_FILE = 16;
+
 }

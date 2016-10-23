@@ -171,22 +171,23 @@ public class ApiResponse {
 //    private JSONObject data;      //result对象中的JSONObject对象，注意：不是JSONArray对象
 
     private String authtoken;
-    private boolean hasnext;
+    private String hasnext;
     private JSONObject info;
-    private boolean isfirst;
+    private String isfirst;
     private JSONArray items;
     private int pagecount;
     private int recordcount;
     private int retcode;
 
     public ApiResponse(JSONObject jsonObject) {
+
         this.jsonObject = jsonObject;
         this.authtoken = jsonObject.getString("authtoken");
         this.retcode =jsonObject.getIntValue("retcode");
-        this.hasnext = jsonObject.getBoolean("hasnext");
+        this.hasnext = jsonObject.getString("hasnext");
 
         this.info = jsonObject.getJSONObject("info");
-        this.isfirst =jsonObject.getBoolean("isfirst");
+        this.isfirst =jsonObject.getString("isfirst");
         this.items =jsonObject.getJSONArray("items");
         this.pagecount=jsonObject.getIntValue("pagecount");
         this.recordcount = jsonObject.getIntValue("recordcount");
@@ -201,11 +202,11 @@ public class ApiResponse {
         this.authtoken = authtoken;
     }
 
-    public boolean isHasnext() {
+    public String getHasnext() {
         return hasnext;
     }
 
-    public void setHasnext(boolean hasnext) {
+    public void setHasnext(String hasnext) {
         this.hasnext = hasnext;
     }
 
@@ -221,11 +222,11 @@ public class ApiResponse {
         this.info = info;
     }
 
-    public boolean isfirst() {
+    public String getIsfirst() {
         return isfirst;
     }
 
-    public void setIsfirst(boolean isfirst) {
+    public void setIsfirst(String isfirst) {
         this.isfirst = isfirst;
     }
 

@@ -66,12 +66,20 @@ public class HomeWorkAdapter extends BaseAdapter {
             view.tvHomeworkName = (TextView) convertView.findViewById(R.id.tv_homework_name);
             view.tvHomeworkInfo = (TextView) convertView.findViewById(R.id.tv_homework_info);
             view.tvSeeDetail = (TextView) convertView.findViewById(R.id.tv_see_detail);
+            view.tvScore = (TextView) convertView.findViewById(R.id.tv_score);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
         view.tvHomeworkName.setText(_dataList.get(position).getTitle());
-        view.tvHomeworkInfo.setText("老师："+_dataList.get(position).getTeacher()+"  开始时间："+ AppUtils.dateFormat(_dataList.get(position).getDatestart()) +" \n 结束时间："+AppUtils.dateFormat(_dataList.get(position).getDateend()));
+        view.tvHomeworkInfo.setText("老师："+_dataList.get(position).getTeacher()+"  开始时间："+ AppUtils.dateFormat(_dataList.get(position).getDatestart()) +"结束时间："+AppUtils.dateFormat(_dataList.get(position).getDateend()));
+        if(System.currentTimeMillis()>AppUtils.DateFormat(_dataList.get(position).getDateend())){
+            view.tvScore.setVisibility(View.VISIBLE);
+            view.tvScore.setText("成绩："+_dataList.get(position).getMyscore());
+        }else{
+            view.tvScore.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
@@ -79,6 +87,6 @@ public class HomeWorkAdapter extends BaseAdapter {
         TextView tvHomeworkName;
         TextView tvHomeworkInfo;
         TextView tvSeeDetail;
-
-    }
+        TextView tvScore;
+     }
 }

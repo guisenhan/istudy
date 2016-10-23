@@ -41,4 +41,16 @@ public class AppUtils {
         }
         return  result;
     }
+
+    public static long DateFormat(String date){
+        long result = 0;
+        SimpleDateFormat sim = new SimpleDateFormat("yyyyMMddHHmmss");
+        try {
+            Date date1 = sim.parse(date);
+            result = date1.getTime();
+        }catch (ParseException e){
+            e.getMessage();
+        }
+        return result;
+    }
 }

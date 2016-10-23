@@ -49,6 +49,9 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
         ButterKnife.bind(this);
 //      x.view().inject(this);
         // 注册事件总线对象
+        if(getIntent() != null && getIntent().getExtras() != null){
+            initExtras(getIntent().getExtras());
+        }
 //      EventBus.getDefault().register(this);
         //添加activity到堆栈中
         AppManager.getInstance().addActivity(this);
@@ -58,7 +61,9 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
         initData();
     }
 
+    protected void initExtras(Bundle extras){
 
+    }
     protected int initLayout() {
         return 0;
     }

@@ -103,6 +103,61 @@ public class TestPaperEntity implements Serializable {
     private String score;
     private String comments;
 
+    private boolean isDesc; //这个字段是客户端自己的字段，用来判断是否是题型描述
+    private String questionType; // 客户端自己的字段，记录题型 如：SINGLE_CHIOCE
+    private String totalNumber; //客户端自己的字段，记录这个题型的题目总数
+    private String number; //客户端自己的字段，记录当前题目的标号
+    private String questionTitle; //客户端自己的字段，用来存储题型类型如：选择题
+    private String questionDesc;//
+
+    public String getQuestionDesc() {
+        return questionDesc;
+    }
+
+    public void setQuestionDesc(String questionDesc) {
+        this.questionDesc = questionDesc;
+    }
+
+    public String getQuestionTitle() {
+        return questionTitle;
+    }
+
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
+    }
+
+    public boolean isDesc() {
+        return isDesc;
+    }
+
+    public void setDesc(boolean desc) {
+        isDesc = desc;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
+    }
+
+    public String getTotalNumber() {
+        return totalNumber;
+    }
+
+    public void setTotalNumber(String totalNumber) {
+        this.totalNumber = totalNumber;
+    }
+
     private List<SubQuestionEntity> subquestions;
     public String getAnalysis() {
         return analysis;

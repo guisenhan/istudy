@@ -17,6 +17,15 @@ public class TestEntity implements Serializable{
     private String title;
     private String type;
     private List<TestPaperEntity> questions;
+    private String desc;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public String getId() {
         return id;

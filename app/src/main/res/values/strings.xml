@@ -1,29 +1,29 @@
 <resources>
-    <string name="app_name">Istudy</string>
+	<string name="app_name">Istudy</string>
 
-    <!-- Login Activity-->
-    <string name="login_prop_username">请输入用户名</string>
-    <string name="login_prop_password">请输入密码</string>
-    <string name="login_button">登录</string>
+	<!-- Login Activity-->
+	<string name="login_prop_username">请输入用户名</string>
+	<string name="login_prop_password">请输入密码</string>
+	<string name="login_button">登录</string>
 
-    <!-- course fragment-->
-    <string name="course_my_course">我的课程</string>
-    <string name="study_now">立即学习</string>
+	<!-- course fragment-->
+	<string name="course_my_course">我的课程</string>
+	<string name="study_now">立即学习</string>
 
-    <!-- exam fragment -->
-    <string name="exam_my_exam">我的考试</string>
-    <string name="exam_name">名称</string>
-    <string name="exam_teacher">老师</string>
-    <string name="exam_start_time">开始时间</string>
-    <string name="exam_end_time">结束时间</string>
+	<!-- exam fragment -->
+	<string name="exam_my_exam">我的考试</string>
+	<string name="exam_name">名称</string>
+	<string name="exam_teacher">老师</string>
+	<string name="exam_start_time">开始时间</string>
+	<string name="exam_end_time">结束时间</string>
 
-    <!-- indoor email -->
-    <string name="email_email">站内信</string>
+	<!-- indoor email -->
+	<string name="email_email">站内信</string>
 
-    <!-- mine fragment-->
-    <string name="mine_person_info">个人资料</string>
-    <string name="mine_safe_setting">安全设置</string>
-    <string name="mine_safe_exit">安全退出</string>
-    <string name="title_activity_person_info">PersonInfoActivity</string>
-    <string name="mis_permission_rationale">mis_permission_rationale</string>
+	<!-- mine fragment-->
+	<string name="mine_person_info">个人资料</string>
+	<string name="mine_safe_setting">安全设置</string>
+	<string name="mine_safe_exit">安全退出</string>
+	<string name="title_activity_person_info">PersonInfoActivity</string>
+	<string name="mis_permission_rationale">mis_permission_rationale</string>
 </resources>

@@ -160,38 +160,46 @@
                         android:visibility="gone"
                         />
                 </RadioGroup>
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="答案：A"
-                    android:id="@+id/tv_choose_answer"
-                    android:textColor="@color/text_important_color"
-                    />
-                <TextView
-                    android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="知识点："
-                    android:id="@+id/tv_answer_knowledge"
-                    android:textColor="@color/text_important_color"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="得分："
-                    android:textColor="@color/text_important_color"
-                    android:id="@+id/tv_choose_score"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_important_color"
-                    android:text="标准答案未开放"
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/tv_choose_stander_answer"
-                    />
+                    android:orientation="vertical"
+                    android:id="@+id/ll_choice_answer"
+                    >
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="答案：A"
+                        android:id="@+id/tv_choose_answer"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="知识点："
+                        android:id="@+id/tv_answer_knowledge"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="得分："
+                        android:textColor="@color/text_important_color"
+                        android:id="@+id/tv_choose_score"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_important_color"
+                        android:text="标准答案未开放"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/tv_choose_stander_answer"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 
@@ -214,78 +222,94 @@
                     android:id="@+id/tv_fill_blank_title"
                     android:textColor="@color/text_important_color"
                     />
-                <EditText
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:hint="输入答案啊"
-                    android:layout_marginTop="15dp"
-                    android:textSize="14sp"
-                    android:id="@+id/tv_fill_blank_answer_a"
-                    />
-                <EditText
+                    android:orientation="vertical"
+                    android:id="@+id/ll_fill_blanks"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:singleLine="true"
+                        android:hint="输入答案啊"
+                        android:layout_marginTop="15dp"
+                        android:textSize="14sp"
+                        android:id="@+id/tv_fill_blank_answer_a"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:singleLine="true"
+                        android:hint="输入答案啊"
+                        android:layout_marginTop="6dp"
+                        android:textSize="14sp"
+                        android:id="@+id/tv_fill_blank_answer_b"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:singleLine="true"
+                        android:hint="输入答案啊"
+                        android:layout_marginTop="6dp"
+                        android:textSize="14sp"
+                        android:id="@+id/tv_fill_blank_answer_c"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:singleLine="true"
+                        android:hint="输入答案啊"
+                        android:layout_marginTop="6dp"
+                        android:textSize="14sp"
+                        android:id="@+id/tv_fill_blank_answer_d"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:hint="输入答案啊"
-                    android:layout_marginTop="6dp"
-                    android:textSize="14sp"
-                    android:id="@+id/tv_fill_blank_answer_b"
-                    />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:hint="输入答案啊"
-                    android:layout_marginTop="6dp"
-                    android:textSize="14sp"
-                    android:id="@+id/tv_fill_blank_answer_c"
-                    />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:hint="输入答案啊"
-                    android:layout_marginTop="6dp"
-                    android:textSize="14sp"
-                    android:id="@+id/tv_fill_blank_answer_d"
-                    />
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="答案：A"
-                    android:id="@+id/tv_fill_blank_answer"
-                    android:textColor="@color/text_important_color"
-                    />
-                <TextView
-                    android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="知识点："
-                    android:id="@+id/tv_fill_blank_knowledge"
-                    android:textColor="@color/text_important_color"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="得分："
-                    android:textColor="@color/text_important_color"
-                    android:id="@+id/tv_fill_blank_score"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_important_color"
-                    android:text="标准答案未开放"
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/tv_fill_blank_stander_answer"
-                    />
+                    android:orientation="vertical"
+                    android:id="@+id/ll_fill_blank_answer"
+                    >
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="答案：A"
+                        android:id="@+id/tv_fill_blank_answer"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="知识点："
+                        android:id="@+id/tv_fill_blank_knowledge"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="得分："
+                        android:textColor="@color/text_important_color"
+                        android:id="@+id/tv_fill_blank_score"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_important_color"
+                        android:text="标准答案未开放"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/tv_fill_blank_stander_answer"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
         <ScrollView
@@ -603,9 +627,9 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_right_arrow"
+            android:src="@mipmap/icon_save"
             android:layout_weight="1"
-            android:id="@+id/iv_center"
+            android:id="@+id/iv_save"
             />
         <ImageView
             android:layout_width="0dp"
