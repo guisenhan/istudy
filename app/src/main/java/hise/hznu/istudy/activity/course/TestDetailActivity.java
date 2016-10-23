@@ -29,6 +29,7 @@ import com.loopj.android.http.RequestParams;
 
 import jp.wasabeef.richeditor.RichEditor;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -208,6 +209,10 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     LinearLayout llFillBlankAnswer;
     @BindView(R.id.ll_fill_blanks)
     LinearLayout llFillBlanks;
+    @BindView(R.id.tv_auto_commit)
+    TextView tvAutoCommit;
+    @BindView(R.id.ll_auto_commit)
+    LinearLayout llAutoCommit;
 
     private List<TestEntity> _dataList = new ArrayList<TestEntity>();
     private String testId;
@@ -242,7 +247,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         keyVisible = extras.getBoolean("keyVisible");
         viewOneWithAnswerKey = extras.getBoolean("viewOneWithAnswerKey");
         paperModel = extras.getInt("paperModel", 2); // 默认为答题模式
-        Log.e("paperModel",""+paperModel);
+        Log.e("paperModel", "" + paperModel + "   " +enableClientJudge);
     }
 
     @Override
@@ -282,6 +287,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 rbChooseD.setEnabled(false);
                 rbChooseC.setEnabled(false);
                 rbChooseB.setEnabled(false);
+                tvAutoCommit.setVisibility(View.GONE);
                 llFillBlanks.setVisibility(View.GONE);
                 if (viewOneWithAnswerKey) { //查卷时参考答案是否可见
                     tvChooseStanderAnswer.setVisibility(View.VISIBLE);
@@ -298,6 +304,11 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 llChoiceAnswer.setVisibility(View.GONE);
                 tvPreview.setVisibility(View.GONE);
                 ivSave.setVisibility(View.VISIBLE);
+                if(enableClientJudge){
+                    tvAutoCommit.setVisibility(View.VISIBLE);
+                }else{
+                    tvAutoCommit.setVisibility(View.GONE);
+                }
                 break;
             case 3: //阅卷模式
                 ivSave.setVisibility(View.GONE);
@@ -389,7 +400,20 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 }
                 break;
             case AppConstant.POST_COMMIT_TEST_RESULT:
-                MiscUtils.showMessageToast("保存成功，请继续答题");
+                Log.e("result",""+JSONObject.toJSONString(response));
+                if(response.getRetcode() == 0){
+                    MiscUtils.showMessageToast("保存成功，请继续答题");
+                }else{
+                    MiscUtils.showMessageToast("请答题后提交");
+                }
+                break;
+            case AppConstant.POST_AUTO_COMMIT_RESULT:
+                if(response.getRetcode() ==0){
+
+                }else{
+                    MiscUtils.showMessageToast("参数错误！");
+                }
+                Log.e("response",""+JSONObject.toJSONString(response));
                 break;
         }
 
@@ -423,8 +447,8 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         slQuestionAnswer.setVisibility(View.GONE);
         slTestChoose.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
+        llAutoCommit.setVisibility(View.GONE);
         tvTestType.setText(_dataList.get(bProblem).getTitle());
-
         tvTestTypeInfo.setText(_dataList.get(bProblem).getDesc());
     }
 
@@ -432,11 +456,24 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
      * 显示选择题
      */
     private void setChooseTest(TestPaperEntity test) {
+
+
         slTestChoose.setVisibility(View.VISIBLE);
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
+        llAutoCommit.setVisibility(View.GONE);
         slQuestionAnswer.setVisibility(View.GONE);
+        if (test.isDesc()) {
+            llTestType.setVisibility(View.VISIBLE);
+            rlTestTitle.setVisibility(View.GONE);
+            slQuestionAnswer.setVisibility(View.GONE);
+            slTestChoose.setVisibility(View.GONE);
+            slFillBlank.setVisibility(View.GONE);
+            tvTestType.setText(test.getQuestionTitle());
+            tvTestTypeInfo.setText(test.getQuestionDesc());
+            return;
+        }
         tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
         tvTestContent.setText(Html.fromHtml(test.getContent()));
         if (MiscUtils.isNotEmpty(test.getOptiona())) {
@@ -496,6 +533,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         slTestChoose.setVisibility(View.GONE);
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
+        llAutoCommit.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.VISIBLE);
         slQuestionAnswer.setVisibility(View.GONE);
         if (test.isDesc()) {
@@ -535,13 +573,17 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 break;
         }
         //getFillBlankResult(test.getAnswer());
-        tvTestName.setText(test.getQuestionTitle());
+        if(MiscUtils.isNotEmpty(test.getQuestionTitle()))
+            tvTestName.setText(test.getQuestionTitle());
         tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
         tvFillBlankTitle.setText(Html.fromHtml(test.getContent(), imgGetter, null));
-        tvFillBlankAnswer.setText("答案:" + Html.fromHtml(test.getAnswer()));
-        tvFillBlankKnowledge.setText("知识点：" + Html.fromHtml(test.getKnowledge()));
+        if(MiscUtils.isNotEmpty(test.getAnswer()))
+            tvFillBlankAnswer.setText("答案:" + Html.fromHtml(test.getAnswer()));
+        if(MiscUtils.isNotEmpty(test.getKnowledge()))
+            tvFillBlankKnowledge.setText("知识点：" + Html.fromHtml(test.getKnowledge()));
         tvFillBlankScore.setText("得分：" + test.getScore() + "/" + test.getTotalscore());
-        tvFillBlankStanderAnswer.setText("标准答案：" + Html.fromHtml(test.getStrandanswer()));
+        if(MiscUtils.isNotEmpty(test.getStrandanswer()))
+            tvFillBlankStanderAnswer.setText("标准答案：" + Html.fromHtml(test.getStrandanswer()));
     }
 
     Html.ImageGetter imgGetter = new Html.ImageGetter() {
@@ -555,7 +597,6 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 e.printStackTrace();
                 return null;
             }
-
             drawable.setBounds(0, 0, MiscUtils.getScreenWidth(),
                     (drawable.getIntrinsicHeight() * MiscUtils.getScreenWidth()) / drawable.getIntrinsicWidth());
             return drawable;
@@ -570,6 +611,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
+        llAutoCommit.setVisibility(View.GONE);
         slQuestionAnswer.setVisibility(View.VISIBLE);
         if (test.isDesc()) {
             llTestType.setVisibility(View.VISIBLE);
@@ -595,24 +637,28 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             R.id.action_bg_color, R.id.action_indent, R.id.action_outdent, R.id.action_align_left,
             R.id.action_align_center, R.id.action_align_right, R.id.action_insert_bullets, R.id.action_insert_numbers,
             R.id.action_blockquote, R.id.action_insert_image, R.id.action_insert_link, R.id.action_insert_checkbox,
-            R.id.iv_save, R.id.iv_back})
+            R.id.iv_save, R.id.iv_back,R.id.tv_auto_commit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left_arrow:
-                if ((bProblem - 1) > 0) {
-                    bProblem = bProblem - 1;
-                    if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
-                        setChooseTest(_questionList.get(bProblem));
-                    } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
-                        setFillBlank(_questionList.get(bProblem));
+                try {
+                    if ((bProblem) > 0) {
+                        bProblem = bProblem - 1;
+                        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
+                            setChooseTest(_questionList.get(bProblem));
+                        } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
+                            setFillBlank(_questionList.get(bProblem));
+                        } else {
+                            setQA(_questionList.get(bProblem));
+                        }
+                        if (bProblem == _questionList.size()) {
+                            return;
+                        }
                     } else {
-                        setQA(_questionList.get(bProblem));
+                        MiscUtils.showMessageToast("已经是第一个了！");
                     }
-                    if (bProblem == _questionList.size()) {
-                        return;
-                    }
-                } else {
-                    MiscUtils.showMessageToast("没有更多了！");
+                }catch (IndexOutOfBoundsException e){
+                    MiscUtils.showMessageToast("已经是第一个了！");
                 }
                 break;
             case R.id.iv_right_arrow:
@@ -629,6 +675,10 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                         if (bProblem == _questionList.size()) {
                             return;
                         }
+                    } else if(enableClientJudge && paperModel ==2){
+                       // autoCommit();
+                    }else{
+                        MiscUtils.showMessageToast("没有更多了！");
                     }
                 } catch (IndexOutOfBoundsException e) {
                     MiscUtils.showMessageToast("没有更多了！");
@@ -718,10 +768,21 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 reEditor.insertTodo();
                 break;
             case R.id.iv_save:
-                saveAnswer();
+                try {
+                    saveAnswer();
+                }catch (Exception e){
+                    return;
+                }
                 break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_auto_commit:
+                try {
+                    auto_commit();
+                }catch (Exception e){
+                    return;
+                }
                 break;
         }
     }
@@ -768,15 +829,51 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 .apiPostData(AppConstant.COMMIT_TEST_RESULE, submitResult, this, AppConstant.POST_COMMIT_TEST_RESULT);
     }
 
+    private void auto_commit() {
+        AnswerEntity answerEntity = new AnswerEntity();
+        answerEntity.setTestid(testId);
+        answerEntity.setQuestionid(_questionList.get(bProblem).getId());
+        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
+
+        } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerA.getText().toString().trim())) {
+                stringBuilder.append(tvFillBlankAnswerA.getText().toString().trim());
+            }
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerB.getText().toString().trim())) {
+                stringBuilder.append("&&&");
+                stringBuilder.append(tvFillBlankAnswerB.getText().toString().trim());
+            }
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerC.getText().toString().trim())) {
+                stringBuilder.append("&&&");
+                stringBuilder.append(tvFillBlankAnswerC.getText().toString().trim());
+            }
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerD.getText().toString().trim())) {
+                stringBuilder.append("&&&");
+                stringBuilder.append(tvFillBlankAnswerD.getText().toString().trim());
+            }
+            answerEntity.setAnswer(stringBuilder.toString());
+        } else {
+            answerEntity.setAnswer(reEditor.getHtml());
+        }
+        _answerList.add(answerEntity);
+        JSONObject temp = new JSONObject();
+        /**
+         * testid	：	考试id
+         questionid:  题目id
+         answer	:    答题内容
+         */
+        temp.put("testid", testId);
+        temp.put("questionid", _answerList.get(bProblem).getQuestionid());
+        temp.put("answer", _answerList.get(bProblem).getAnswer());
+        submitResult.put("data", new String(Base64.encode(JSONObject.toJSONString(temp).getBytes(), Base64.DEFAULT)));
+        RequestManager.getmInstance()
+                .apiPostData(AppConstant.AUTO_COMMIT_RESULT, submitResult, this, AppConstant.POST_AUTO_COMMIT_RESULT);
+    }
+
     public static void struct() {
         StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork() // or
-                        // .detectAll()
-                        // for
-                        // all
-                        // detectable
-                        // problems
-                        .penaltyLog().build());
+                new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
                 .penaltyLog() // 打印logcat
                 .penaltyDeath().build());
@@ -864,5 +961,15 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
 
     private int getBlankNumber(String standerAnswer) {
         return standerAnswer.split("&&&").length;
+    }
+
+    private void autoCommit(){
+        llFillBlanks.setVisibility(View.GONE);
+        llTestType.setVisibility(View.GONE);
+        slQuestionAnswer.setVisibility(View.GONE);
+        slFillBlank.setVisibility(View.GONE);
+        slTestChoose.setVisibility(View.GONE);
+        rlTestTitle.setVisibility(View.GONE);
+        llAutoCommit.setVisibility(View.VISIBLE);
     }
 }

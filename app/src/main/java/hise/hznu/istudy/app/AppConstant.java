@@ -43,5 +43,8 @@ public class AppConstant {
     public static final int POST_COMMIT_TEST_RESULT = 15;
     public static final String UPLOAD_FILE = "upfile"; //上传文件
     public static final int POST_UPLOAD_FILE = 16;
-
+    public static final String AUTO_COMMIT_RESULT = "judgequestion";//自动阅卷
+    public static final int POST_AUTO_COMMIT_RESULT = 17;
+    public static final String GET_FORUM = "forumquery"; //查询论坛主题
+    public static final int POST_GET_FORUM = 18;
 }

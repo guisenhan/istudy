@@ -25,9 +25,9 @@ public class ExerciseEntity implements Serializable {
     private String datestart;
     private String dateend;
     private String score;
-    private String enableClientJudge;
-    private String keyVisible;
-    private String viewOneWithAnswerKey;
+    private boolean enableClientJudge;
+    private boolean keyVisible;
+    private boolean viewOneWithAnswerKey;
 
     public String getDateend() {
         return dateend;
@@ -45,13 +45,7 @@ public class ExerciseEntity implements Serializable {
         this.datestart = datestart;
     }
 
-    public String getEnableClientJudge() {
-        return enableClientJudge;
-    }
 
-    public void setEnableClientJudge(String enableClientJudge) {
-        this.enableClientJudge = enableClientJudge;
-    }
 
     public String getId() {
         return id;
@@ -61,13 +55,6 @@ public class ExerciseEntity implements Serializable {
         this.id = id;
     }
 
-    public String getKeyVisible() {
-        return keyVisible;
-    }
-
-    public void setKeyVisible(String keyVisible) {
-        this.keyVisible = keyVisible;
-    }
 
     public String getMome() {
         return mome;
@@ -101,11 +88,27 @@ public class ExerciseEntity implements Serializable {
         this.title = title;
     }
 
-    public String getViewOneWithAnswerKey() {
+    public boolean isEnableClientJudge() {
+        return enableClientJudge;
+    }
+
+    public void setEnableClientJudge(boolean enableClientJudge) {
+        this.enableClientJudge = enableClientJudge;
+    }
+
+    public boolean isKeyVisible() {
+        return keyVisible;
+    }
+
+    public void setKeyVisible(boolean keyVisible) {
+        this.keyVisible = keyVisible;
+    }
+
+    public boolean isViewOneWithAnswerKey() {
         return viewOneWithAnswerKey;
     }
 
-    public void setViewOneWithAnswerKey(String viewOneWithAnswerKey) {
+    public void setViewOneWithAnswerKey(boolean viewOneWithAnswerKey) {
         this.viewOneWithAnswerKey = viewOneWithAnswerKey;
     }
 }

@@ -605,7 +605,40 @@
                     />
             </LinearLayout>
         </ScrollView>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ll_auto_commit"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已经完成所有题目，是否开始自动阅卷?"
+                android:textSize="14sp"
+                android:textColor="@color/text_normal_color"
+                />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:background="@drawable/tv_empty_ovil_back"
+                android:text="自动阅卷"
+                android:visibility="gone"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tips:每题答完，一定要点击下方的保存按钮，才能保存哟"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+        </LinearLayout>
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -630,6 +663,17 @@
             android:src="@mipmap/icon_save"
             android:layout_weight="1"
             android:id="@+id/iv_save"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="阅"
+            android:textColor="@color/text_important_color"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:id="@+id/tv_auto_commit"
             />
         <ImageView
             android:layout_width="0dp"

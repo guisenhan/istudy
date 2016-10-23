@@ -26,6 +26,13 @@ public class CommentAreaActivity extends BaseActivity {
     @BindView(R.id.lv_comment)
     ListView lvComment;
 
+    private String courseid;
+    @Override
+    protected void initExtras(Bundle extras) {
+        super.initExtras(extras);
+        courseid = extras.getString("courseid");
+    }
+
     @Override
     protected void initData() {
         super.initData();
@@ -45,12 +52,5 @@ public class CommentAreaActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

@@ -1,7 +1,10 @@
 package hise.hznu.istudy.activity.course;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.ExprementEntity;
+import hise.hznu.istudy.util.AppUtils;
 
 public class MyExperimentActivity extends BaseActivity {
     @BindView(R.id.tv_back)
@@ -59,6 +63,21 @@ public class MyExperimentActivity extends BaseActivity {
         super.initView(savedInstanceState);
         adapter = new ExperimentAdapter(this);
         lvExperiment .setAdapter(adapter);
+        lvExperiment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MyExperimentActivity.this,TestDetailActivity.class);
+                intent.putExtra("testId",_dataList.get(i).getId());
+                intent.putExtra("enableClientJudge",_dataList.get(i).isEnableClientJudge()); //是否开启客户端阅卷
+                intent.putExtra("keyVisible",_dataList.get(i).isKeyVisible()); //阅卷时参考答案是否可见
+                intent.putExtra("viewOneWithAnswerKey",_dataList.get(i).isViewOneWithAnswerKey()); //查卷时参考答案是否可见
+                if(System.currentTimeMillis()> AppUtils.DateFormat(_dataList.get(i).getDateend()))
+                    intent.putExtra("paperModel",1); //查模式
+                else
+                    intent.putExtra("paperModel",2); //答题模式
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
