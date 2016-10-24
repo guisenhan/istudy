@@ -107,7 +107,18 @@
 		android:orientation="horizontal"
 		android:background="#f5f5f5"
 		android:layout_alignParentBottom="true"
+		android:gravity="center"
 		>
-
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/icon_email_back"
+			/>
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/icon_delete"
+			android:layout_marginLeft="20dp"
+			/>
 	</LinearLayout>
 </RelativeLayout>
