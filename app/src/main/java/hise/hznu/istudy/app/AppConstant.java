@@ -53,4 +53,6 @@ public class AppConstant {
     public static final int POST_SAVE_PERSON_INFO = 21;
     public static final String GET_USERINFO = "queryprofile";//查询个人信息
     public static final int POST_GET_USERINFO = 22;
+    public static final String CHANGE_PASSWORD = "changepassword";//修啊密码
+    public static final int POST_CHANGE_PASSWORD = 23;
 }

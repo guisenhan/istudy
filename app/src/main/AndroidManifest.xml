@@ -90,6 +90,8 @@
 		</activity>
 		<activity android:name=".activity.mine.SetUserInfoActivity">
 		</activity>
+		<activity android:name=".activity.mine.ChangePassActivity">
+		</activity>
 	</application>
 
 </manifest>

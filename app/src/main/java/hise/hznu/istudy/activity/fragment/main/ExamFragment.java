@@ -75,6 +75,7 @@ public class ExamFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
+        Log.e("response",""+JSONObject.toJSONString(apiResponse));
         _dataList = apiResponse.getListData(ExamEntity.class);
         adapter.UpdateView(_dataList);
     }

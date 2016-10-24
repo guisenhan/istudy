@@ -13,6 +13,7 @@ import java.util.List;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.model.exam.ExamEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.util.MiscUtils;
 
 /**
  * Created by PC on 2016/9/21.
@@ -69,7 +70,8 @@ public class ExamAdapter extends BaseAdapter {
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-       view.tvDate.setText(AppUtils.dateFormat(_dataList.get(position).getDatestart()));
+       view.tvDate.setText("开始时间："+AppUtils.dateFormat(_dataList.get(position).getDatestart()));
+        if(MiscUtils.isNotEmpty(_dataList.get(position).getKsdd() )&&MiscUtils.isNotEmpty( _dataList.get(position).getKszw()))
         view.tvLocation.setText(_dataList.get(position).getKsdd()+_dataList.get(position).getKszw());
         view.tvExamName.setText(_dataList.get(position).getTitle());
         view.tvTeacherName.setText(_dataList.get(position).getTeacher());
