@@ -94,6 +94,7 @@ public class RequestManager {
             request =new ApiJsonRequest(Request.Method.GET,url,params,loadContrller,loadContrller);
         }
 
+        Log.e("url"," " + generateGetUrl(url,params1));
         request.setShouldCache(shouleCacher);
         if(headers!=null && !headers.isEmpty()){
             request.setHeaders(headers);

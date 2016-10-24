@@ -18,7 +18,7 @@ public class CommentCardEntity implements Serializable{
      ”author”		:			发布者
      "authorcomp"  ：         发布者单位
      */
-    private int top;
+    private boolean top;
     private String id;
     private String title;
     private String content;
@@ -93,19 +93,19 @@ public class CommentCardEntity implements Serializable{
         this.title = title;
     }
 
-    public int getTop() {
-        return top;
-    }
-
-    public void setTop(int top) {
-        this.top = top;
-    }
-
     public int getViewtimes() {
         return viewtimes;
     }
 
     public void setViewtimes(int viewtimes) {
         this.viewtimes = viewtimes;
+    }
+
+    public boolean isTop() {
+        return top;
+    }
+
+    public void setTop(boolean top) {
+        this.top = top;
     }
 }

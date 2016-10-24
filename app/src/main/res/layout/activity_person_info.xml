@@ -24,6 +24,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/text_important_color"
                 android:layout_marginLeft="11dp"
+                android:id="@+id/tv_back"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -177,6 +178,7 @@
             android:layout_height="50dp"
             android:background="@color/unit_background_color"
             android:padding="11dp"
+            android:id="@+id/rl_phone"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -210,6 +212,7 @@
             android:layout_height="50dp"
             android:background="@color/unit_background_color"
             android:padding="11dp"
+            android:id="@+id/rl_email"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -242,6 +245,7 @@
             android:layout_height="50dp"
             android:background="@color/unit_background_color"
             android:padding="11dp"
+            android:id="@+id/rl_address"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -274,6 +278,7 @@
             android:layout_height="50dp"
             android:background="@color/unit_background_color"
             android:padding="11dp"
+            android:id="@+id/rl_qq"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -306,6 +311,7 @@
             android:layout_height="50dp"
             android:background="@color/unit_background_color"
             android:padding="11dp"
+            android:id="@+id/rl_zipcode"
             >
             <TextView
                 android:layout_width="wrap_content"

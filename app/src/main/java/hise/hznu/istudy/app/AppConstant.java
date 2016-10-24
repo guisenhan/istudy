@@ -25,8 +25,6 @@ public class AppConstant {
     public static final int POST_GET_STUDY_DATUM = 6;
     public static final String GET_EXAM_LIST_ACTION = "testquery"; //获取学生的考试信息
     public static final int POST_EXAM_LIST_ACTION = 7 ;
-    public static final String GET_EXAM_DETAI_INFO_ACTION = "testinfo" ; //获取考试的详细信息
-    public static final int POST_EXAM_DETAIL_INFO = 8;
     public static final String GET_EMAIL_ACTION = "messagereceivequery"; //获取站内信
     public static final int POST_GET_EMAIL_ACTION = 9;
     public static final String GET_HOMEWORK_ACTION = "homeworkquery"; //查询课程作业
@@ -47,4 +45,12 @@ public class AppConstant {
     public static final int POST_AUTO_COMMIT_RESULT = 17;
     public static final String GET_FORUM = "forumquery"; //查询论坛主题
     public static final int POST_GET_FORUM = 18;
+    public static final String FORUM_POST = "forumpost" ;// 发帖子或者回复帖子
+    public static final int POST_FORUM_POST = 19;
+    public static final String FORUM_COMMENT = "forumcommentquery";//查询帖子回复
+    public static final int POST_FORUM_COMMENT = 20;
+    public static final String SAVE_PERSON_INFO = "saveprofile";//保存个人信息
+    public static final int POST_SAVE_PERSON_INFO = 21;
+    public static final String GET_USERINFO = "queryprofile";//查询个人信息
+    public static final int POST_GET_USERINFO = 22;
 }

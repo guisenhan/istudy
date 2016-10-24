@@ -2,25 +2,25 @@ package hise.hznu.istudy.activity.mine;
 
 import android.Manifest;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.Base64;
 import com.loopj.android.http.RequestParams;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,21 +29,21 @@ import hise.hznu.istudy.R;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.AsyHttpClient;
 import hise.hznu.istudy.api.RequestManager;
-import hise.hznu.istudy.app.AppConfig;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.UpLoadFileEntity;
+import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.util.AppUtils;
 import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
-import hise.hznu.istudy.util.SharePreUtil;
 import hise.hznu.istudy.util.UIUtils;
 import hise.hznu.istudy.widget.CircleImageView;
+import hise.hznu.istudy.widget.SexDialog;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class PersonInfoActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
+public class PersonInfoActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 102;
     public static final int REQUEST_IMAGE = 103;
@@ -69,10 +69,23 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
     TextView tvQq;
     @BindView(R.id.tv_zip_code)
     TextView tvZipCode;
+    @BindView(R.id.rl_phone)
+    RelativeLayout rlPhone;
+    @BindView(R.id.rl_email)
+    RelativeLayout rlEmail;
+    @BindView(R.id.rl_address)
+    RelativeLayout rlAddress;
+    @BindView(R.id.rl_qq)
+    RelativeLayout rlQq;
+    @BindView(R.id.rl_zipcode)
+    RelativeLayout rlZipcode;
 
     private ArrayList<String> selectPath;
     private File avatarClipResult;
     private UpLoadFileEntity _uploadResult = new UpLoadFileEntity();
+    private UserInfoEntity userInfoEntity = new UserInfoEntity();
+    private int seex = 0;
+    private SexDialog dialog;
     @Override
     protected void initData() {
         super.initData();
@@ -87,13 +100,57 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-    }
 
+    }
+    private void initViewss(){
+        if(MiscUtils.isNotEmpty(userInfoEntity.getUsername()))
+            tvUserAccount.setText(userInfoEntity.getUsername());
+        if(MiscUtils.isNotEmpty(userInfoEntity.getAddr()))
+            tvAddress.setText(userInfoEntity.getAddr());
+        if(MiscUtils.isNotEmpty(userInfoEntity.getEmail()))
+            tvEmail.setText(userInfoEntity.getEmail());
+        if (MiscUtils.isNotEmpty(userInfoEntity.getGender()))
+            tvSex.setText(userInfoEntity.getGender());
+        if (MiscUtils.isNotEmpty(userInfoEntity.getName()))
+            tvUserName.setText(userInfoEntity.getName());
+        if (MiscUtils.isNotEmpty(userInfoEntity.getPhone()))
+            tvMobile.setText(userInfoEntity.getPhone());
+        if (MiscUtils.isNotEmpty(userInfoEntity.getQq()))
+            tvQq.setText(userInfoEntity.getQq());
+        if(MiscUtils.isNotEmpty(userInfoEntity.getZipcode()))
+            tvZipCode.setText(userInfoEntity.getZipcode());
+        if(MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl()))
+            ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(),ivUserPhoto);
+
+        if(userInfoEntity.getGender().equals("女")){
+            seex =0;
+        }else if(userInfoEntity.getGender().equals("男")){
+            seex =1 ;
+        }else{
+            seex =2;
+        }
+    }
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-        switch (actionId){
+        switch (actionId) {
             case AppConstant.POST_UPLOAD_FILE:
+                break;
+            case AppConstant.POST_SAVE_PERSON_INFO:
+                Log.e("response","" +JSONObject.toJSONString(response));
+                if (response.getRetcode() == 0) {
+                    if(dialog!= null&&dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                    MiscUtils.showMessageToast("保存成功");
+                    JSONObject params = new JSONObject();
+                    RequestManager.getmInstance().apiPostData(AppConstant.GET_USERINFO,params,this,AppConstant.POST_GET_USERINFO);
+                }
+                break;
+            case AppConstant.POST_GET_USERINFO:
+
+                userInfoEntity = response.getInfo(UserInfoEntity.class);
+                initViewss();
                 break;
 
         }
@@ -105,27 +162,74 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
     }
 
 
-    @OnClick({R.id.iv_user_photo, R.id.tv_user_account, R.id.tv_user_name, R.id.tv_sex, R.id.tv_mobile, R.id.tv_email, R.id.tv_address, R.id.tv_qq, R.id.tv_zip_code})
+    @OnClick({R.id.iv_user_photo, R.id.tv_user_account, R.id.tv_user_name, R.id.tv_sex, R.id.tv_mobile, R.id.tv_email,
+            R.id.tv_address, R.id.tv_qq, R.id.tv_zip_code,R.id.rl_phone, R.id.rl_email, R.id.rl_address, R.id.rl_qq,
+            R.id.rl_zipcode,R.id.tv_back
+    })
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rl_phone:
+                Intent mobile = new Intent(this, SetUserInfoActivity.class);
+                mobile.putExtra("type", "phone");
+                mobile.putExtra("title", "修改手机号");
+                startActivity(mobile);
+                break;
+            case R.id.rl_email:
+                Intent email = new Intent(this, SetUserInfoActivity.class);
+                email.putExtra("type", "email");
+                email.putExtra("title", "修改邮箱");
+                startActivity(email);
+                break;
+            case R.id.rl_address:
+                Intent address = new Intent(this, SetUserInfoActivity.class);
+                address.putExtra("type", "addr");
+                address.putExtra("title", "修改地址");
+                startActivity(address);
+                break;
+            case R.id.rl_qq:
+                Intent qq = new Intent(this, SetUserInfoActivity.class);
+                qq.putExtra("type", "qq");
+                qq.putExtra("title", "修改QQ");
+                startActivity(qq);
+                break;
+            case R.id.rl_zipcode:
+                Intent zipcode = new Intent(this, SetUserInfoActivity.class);
+                zipcode.putExtra("type", "zipcode ");
+                zipcode.putExtra("title", "修改邮编");
+                startActivity(zipcode);
+                break;
             case R.id.iv_user_photo:
                 pickImage();
                 break;
-            case R.id.tv_user_account:
-                break;
             case R.id.tv_user_name:
+                Intent name = new Intent(this, SetUserInfoActivity.class);
+                name.putExtra("type", "name");
+                name.putExtra("title", "修改姓名");
+                startActivity(name);
                 break;
             case R.id.tv_sex:
+
+                 dialog = new SexDialog(this, seex, this, new SexDialog.OnChooseSex() {
+                    @Override
+                    public void callBack(int sex) {
+                        seex = sex;
+                        switch (sex) {
+                            case 2:
+                                tvSex.setText("未设置性别");
+                                break;
+                            case 1:
+                                tvSex.setText("男");
+                                break;
+                            case 0:
+                                tvSex.setText("女");
+                                break;
+                        }
+                    }
+                });
+                dialog.show();
                 break;
-            case R.id.tv_mobile:
-                break;
-            case R.id.tv_email:
-                break;
-            case R.id.tv_address:
-                break;
-            case R.id.tv_qq:
-                break;
-            case R.id.tv_zip_code:
+            case R.id.tv_back:
+                finish();
                 break;
         }
     }
@@ -164,44 +268,63 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-             if (requestCode == REQUEST_IMAGE) {
+            if (requestCode == REQUEST_IMAGE) {
                 selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-                if(MiscUtils.isNotEmpty(selectPath)){
+                if (MiscUtils.isNotEmpty(selectPath)) {
                     AppUtils.startClipAvatarActivity(this, new File(selectPath.get(0)));
                 }
-            }else if (requestCode == AppUtils.REQUEST_CODE_CLIP_PHOTO) {
-                if(data != null) {
+            } else if (requestCode == AppUtils.REQUEST_CODE_CLIP_PHOTO) {
+                if (data != null) {
                     Uri uri = data.getData();
                     if (uri == null) {
                         UIUtils.showToast("选取失败");
                     } else {
                         String path = uri.getPath();
                         avatarClipResult = new File(path);
-                        ImageLoaderUtils.getImageLoader().displayImage("file://"+path,ivUserPhoto);
+                        ImageLoaderUtils.getImageLoader().displayImage("file://" + path, ivUserPhoto);
                         //上传图像
-                       // doUpload(ivUserPhoto);
                         doUpLoad();
                     }
                 }
             }
         }
     }
-    private void doUpLoad(){
-       // JSONObject params  = new JSONObject();
+
+    private void doUpLoad() {
+        // JSONObject params  = new JSONObject();
         RequestParams params = new RequestParams();
         try {
-            params.put("name",avatarClipResult);
-        }catch (IOException e){
+            params.put("name", avatarClipResult);
+        } catch (IOException e) {
 
         }
-       // String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
-        AsyHttpClient.get("upfile",params,null);
-       // RequestManager.getmInstance().apiPostData(AppConstant.UPLOAD_FILE,params,this,AppConstant.POST_UPLOAD_FILE);
+        AsyHttpClient.get("upfile", params, handler);
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            JSONObject params = new JSONObject();
+           org.json.JSONObject response = (org.json.JSONObject) msg.obj;
+            UpLoadFileEntity upLoadFileEntity = new UpLoadFileEntity();
+            upLoadFileEntity = new ApiResponse(JSON.parseObject(response.toString())).getInfo(UpLoadFileEntity.class);
+            params.put("avtarurl", upLoadFileEntity.getUploadedurl());
+
+            JSONObject temp = new JSONObject();
+            temp.put("data",new String(Base64.encode(JSONObject.toJSONString(params).getBytes(),Base64.DEFAULT)));
+            RequestManager.getmInstance().apiPostData(AppConstant.SAVE_PERSON_INFO, temp, PersonInfoActivity.this,
+                    AppConstant.POST_SAVE_PERSON_INFO);
+        }
+    };
+
     @Override
-    public void onSuccess(JSONObject response, int actionId) {
-        super.onSuccess(response, actionId);
-        Log.e("response"," " +response);
+    protected void onResume() {
+        super.onResume();
+        JSONObject params = new JSONObject();
+        RequestManager.getmInstance().apiPostData(AppConstant.GET_USERINFO,params,this,AppConstant.POST_GET_USERINFO);
     }
+
+
+
 }

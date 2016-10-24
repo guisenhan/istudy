@@ -411,7 +411,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 if(response.getRetcode() ==0){
 
                 }else{
-                    MiscUtils.showMessageToast("参数错误！");
+                    MiscUtils.showMessageToast("请先保存答案，再阅卷");
                 }
                 Log.e("response",""+JSONObject.toJSONString(response));
                 break;
@@ -857,16 +857,13 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             answerEntity.setAnswer(reEditor.getHtml());
         }
         _answerList.add(answerEntity);
-        JSONObject temp = new JSONObject();
         /**
          * testid	：	考试id
          questionid:  题目id
          answer	:    答题内容
          */
-        temp.put("testid", testId);
-        temp.put("questionid", _answerList.get(bProblem).getQuestionid());
-        temp.put("answer", _answerList.get(bProblem).getAnswer());
-        submitResult.put("data", new String(Base64.encode(JSONObject.toJSONString(temp).getBytes(), Base64.DEFAULT)));
+        submitResult.put("testid", testId);
+        submitResult.put("questionid", _answerList.get(bProblem).getQuestionid());
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.AUTO_COMMIT_RESULT, submitResult, this, AppConstant.POST_AUTO_COMMIT_RESULT);
     }

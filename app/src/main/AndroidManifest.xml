@@ -80,6 +80,16 @@
 		</activity>
 		<activity android:name=".activity.course.CommentAreaActivity">
 		</activity>
+		<activity android:name=".activity.course.PostActivity">
+		</activity>
+		<activity android:name=".activity.course.EditPostActivity">
+		</activity>
+		<activity android:name=".activity.course.CallBackActivity">
+		</activity>
+		<activity android:name=".activity.email.EmailActivity">
+		</activity>
+		<activity android:name=".activity.mine.SetUserInfoActivity">
+		</activity>
 	</application>
 
 </manifest>

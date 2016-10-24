@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by PC on 2016/7/22.
  */
 public class UserInfo implements Serializable{
+
     private String name;
     private String gender;
     private String cls;

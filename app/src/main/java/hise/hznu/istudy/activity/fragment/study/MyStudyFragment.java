@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.course.CommentAreaActivity;
 import hise.hznu.istudy.activity.course.CommentEachActivity;
 import hise.hznu.istudy.activity.course.MyExerciseActivity;
 import hise.hznu.istudy.activity.course.MyExperimentActivity;
@@ -90,6 +91,9 @@ public class MyStudyFragment extends BaseFragment {
                 startActivity(exercise);
                 break;
             case R.id.ll_talk_zone:
+                Intent talk = new Intent(getActivity(),CommentAreaActivity.class);
+                talk.putExtra("course",courseEntity);
+                startActivity(talk);
                 break;
         }
     }

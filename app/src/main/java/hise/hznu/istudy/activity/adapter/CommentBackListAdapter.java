@@ -1,34 +1,32 @@
 package hise.hznu.istudy.activity.adapter;
 
 import android.content.Context;
-import android.media.Image;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
-import hise.hznu.istudy.app.AppConfig;
-import hise.hznu.istudy.model.email.EmailEntity;
+import hise.hznu.istudy.model.course.CommentBackEntity;
+import hise.hznu.istudy.model.course.CommentCardEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.util.ImageLoaderUtils;
+import hise.hznu.istudy.widget.CircleImageView;
 
 /**
  * Created by PC on 2016/9/21.
  */
-public class EmailAdapter extends BaseAdapter {
+public class CommentBackListAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<EmailEntity> _dataList = new ArrayList<EmailEntity>();
+    private ArrayList<CommentBackEntity> _dataList = new ArrayList<CommentBackEntity>();
 
-    public EmailAdapter(Context context) {
+    public CommentBackListAdapter(Context context) {
         this.context = context;
     }
 
@@ -47,7 +45,7 @@ public class EmailAdapter extends BaseAdapter {
         }
     }
 
-    public void UpdateView(List<EmailEntity> newList) {
+    public void UpdateView(List<CommentBackEntity> newList) {
         if (_dataList != null) {
             _dataList.clear();
             this.notifyDataSetChanged();
@@ -66,35 +64,29 @@ public class EmailAdapter extends BaseAdapter {
         ViewHolder view = null;
         if (convertView == null) {
             view = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_email, null);
-            view.tvRedLabel = (TextView) convertView.findViewById(R.id.tv_red_label);
-            view.ivEmail = (ImageView)convertView.findViewById(R.id.iv_email);
-
-            view.tvEmailSender = (TextView) convertView.findViewById(R.id.tv_email_sender);
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_comment_call_back, null);
+            view.tvName = (TextView) convertView.findViewById(R.id.tv_name);
             view.tvDate = (TextView) convertView.findViewById(R.id.tv_date);
-            view.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+
+            view.tvContent = (TextView)convertView.findViewById(R.id.tv_content);
+            view.ivPhoto = (CircleImageView)convertView.findViewById(R.id.iv_photo);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        view.tvDate.setText(AppUtils.dateFormat(_dataList.get(position).getDate()));
-        view.tvContent.setText(_dataList.get(position).getSubject());
-        view.tvEmailSender.setText(_dataList.get(position).getSendername());
-        if(_dataList.get(position).isread()){
-            view.ivEmail.setImageResource(R.mipmap.icon_email_readed);
-        }else{
-            view.ivEmail.setImageResource(R.mipmap.icon_emali_unread);
-        }
-        view.tvRedLabel.setVisibility(View.GONE);
+        ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getAvatar_url(),view.ivPhoto);
+        view.tvName.setText(_dataList.get(position).getAuthor());
+        view.tvDate.setText(_dataList.get(position).getAuthor() + " 于" + AppUtils.dateFormat(_dataList.get
+                (position)
+                .getDate()) +"发表");
+        view.tvContent.setText(Html.fromHtml(_dataList.get(position).getContent()));
         return convertView;
     }
 
-
-    final class ViewHolder {
-        TextView tvRedLabel;
-        ImageView ivEmail;
-        TextView tvEmailSender;
-        TextView tvContent;
+    static class ViewHolder {
+        TextView tvName;
         TextView tvDate;
+        TextView tvContent;
+        CircleImageView ivPhoto;
     }
 }

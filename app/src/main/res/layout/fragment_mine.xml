@@ -12,7 +12,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/icon_user_photo"
+            android:src="@mipmap/icon_default_photo"
             android:scaleType="centerCrop"
             android:layout_centerInParent="true"
             app:riv_corner_radius="25dp"
