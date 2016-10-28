@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.fragment.fragmentAdpater.MainFragmentAdapter;
 import hise.hznu.istudy.base.BaseActivity;
+import hise.hznu.istudy.lib.SlidingMenu;
 
 
 /**
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
         super.initView(savedInstanceState);
         indicator = new IndicatorViewPager(fivMain,svpMain);
         indicator.setAdapter(new MainFragmentAdapter(this,getSupportFragmentManager()));
+         
     }
 
 }

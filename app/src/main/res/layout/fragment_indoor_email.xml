@@ -13,6 +13,7 @@
             android:src="@mipmap/icon_choose"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:id="@+id/iv_choose"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -41,9 +42,42 @@
             android:layout_marginRight="10dp"
             />
     </RelativeLayout>
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lv_email"
-        ></ListView>
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="11dp"
+            android:id="@+id/ll_email_type"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收件箱"
+                android:textColor="@color/text_important_color"
+                android:textSize="16sp"
+                android:padding="11dp"
+                android:id="@+id/tv_get_email"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发件箱"
+                android:padding="11dp"
+                android:textSize="16sp"
+                android:textColor="@color/text_important_color"
+                android:id="@+id/tv_send_email"
+                />
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_email"
+            ></ListView>
+    </LinearLayout>
+    
 </LinearLayout>

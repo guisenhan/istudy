@@ -113,12 +113,14 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@mipmap/icon_email_back"
+			android:id="@+id/iv_email_back"
 			/>
 		<ImageView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@mipmap/icon_delete"
 			android:layout_marginLeft="20dp"
+			android:id="@+id/iv_delete"
 			/>
 	</LinearLayout>
 </RelativeLayout>

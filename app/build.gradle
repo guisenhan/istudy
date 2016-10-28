@@ -37,7 +37,6 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     //    //网络框架Volley
     //    compile 'com.android.volley:volley:1.0.0'
-
     // 由于用到了v4和recyclerview所以也要导入他们
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'com.makeramen:roundedimageview:2.2.1'
@@ -47,7 +46,7 @@ dependencies {
     //动态权限申请
     compile 'pub.devrel:easypermissions:0.1.7'
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
-
     //富文本编辑器
     compile 'jp.wasabeef:richeditor-android:1.2.1'
+
 }
