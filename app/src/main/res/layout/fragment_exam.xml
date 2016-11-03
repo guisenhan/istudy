@@ -5,126 +5,34 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimary"
+        android:padding="11dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/exam_my_exam"
             android:textSize="@dimen/tv_title_size"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
             />
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/icon_search"
+            android:src="@mipmap/icon_title_bar_search"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             />
     </RelativeLayout>
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/back_gray_empty"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        >
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exam_name"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/exam_name"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_arrow_up"
-                android:layout_toRightOf="@+id/exam_name"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exam_teacher"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/exam_teacher"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_arrow_up"
-                android:layout_toRightOf="@+id/exam_teacher"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exam_start_time"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/exam_start_time"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_arrow_up"
-                android:layout_toRightOf="@+id/exam_start_time"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exam_end_time"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/exam_end_time"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_arrow_up"
-                android:layout_toRightOf="@+id/exam_end_time"
-                />
-        </RelativeLayout>
-    </LinearLayout>
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/default_divider_color"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/lv_exam"
-        ></ListView>
+        android:divider="@color/divider_color"
+        android:dividerHeight="@dimen/divider_height"
+        />
 </LinearLayout>

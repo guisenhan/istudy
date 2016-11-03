@@ -1,6 +1,7 @@
 package hise.hznu.istudy.activity.email;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import butterknife.OnClick;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseActivity;
+import hise.hznu.istudy.model.email.EmailEntity;
 
 public class EmailActivity extends BaseActivity {
 
@@ -43,6 +45,7 @@ public class EmailActivity extends BaseActivity {
     @BindView(R.id.iv_delete)
     ImageView ivDelete;
 
+    private EmailEntity data;
     @Override
     protected void initData() {
         super.initData();
@@ -51,6 +54,8 @@ public class EmailActivity extends BaseActivity {
     @Override
     protected void initExtras(Bundle extras) {
         super.initExtras(extras);
+        data = new EmailEntity();
+        data = (EmailEntity) extras.get("email");
     }
 
     @Override
@@ -61,6 +66,10 @@ public class EmailActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        tvName.setText(data.getSubject());
+        tvContent.setText(Html.fromHtml(data.getContent()));
+        tvEmailGeter.setText(data.getSendername());
+
     }
 
     @Override

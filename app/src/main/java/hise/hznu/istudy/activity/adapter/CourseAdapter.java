@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.course.StudyActivity;
 import hise.hznu.istudy.model.course.CourseEntity;
 import hise.hznu.istudy.util.ImageLoaderUtils;
+import hise.hznu.istudy.util.MiscUtils;
 
 /**
  * Created by PC on 2016/9/21.
@@ -72,59 +74,28 @@ public class CourseAdapter extends BaseAdapter {
         if (convertView == null) {
             view = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_course, null);
-            view.rlIcon = (RelativeLayout) convertView.findViewById(R.id.rl_icon);
             view.tvCourseName = (TextView) convertView.findViewById(R.id.tv_course_name);
             view.tvTeacherName = (TextView) convertView.findViewById(R.id.tv_teacher_name);
-            view.tvStudy = (TextView) convertView.findViewById(R.id.tv_study);
-            view.rlCourse = (RelativeLayout) convertView.findViewById(R.id.rl_course);
             view.tvCourseDetail = (TextView) convertView.findViewById(R.id.tv_course_detail);
-            view.ivArrow =(ImageView)convertView.findViewById(R.id.iv_arrow);
             view.tvPicTitle = (TextView)convertView.findViewById(R.id.tv_pic_title);
-            view.rivImageView = (RoundedImageView)convertView.findViewById(R.id.riv_user_photo);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        final ViewHolder viewHolder = view;
-       view.ivArrow.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if(viewHolder.tvCourseDetail.getVisibility()==View.VISIBLE){
-                   viewHolder.tvCourseDetail.setVisibility(View.GONE);
-                   viewHolder.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
-               }else{
-                   viewHolder.tvCourseDetail.setVisibility(View.VISIBLE);
-                   viewHolder.ivArrow.setImageResource(R.mipmap.icon_arrow_up);
-               }
-           }
-       });
-        view.tvCourseDetail.setText(_dataList.get(position).getMemo());
+        if(MiscUtils.isNotEmpty(_dataList.get(position).getMemo()))
+            view.tvCourseDetail.setText(Html.fromHtml(_dataList.get(position).getMemo()));
         view.tvCourseName.setText(_dataList.get(position).getTitle());
-        view.tvTeacherName.setText(_dataList.get(position).getTeacher());
-        view.tvPicTitle.setText(_dataList.get(position).getPictit());
+        view.tvTeacherName.setText("讲师:"+_dataList.get(position).getTeacher());
+        view.tvPicTitle.setText(_dataList.get(position).getPictit().substring(0,3));
         List<Integer> argb = _dataList.get(position).getPicbg();
-        view.tvPicTitle.setBackgroundColor(Color.argb(255,argb.get(0),argb.get(1),argb.get(2)));
-        view.tvStudy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent study = new Intent(context, StudyActivity.class);
-                study.putExtra("course",_dataList.get(position));
-                context.startActivity(study);
-            }
-        });
-        ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getPic(),view.rivImageView);
+        view.tvPicTitle.setTextColor(Color.argb(255,argb.get(0),argb.get(1),argb.get(2)));
         return convertView;
     }
 
     final class ViewHolder {
-        RelativeLayout rlIcon;
         TextView tvCourseName;
         TextView tvTeacherName;
-        TextView tvStudy;
-        RelativeLayout rlCourse;
         TextView tvCourseDetail;
-        ImageView ivArrow;
         TextView tvPicTitle;
-        RoundedImageView rivImageView;
     }
 }

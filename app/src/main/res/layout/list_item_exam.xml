@@ -26,23 +26,28 @@
             android:textSize="13sp"
             android:layout_marginTop="5dp"
             android:id="@+id/tv_date"
+            android:drawableLeft="@mipmap/icon_time"
+            android:drawablePadding="8dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2-804"
+            android:text="考试地点：2-804"
             android:textColor="@color/text_other_color"
             android:textSize="13sp"
             android:layout_marginTop="5dp"
             android:id="@+id/tv_location"
+            android:drawableLeft="@mipmap/icon_location"
+            android:drawablePadding="8dp"
             />
     </LinearLayout>
     <TextView
         android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tv_blue_empty_back"
         android:text="XX老师"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:padding="5dp"
         android:id="@+id/tv_teacher_name"

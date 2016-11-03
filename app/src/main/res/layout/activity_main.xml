@@ -2,20 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" android:orientation="vertical"
     android:background="@color/window_background_color"
     tools:context=".activity.MainActivity">
+    <com.shizhefei.view.viewpager.SViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/svp_main"
+        android:layout_above="@+id/divider"
+        android:background="@color/unit_background_color"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/default_divider_color"
+        android:layout_above="@+id/fiv_main"
+        android:id="@id/divider"
+        />
     <com.shizhefei.view.indicator.FixedIndicatorView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:id="@+id/fiv_main"
         android:layout_alignParentBottom="true"
+        android:paddingTop="8dp"
+        android:background="#FDFFFF"
+        android:paddingBottom="8dp"
         />
-   <com.shizhefei.view.viewpager.SViewPager
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/svp_main"
-       android:layout_above="@+id/fiv_main"
-       android:background="@color/unit_background_color"
-       />
+
 </RelativeLayout>

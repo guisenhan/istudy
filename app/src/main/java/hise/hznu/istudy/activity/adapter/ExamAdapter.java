@@ -72,7 +72,7 @@ public class ExamAdapter extends BaseAdapter {
         }
        view.tvDate.setText("开始时间："+AppUtils.dateFormat(_dataList.get(position).getDatestart()));
         if(MiscUtils.isNotEmpty(_dataList.get(position).getKsdd() )&&MiscUtils.isNotEmpty( _dataList.get(position).getKszw()))
-        view.tvLocation.setText(_dataList.get(position).getKsdd()+_dataList.get(position).getKszw());
+        view.tvLocation.setText("考试地点："+_dataList.get(position).getKsdd()+_dataList.get(position).getKszw());
         view.tvExamName.setText(_dataList.get(position).getTitle());
         view.tvTeacherName.setText(_dataList.get(position).getTeacher());
         return convertView;

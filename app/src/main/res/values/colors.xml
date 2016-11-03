@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008fee</color>
-    <color name="colorPrimaryDark">#008fee</color>
+    <color name="colorPrimary">#08ABF7</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="login_background">#f4f4f4</color>
@@ -17,11 +16,11 @@
     <color name="default_divider_color">#cfcfcf</color>
     <!-- 分隔线次要颜色 -->
     <color name="default_divider_other_color">#dedede</color>
-
+    <color name="black">#000000</color>
     <!-- 正常文字 -->
     <color name="text_normal_color">#ff666666</color>
     <!-- 重要文字 -->
-    <color name="text_important_color">#ff111111</color>
+    <color name="text_important_color">#666666</color>
     <!-- 辅助文字 -->
     <color name="text_other_color">#ff999999</color>
     <color name="text_white_color">#ffffffff</color>

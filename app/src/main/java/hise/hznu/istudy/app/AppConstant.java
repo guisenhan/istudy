@@ -55,4 +55,7 @@ public class AppConstant {
     public static final int POST_GET_USERINFO = 22;
     public static final String CHANGE_PASSWORD = "changepassword";//修啊密码
     public static final int POST_CHANGE_PASSWORD = 23;
+    public static final String QUERY_EMAIL_SEND = "messagesendquery";// 发信查询
+    public static final int POST_QUERY_EMAIL_SEND = 24;
+
 }

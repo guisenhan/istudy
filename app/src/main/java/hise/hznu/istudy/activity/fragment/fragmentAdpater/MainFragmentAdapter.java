@@ -25,8 +25,8 @@ import hise.hznu.istudy.activity.fragment.main.MineFragment;
  * Created by GuisenHan on 2016/7/25.
  */
 public class MainFragmentAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter{
-    private String[] names = {"我的课程","我的考试","站内信","个人信息"};
-    private int[] icons ={R.drawable.tab_my_course,R.drawable.tab_my_exam,R.drawable.tab_indoor_email,R.drawable.tab_indoor_email};
+    private String[] names = {"课程","考试","邮件","我的"};
+    private int[] icons ={R.drawable.tab_my_course,R.drawable.tab_my_exam,R.drawable.tab_indoor_email,R.drawable.tab_mine};
     private LayoutInflater inflater;
     public MainFragmentAdapter(Context context,FragmentManager fragmentManager) {
         super(fragmentManager);

@@ -28,15 +28,6 @@ import hise.hznu.istudy.model.exam.ExamEntity;
  * Created by GuisenHan on 2016/7/25.
  */
 public class ExamFragment extends BaseFragment {
-
-    @BindView(R.id.exam_name)
-    TextView examName;
-    @BindView(R.id.exam_teacher)
-    TextView examTeacher;
-    @BindView(R.id.exam_start_time)
-    TextView examStartTime;
-    @BindView(R.id.exam_end_time)
-    TextView examEndTime;
     @BindView(R.id.lv_exam)
     ListView lvExam;
 
@@ -75,7 +66,6 @@ public class ExamFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
-        Log.e("response",""+JSONObject.toJSONString(apiResponse));
         _dataList = apiResponse.getListData(ExamEntity.class);
         adapter.UpdateView(_dataList);
     }
