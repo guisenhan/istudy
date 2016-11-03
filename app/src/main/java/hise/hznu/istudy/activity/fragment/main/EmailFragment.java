@@ -32,8 +32,6 @@ import hise.hznu.istudy.model.email.EmailEntity;
  * Created by GuisenHan on 2016/7/25.
  */
 public class EmailFragment extends BaseFragment {
-    @BindView(R.id.icon_edit)
-    ImageView iconEdit;
     @BindView(R.id.lv_email)
     ListView lvEmail;
     @BindView(R.id.iv_choose)
@@ -44,6 +42,10 @@ public class EmailFragment extends BaseFragment {
     TextView tvSendEmail;
     @BindView(R.id.ll_email_type)
     LinearLayout llEmailType;
+    @BindView(R.id.icon_add)
+    ImageView iconAdd;
+    @BindView(R.id.iv_search)
+    ImageView ivSearch;
 
     private List<EmailEntity> _datalist = new ArrayList<EmailEntity>();
     private EmailAdapter adapter;
@@ -62,7 +64,7 @@ public class EmailFragment extends BaseFragment {
         adapter = new EmailAdapter(getActivity());
         lvEmail.setAdapter(adapter);
         JSONObject params = new JSONObject();
-        params.put("count", "50");
+        params.put("count", "30");
         params.put("page", "0");
         params.put("unreadonly", "2");
         RequestManager.getmInstance()
@@ -81,7 +83,7 @@ public class EmailFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), EmailActivity.class);
-                intent.putExtra("email",_datalist.get(i));
+                intent.putExtra("email", _datalist.get(i));
                 startActivity(intent);
             }
         });
@@ -90,7 +92,7 @@ public class EmailFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
-        if(llEmailType.getVisibility() ==View.VISIBLE){
+        if (llEmailType.getVisibility() == View.VISIBLE) {
             llEmailType.setVisibility(View.GONE);
         }
         _datalist.clear();
@@ -99,22 +101,21 @@ public class EmailFragment extends BaseFragment {
     }
 
 
-
-    @OnClick({R.id.iv_choose, R.id.icon_edit, R.id.tv_get_email, R.id.tv_send_email})
+    @OnClick({R.id.iv_choose, R.id.icon_add, R.id.tv_get_email, R.id.tv_send_email})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_choose:
-                if(llEmailType.getVisibility() ==View.VISIBLE){
+                if (llEmailType.getVisibility() == View.VISIBLE) {
                     llEmailType.setVisibility(View.GONE);
-                }else{
+                } else {
                     llEmailType.setVisibility(View.VISIBLE);
                 }
                 break;
-            case R.id.icon_edit:
+            case R.id.icon_add:
                 break;
             case R.id.tv_get_email:
                 JSONObject params = new JSONObject();
-                params.put("count", "50");
+                params.put("count", "30");
                 params.put("page", "0");
                 params.put("unreadonly", "2");
                 RequestManager.getmInstance()
@@ -127,8 +128,8 @@ public class EmailFragment extends BaseFragment {
                  count			:		每页记录数量
                  page
                  */
-                jsonObject.put("count","50");
-                jsonObject.put("page","0");
+                jsonObject.put("count", "30");
+                jsonObject.put("page", "0");
                 RequestManager.getmInstance()
                         .apiPostData(AppConstant.QUERY_EMAIL_SEND, jsonObject, this, AppConstant.POST_QUERY_EMAIL_SEND);
                 break;

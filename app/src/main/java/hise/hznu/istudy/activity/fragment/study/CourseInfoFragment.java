@@ -13,6 +13,7 @@ import hise.hznu.istudy.R;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseFragment;
 import hise.hznu.istudy.model.course.CourseEntity;
+import hise.hznu.istudy.util.MiscUtils;
 
 /**
  * Created by PC on 2016/9/21.
@@ -28,7 +29,8 @@ public class CourseInfoFragment extends BaseFragment {
     protected void initData() {
         super.initData();
         courseEntity = (CourseEntity)getArguments().getSerializable("course");
-        tvCourseInfo.setText(Html.fromHtml(courseEntity.getMemo()));
+        if(MiscUtils.isNotEmpty(courseEntity.getMemo()))
+            tvCourseInfo.setText(Html.fromHtml(courseEntity.getMemo()));
         tvCourseTitle.setText(courseEntity.getTitle());
     }
 

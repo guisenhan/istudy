@@ -3,24 +3,17 @@ package hise.hznu.istudy.activity.fragment.fragmentAdpater;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shizhefei.view.indicator.IndicatorViewPager;
-
-import java.util.zip.Inflater;
-
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.fragment.main.CourseFragment;
 import hise.hznu.istudy.activity.fragment.main.EmailFragment;
 import hise.hznu.istudy.activity.fragment.main.ExamFragment;
 import hise.hznu.istudy.activity.fragment.main.MineFragment;
-
-
 /**
  * Created by GuisenHan on 2016/7/25.
  */
