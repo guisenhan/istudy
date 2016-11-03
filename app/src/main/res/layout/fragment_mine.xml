@@ -56,6 +56,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="15dp"
+            android:id="@+id/ll_person_info"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -83,32 +84,14 @@
         android:orientation="vertical"
         >
         <TextView
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mine_person_info"
-            android:drawableLeft="@mipmap/icon_personinfo"
-            android:paddingBottom="@dimen/mine_options_padding_vertical"
-            android:paddingTop="@dimen/mine_options_padding_vertical"
-            android:layout_marginLeft="@dimen/mine_options_margin_horizontal"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:drawablePadding="@dimen/mine_options_padding_vertical"
-            android:id="@+id/tv_person_info"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_color"
-            />
-        <TextView
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/mine_safe_setting"
             android:drawableLeft="@mipmap/icon_safe_setting"
             android:paddingBottom="@dimen/mine_options_padding_vertical"
             android:paddingTop="@dimen/mine_options_padding_vertical"
-            android:layout_marginLeft="@dimen/mine_options_margin_horizontal"
+            android:paddingLeft="@dimen/mine_options_margin_horizontal"
             android:textSize="16sp"
             android:gravity="center_vertical"
             android:drawablePadding="@dimen/mine_options_padding_vertical"
@@ -127,11 +110,12 @@
             android:drawableLeft="@mipmap/icon_exit"
             android:paddingBottom="@dimen/mine_options_padding_vertical"
             android:paddingTop="@dimen/mine_options_padding_vertical"
-            android:layout_marginLeft="@dimen/mine_options_margin_horizontal"
+            android:paddingLeft="@dimen/mine_options_margin_horizontal"
             android:textSize="16sp"
             android:gravity="center_vertical"
             android:drawablePadding="@dimen/mine_options_padding_vertical"
             android:id="@+id/tv_exit"
+            android:background="@drawable/mail_type_back"
             />
         <View
             android:layout_width="match_parent"

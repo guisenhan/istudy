@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -33,18 +34,19 @@ public class MineFragment extends BaseFragment {
     RoundedImageView rivUserPhoto;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
-    @BindView(R.id.tv_person_info)
-    TextView tvPersonInfo;
     @BindView(R.id.tv_safe_setting)
     TextView tvSafeSetting;
     @BindView(R.id.tv_exit)
     TextView tvExit;
+    @BindView(R.id.ll_person_info)
+    LinearLayout llPersonInfo;
 
     @Override
     protected void initData() {
         super.initData();
         JSONObject params = new JSONObject();
-        RequestManager.getmInstance().apiPostData(AppConstant.GET_USERINFO,params,this,AppConstant.POST_GET_USERINFO);
+        RequestManager.getmInstance()
+                .apiPostData(AppConstant.GET_USERINFO, params, this, AppConstant.POST_GET_USERINFO);
     }
 
     @Override
@@ -71,20 +73,20 @@ public class MineFragment extends BaseFragment {
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
         UserInfoEntity userInfoEntity = apiResponse.getInfo(UserInfoEntity.class);
-        if(MiscUtils.isNotEmpty(userInfoEntity.getName()))
-            tvUserName.setText(userInfoEntity.getName());
-        if(MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl()))
-            ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(),rivUserPhoto);
+        if (MiscUtils.isNotEmpty(userInfoEntity.getName())) { tvUserName.setText(userInfoEntity.getName()); }
+        if (MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl())) {
+            ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(), rivUserPhoto);
+        }
     }
 
-    @OnClick({R.id.tv_user_name, R.id.tv_person_info, R.id.tv_safe_setting, R.id.tv_exit})
+    @OnClick({R.id.tv_user_name, R.id.ll_person_info, R.id.tv_safe_setting, R.id.tv_exit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_user_name:
 
                 break;
-            case R.id.tv_person_info:
-                Intent intent =new Intent(getActivity(), PersonInfoActivity.class);
+            case R.id.ll_person_info:
+                Intent intent = new Intent(getActivity(), PersonInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_safe_setting:
@@ -95,5 +97,13 @@ public class MineFragment extends BaseFragment {
                 AppManager.getInstance().finishAllActivity();
                 break;
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }
