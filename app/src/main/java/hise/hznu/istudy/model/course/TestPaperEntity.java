@@ -78,7 +78,7 @@ public class TestPaperEntity implements Serializable {
     private String strandanswer;
     private String analysis;
     private String defaultanswer;
-    private String  knowledge;
+    private String knowledge;
     private String optiona;
     private String optionb;
     private String optionc;

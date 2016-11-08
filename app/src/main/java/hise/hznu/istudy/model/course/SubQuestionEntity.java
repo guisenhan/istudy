@@ -34,7 +34,7 @@ public class SubQuestionEntity implements Serializable{
      blank10   : 填空提示10
      */
     private String id;
-    private int type;
+    private String type;
     private String content;
     private String totalscore;
     private String strandanswer;
@@ -195,11 +195,11 @@ public class SubQuestionEntity implements Serializable{
         this.optione = optione;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

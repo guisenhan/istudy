@@ -8,23 +8,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/colorPrimary"
         android:padding="11dp"
         android:id="@+id/rl_top"
         >
         <ImageView
             android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:id="@+id/iv_back"
             android:src="@mipmap/arrow_left"
+            android:paddingRight="13dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的实验"
-            android:layout_centerInParent="true"
             android:textSize="16sp"
-            android:textColor="@color/text_important_color"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/iv_back"
+            android:layout_centerVertical="true"
             android:id="@+id/tv_title"
             />
     </RelativeLayout>
@@ -637,6 +641,25 @@
                 android:textSize="12sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_important_color"
+                android:textSize="13sp"
+                android:id="@+id/tv_complex_content"
+                />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_complex"
+                android:divider="@null"
                 />
         </LinearLayout>
     </FrameLayout>

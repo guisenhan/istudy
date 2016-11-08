@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.LoginActivity;
 import hise.hznu.istudy.activity.mine.ChangePassActivity;
 import hise.hznu.istudy.activity.mine.PersonInfoActivity;
 import hise.hznu.istudy.api.ApiResponse;
@@ -40,6 +41,8 @@ public class MineFragment extends BaseFragment {
     TextView tvExit;
     @BindView(R.id.ll_person_info)
     LinearLayout llPersonInfo;
+    @BindView(R.id.tv_switch)
+    TextView tvSwitch;
 
     @Override
     protected void initData() {
@@ -79,9 +82,14 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.tv_user_name, R.id.ll_person_info, R.id.tv_safe_setting, R.id.tv_exit})
+    @OnClick({R.id.tv_user_name, R.id.ll_person_info, R.id.tv_safe_setting, R.id.tv_exit,R.id.tv_switch})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_switch:
+                Intent Login = new Intent(getActivity(), LoginActivity.class);
+                startActivity(Login);
+                getActivity().finish();
+                break;
             case R.id.tv_user_name:
 
                 break;

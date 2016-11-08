@@ -86,9 +86,9 @@
         <TextView
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="@string/mine_safe_setting"
-            android:drawableLeft="@mipmap/icon_safe_setting"
+            android:drawableLeft="@mipmap/mine_change_password"
             android:paddingBottom="@dimen/mine_options_padding_vertical"
             android:paddingTop="@dimen/mine_options_padding_vertical"
             android:paddingLeft="@dimen/mine_options_margin_horizontal"
@@ -105,7 +105,26 @@
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:text="切换帐号"
+            android:drawableLeft="@mipmap/icon_switch_account"
+            android:paddingBottom="@dimen/mine_options_padding_vertical"
+            android:paddingTop="@dimen/mine_options_padding_vertical"
+            android:paddingLeft="@dimen/mine_options_margin_horizontal"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:drawablePadding="@dimen/mine_options_padding_vertical"
+            android:id="@+id/tv_switch"
+            android:background="@drawable/mail_type_back"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:text="@string/mine_safe_exit"
             android:drawableLeft="@mipmap/icon_exit"
             android:paddingBottom="@dimen/mine_options_padding_vertical"

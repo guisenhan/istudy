@@ -9,31 +9,38 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/topbar_height"
-        android:background="@color/colorPrimary"
         android:padding="11dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="返回"
             android:textColor="@color/text_white_color"
             android:drawableLeft="@mipmap/arrow_left"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:textSize="15sp"
             android:id="@+id/tv_back"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="学习资料"
             android:textSize="18sp"
-            android:textColor="@color/text_white_color"
-            android:layout_centerInParent="true"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:id="@+id/tv_title"
+            android:layout_toRightOf="@+id/tv_back"
+            android:layout_centerVertical="true"
             />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/default_divider_color"
+        android:id="@+id/divider"
+        />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -9,34 +9,30 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/topbar_height"
-        android:background="@color/colorPrimary"
         android:padding="11dp"
         >
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="返回"
-            android:textColor="@color/text_white_color"
-            android:drawableLeft="@mipmap/arrow_left"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:id="@+id/tv_back"
+            android:src="@mipmap/arrow_left"
+            android:id="@+id/iv_back"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
             />
         <TextView
+            android:layout_toRightOf="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="立即学习"
             android:textSize="18sp"
-            android:textColor="@color/text_white_color"
-            android:layout_centerInParent="true"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="6dp"
+            android:layout_centerVertical="true"
             />
     </RelativeLayout>
     <com.shizhefei.view.indicator.FixedIndicatorView
         android:layout_width="match_parent"
         android:layout_height="@dimen/topbar_height"
-        android:background="@color/light_blue"
         android:id="@+id/fiv_study"
         />
     <com.shizhefei.view.viewpager.SViewPager

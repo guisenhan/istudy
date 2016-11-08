@@ -1,6 +1,7 @@
 package hise.hznu.istudy.activity.course;
 
 import android.Manifest;
+import android.app.MediaRouteActionProvider;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -29,12 +31,13 @@ import com.loopj.android.http.RequestParams;
 
 import jp.wasabeef.richeditor.RichEditor;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -213,6 +216,13 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     TextView tvAutoCommit;
     @BindView(R.id.ll_auto_commit)
     LinearLayout llAutoCommit;
+    @BindView(R.id.tv_complex_content)
+    TextView tvComplexContent;
+    @BindView(R.id.lv_complex)
+    ListView lvComplex;
+
+    public static final  Map<String,Integer> type = new HashMap<String, Integer>();
+
 
     private List<TestEntity> _dataList = new ArrayList<TestEntity>();
     private String testId;
@@ -247,12 +257,21 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         keyVisible = extras.getBoolean("keyVisible");
         viewOneWithAnswerKey = extras.getBoolean("viewOneWithAnswerKey");
         paperModel = extras.getInt("paperModel", 2); // 默认为答题模式
-        Log.e("paperModel", "" + paperModel + "   " +enableClientJudge);
     }
 
     @Override
     protected void initData() {
         super.initData();
+        type.put("JUDGE",1);
+        type.put("SINGLE_CHOICE",2);
+        type.put("MULIT_CHIOCE",3);
+        type.put("FILL_BLANK",4);
+        type.put("DESIGN",5);
+        type.put("COMPLEX",6);
+        type.put("PROGRAM_FILL_BLANK",7);
+        type.put("PROGRAM_CORRECT",8);
+        type.put("PROGRAM_DESIGN",9);
+        type.put("DOC_DESIGN",10);
         submitResult = new JSONObject();
         selectPath = new ArrayList<String>();
         JSONObject params = new JSONObject();
@@ -304,9 +323,9 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 llChoiceAnswer.setVisibility(View.GONE);
                 tvPreview.setVisibility(View.GONE);
                 ivSave.setVisibility(View.VISIBLE);
-                if(enableClientJudge){
+                if (enableClientJudge) {
                     tvAutoCommit.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tvAutoCommit.setVisibility(View.GONE);
                 }
                 break;
@@ -400,20 +419,20 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 }
                 break;
             case AppConstant.POST_COMMIT_TEST_RESULT:
-                Log.e("result",""+JSONObject.toJSONString(response));
-                if(response.getRetcode() == 0){
+                Log.e("result", "" + JSONObject.toJSONString(response));
+                if (response.getRetcode() == 0) {
                     MiscUtils.showMessageToast("保存成功，请继续答题");
-                }else{
+                } else {
                     MiscUtils.showMessageToast("请答题后提交");
                 }
                 break;
             case AppConstant.POST_AUTO_COMMIT_RESULT:
-                if(response.getRetcode() ==0){
+                if (response.getRetcode() == 0) {
 
-                }else{
+                } else {
                     MiscUtils.showMessageToast("请先保存答案，再阅卷");
                 }
-                Log.e("response",""+JSONObject.toJSONString(response));
+                //  Log.e("response",""+JSONObject.toJSONString(response));
                 break;
         }
 
@@ -456,8 +475,6 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
      * 显示选择题
      */
     private void setChooseTest(TestPaperEntity test) {
-
-
         slTestChoose.setVisibility(View.VISIBLE);
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
@@ -573,17 +590,19 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 break;
         }
         //getFillBlankResult(test.getAnswer());
-        if(MiscUtils.isNotEmpty(test.getQuestionTitle()))
-            tvTestName.setText(test.getQuestionTitle());
+        if (MiscUtils.isNotEmpty(test.getQuestionTitle())) { tvTestName.setText(test.getQuestionTitle()); }
         tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
         tvFillBlankTitle.setText(Html.fromHtml(test.getContent(), imgGetter, null));
-        if(MiscUtils.isNotEmpty(test.getAnswer()))
+        if (MiscUtils.isNotEmpty(test.getAnswer())) {
             tvFillBlankAnswer.setText("答案:" + Html.fromHtml(test.getAnswer()));
-        if(MiscUtils.isNotEmpty(test.getKnowledge()))
+        }
+        if (MiscUtils.isNotEmpty(test.getKnowledge())) {
             tvFillBlankKnowledge.setText("知识点：" + Html.fromHtml(test.getKnowledge()));
+        }
         tvFillBlankScore.setText("得分：" + test.getScore() + "/" + test.getTotalscore());
-        if(MiscUtils.isNotEmpty(test.getStrandanswer()))
+        if (MiscUtils.isNotEmpty(test.getStrandanswer())) {
             tvFillBlankStanderAnswer.setText("标准答案：" + Html.fromHtml(test.getStrandanswer()));
+        }
     }
 
     Html.ImageGetter imgGetter = new Html.ImageGetter() {
@@ -637,7 +656,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             R.id.action_bg_color, R.id.action_indent, R.id.action_outdent, R.id.action_align_left,
             R.id.action_align_center, R.id.action_align_right, R.id.action_insert_bullets, R.id.action_insert_numbers,
             R.id.action_blockquote, R.id.action_insert_image, R.id.action_insert_link, R.id.action_insert_checkbox,
-            R.id.iv_save, R.id.iv_back,R.id.tv_auto_commit})
+            R.id.iv_save, R.id.iv_back, R.id.tv_auto_commit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left_arrow:
@@ -657,7 +676,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                     } else {
                         MiscUtils.showMessageToast("已经是第一个了！");
                     }
-                }catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
                     MiscUtils.showMessageToast("已经是第一个了！");
                 }
                 break;
@@ -665,7 +684,8 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 try {
                     if (bProblem + 1 < _questionList.size()) {
                         bProblem = bProblem + 1;
-                        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
+                        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") || _questionList
+                                .get(bProblem).getQuestionType().equals("JUDGE")) {
                             setChooseTest(_questionList.get(bProblem));
                         } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
                             setFillBlank(_questionList.get(bProblem));
@@ -675,9 +695,9 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                         if (bProblem == _questionList.size()) {
                             return;
                         }
-                    } else if(enableClientJudge && paperModel ==2){
-                       // autoCommit();
-                    }else{
+                    } else if (enableClientJudge && paperModel == 2) {
+                        // autoCommit();
+                    } else {
                         MiscUtils.showMessageToast("没有更多了！");
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -770,7 +790,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             case R.id.iv_save:
                 try {
                     saveAnswer();
-                }catch (Exception e){
+                } catch (Exception e) {
                     return;
                 }
                 break;
@@ -780,7 +800,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             case R.id.tv_auto_commit:
                 try {
                     auto_commit();
-                }catch (Exception e){
+                } catch (Exception e) {
                     return;
                 }
                 break;
@@ -870,7 +890,8 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
 
     public static void struct() {
         StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+                new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog()
+                        .build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
                 .penaltyLog() // 打印logcat
                 .penaltyDeath().build());
@@ -960,7 +981,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         return standerAnswer.split("&&&").length;
     }
 
-    private void autoCommit(){
+    private void autoCommit() {
         llFillBlanks.setVisibility(View.GONE);
         llTestType.setVisibility(View.GONE);
         slQuestionAnswer.setVisibility(View.GONE);

@@ -4,6 +4,7 @@ package hise.hznu.istudy.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
@@ -275,8 +276,15 @@ public class ApiResponse {
     public <T>List<T> getListData(Class<T> cls){
         List<T> dataList = new ArrayList<T>();
         if(items.size()>0){
-            for(int i=0 ; i <items.size();i++)
-                dataList.add(JSON.parseObject(items.getJSONObject(i).toJSONString(),cls));
+            for(int i=0 ; i <items.size();i++){
+                try {
+                    dataList.add(JSON.parseObject(items.getJSONObject(i).toJSONString(),cls));
+                }catch (JSONException e){
+                    e.getMessage();
+                    continue;
+                }
+
+            }
         }
         return dataList;
     }
