@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+	android:padding="11dp"
+	>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="这是个问答提"
+		android:textSize="16sp"
+		android:textColor="@color/text_important_color"
+		android:id="@+id/tv_question_answer_title"
+		/>
+	<HorizontalScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/colorPrimary"
+		android:layout_marginTop="20dp"
+		>
+
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			>
+
+			<ImageButton
+				android:id="@+id/action_undo"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="@null"
+				android:contentDescription="@null"
+				android:src="@mipmap/icon_undo"
+				/>
+
+			<ImageButton
+				android:id="@+id/action_redo"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="@null"
+				android:contentDescription="@null"
+				android:src="@mipmap/icon_redo"
+				/>
+
+			<ImageButton
+				android:id="@+id/action_insert_image"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="@null"
+				android:contentDescription="@null"
+				android:src="@mipmap/icon_insert_image"
+				/>
+
+			<ImageButton
+				android:id="@+id/action_insert_link"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:background="@null"
+				android:contentDescription="@null"
+				android:src="@mipmap/icon_insert_link"
+				/>
+		</LinearLayout>
+	</HorizontalScrollView>
+	<jp.wasabeef.richeditor.RichEditor
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/re_editor"
+		android:minHeight="300dp"
+		/>
+</LinearLayout>

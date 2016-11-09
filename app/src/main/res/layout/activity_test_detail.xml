@@ -95,6 +95,107 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/sl_multi_choice"
+            android:visibility="gone"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="11dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_important_color"
+                    android:textSize="16sp"
+                    android:text="选一个对的蛋啊"
+                    android:id="@+id/tv_multi_choice_content"
+                    />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_multi_choice_a"
+                        android:text="选项A"
+                        android:visibility="gone"
+                        />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_multi_choice_b"
+                        android:layout_marginTop="8dp"
+                        android:text="选项B"
+                        android:visibility="gone"
+                        />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_multi_choice_c"
+                        android:layout_marginTop="8dp"
+                        android:text="选项B"
+                        android:visibility="gone"
+                        />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_multi_choice_d"
+                        android:layout_marginTop="8dp"
+                        android:text="选项B"
+                        android:visibility="gone"
+                        />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_multi_choice_e"
+                        android:layout_marginTop="8dp"
+                        android:text="选项B"
+                        android:visibility="gone"
+                        />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_multi_choice_answer"
+                    >
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="答案：A"
+                        android:id="@+id/tv_multi_choice_answer"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="知识点："
+                        android:id="@+id/tv_multi_choice_answer_knowledge"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="得分："
+                        android:textColor="@color/text_important_color"
+                        android:id="@+id/tv_multi_choice_score"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_important_color"
+                        android:text="标准答案未开放"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/tv_multi_choice_stander_answer"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/sl_test_choose"
             android:visibility="gone"
             >
@@ -367,204 +468,6 @@
                             android:contentDescription="@null"
                             android:src="@mipmap/icon_redo"
                             />
-
-                        <ImageButton
-                            android:id="@+id/action_bold"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_bold"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_italic"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_italic"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_subscript"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_subscript"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_superscript"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_superscript"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_strikethrough"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_strikethrough"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_underline"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_underline"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_heading1"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_h1"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_heading2"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_h2"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_heading3"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_h3"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_heading4"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_h4"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_heading5"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_h5"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_heading6"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_h6"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_txt_color"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_txt_color"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_bg_color"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_bg_color"
-                            />
-                        <ImageButton
-                            android:id="@+id/action_indent"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_indent"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_outdent"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_outdent"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_align_left"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_justify_left"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_align_center"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_justify_center"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_align_right"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_justify_right"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_insert_bullets"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_bullets"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_insert_numbers"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_numbers"
-                            />
-
-                        <ImageButton
-                            android:id="@+id/action_blockquote"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/icon_blockquote"
-                            />
-
                         <ImageButton
                             android:id="@+id/action_insert_image"
                             android:layout_width="48dp"
@@ -583,14 +486,6 @@
                             android:src="@mipmap/icon_insert_link"
                             />
 
-                        <ImageButton
-                            android:id="@+id/action_insert_checkbox"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@null"
-                            android:contentDescription="@null"
-                            android:src="@android:drawable/checkbox_on_background"
-                            />
 
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -609,59 +504,74 @@
                     />
             </LinearLayout>
         </ScrollView>
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/ll_auto_commit"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:id="@+id/sl_complex"
             android:visibility="gone"
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="已经完成所有题目，是否开始自动阅卷?"
-                android:textSize="14sp"
-                android:textColor="@color/text_normal_color"
-                />
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="@drawable/tv_empty_ovil_back"
-                android:text="自动阅卷"
-                android:visibility="gone"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="tips:每题答完，一定要点击下方的保存按钮，才能保存哟"
-                android:layout_marginTop="20dp"
-                android:textSize="12sp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_important_color"
-                android:textSize="13sp"
-                android:id="@+id/tv_complex_content"
-                />
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lv_complex"
-                android:divider="@null"
-                />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_important_color"
+                    android:textSize="13sp"
+                    android:id="@+id/tv_complex_content"
+                    android:padding="11dp"
+                    />
+                <hise.hznu.istudy.widget.MyListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/lv_complex"
+                    android:divider="@null"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_complex_answer"
+
+                    >
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="答案：A"
+                        android:id="@+id/tv_complex_answer"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="知识点："
+                        android:id="@+id/tv_complex_knowledge"
+                        android:textColor="@color/text_important_color"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="得分："
+                        android:textColor="@color/text_important_color"
+                        android:id="@+id/tv_complex_score"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_important_color"
+                        android:text="标准答案未开放"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/tv_complex_stander_answer"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"

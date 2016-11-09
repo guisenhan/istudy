@@ -1,9 +1,8 @@
 package hise.hznu.istudy.activity.course;
 
 import android.Manifest;
-import android.app.MediaRouteActionProvider;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,11 +12,13 @@ import android.os.StrictMode;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -35,13 +36,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import hise.hznu.istudy.R;
+import hise.hznu.istudy.activity.adapter.ComplexQuestionAdapter;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.AsyHttpClient;
 import hise.hznu.istudy.api.RequestManager;
@@ -52,13 +52,16 @@ import hise.hznu.istudy.model.course.AnswerEntity;
 import hise.hznu.istudy.model.course.TestEntity;
 import hise.hznu.istudy.model.course.TestPaperEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.UIUtils;
+import hise.hznu.istudy.widget.MyListView;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class TestDetailActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class TestDetailActivity extends BaseActivity
+        implements EasyPermissions.PermissionCallbacks, View.OnClickListener {
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 102;
     public static final int REQUEST_IMAGE = 103;
 
@@ -140,56 +143,10 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     ImageButton actionUndo;
     @BindView(R.id.action_redo)
     ImageButton actionRedo;
-    @BindView(R.id.action_bold)
-    ImageButton actionBold;
-    @BindView(R.id.action_italic)
-    ImageButton actionItalic;
-    @BindView(R.id.action_subscript)
-    ImageButton actionSubscript;
-    @BindView(R.id.action_superscript)
-    ImageButton actionSuperscript;
-    @BindView(R.id.action_strikethrough)
-    ImageButton actionStrikethrough;
-    @BindView(R.id.action_underline)
-    ImageButton actionUnderline;
-    @BindView(R.id.action_heading1)
-    ImageButton actionHeading1;
-    @BindView(R.id.action_heading2)
-    ImageButton actionHeading2;
-    @BindView(R.id.action_heading3)
-    ImageButton actionHeading3;
-    @BindView(R.id.action_heading4)
-    ImageButton actionHeading4;
-    @BindView(R.id.action_heading5)
-    ImageButton actionHeading5;
-    @BindView(R.id.action_heading6)
-    ImageButton actionHeading6;
-    @BindView(R.id.action_txt_color)
-    ImageButton actionTxtColor;
-    @BindView(R.id.action_bg_color)
-    ImageButton actionBgColor;
-    @BindView(R.id.action_indent)
-    ImageButton actionIndent;
-    @BindView(R.id.action_outdent)
-    ImageButton actionOutdent;
-    @BindView(R.id.action_align_left)
-    ImageButton actionAlignLeft;
-    @BindView(R.id.action_align_center)
-    ImageButton actionAlignCenter;
-    @BindView(R.id.action_align_right)
-    ImageButton actionAlignRight;
-    @BindView(R.id.action_insert_bullets)
-    ImageButton actionInsertBullets;
-    @BindView(R.id.action_insert_numbers)
-    ImageButton actionInsertNumbers;
-    @BindView(R.id.action_blockquote)
-    ImageButton actionBlockquote;
     @BindView(R.id.action_insert_image)
     ImageButton actionInsertImage;
     @BindView(R.id.action_insert_link)
     ImageButton actionInsertLink;
-    @BindView(R.id.action_insert_checkbox)
-    ImageButton actionInsertCheckbox;
     @BindView(R.id.re_editor)
     RichEditor reEditor;
     @BindView(R.id.tv_preview)
@@ -214,25 +171,58 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     LinearLayout llFillBlanks;
     @BindView(R.id.tv_auto_commit)
     TextView tvAutoCommit;
-    @BindView(R.id.ll_auto_commit)
-    LinearLayout llAutoCommit;
+
+
+    @BindView(R.id.tv_complex_answer)
+    TextView tvComplexAnswer;
+    @BindView(R.id.tv_complex_knowledge)
+    TextView tvComplexKnowledge;
+    @BindView(R.id.tv_complex_score)
+    TextView tvComplexScore;
+    @BindView(R.id.tv_complex_stander_answer)
+    TextView tvComplexStanderAnswer;
+    @BindView(R.id.ll_complex_answer)
+    LinearLayout llComplexAnswer;
     @BindView(R.id.tv_complex_content)
     TextView tvComplexContent;
     @BindView(R.id.lv_complex)
-    ListView lvComplex;
-
-    public static final  Map<String,Integer> type = new HashMap<String, Integer>();
-
+    MyListView lvComplex;
+    @BindView(R.id.sl_complex)
+    ScrollView slComplex;
+    //多选题
+    @BindView(R.id.tv_multi_choice_content)
+    TextView tvMultiChoiceContent;
+    @BindView(R.id.rb_multi_choice_a)
+    CheckBox rbMultiChoiceA;
+    @BindView(R.id.rb_multi_choice_b)
+    CheckBox rbMultiChoiceB;
+    @BindView(R.id.rb_multi_choice_c)
+    CheckBox rbMultiChoiceC;
+    @BindView(R.id.rb_multi_choice_d)
+    CheckBox rbMultiChoiceD;
+    @BindView(R.id.rb_multi_choice_e)
+    CheckBox rbMultiChoiceE;
+    @BindView(R.id.tv_multi_choice_answer)
+    TextView tvMultiChoiceAnswer;
+    @BindView(R.id.tv_multi_choice_answer_knowledge)
+    TextView tvMultiChoiceAnswerKnowledge;
+    @BindView(R.id.tv_multi_choice_score)
+    TextView tvMultiChoiceScore;
+    @BindView(R.id.tv_multi_choice_stander_answer)
+    TextView tvMultiChoiceStanderAnswer;
+    @BindView(R.id.ll_multi_choice_answer)
+    LinearLayout llMultiChoiceAnswer;
+    @BindView(R.id.sl_multi_choice)
+    ScrollView slMultiChoice;
 
     private List<TestEntity> _dataList = new ArrayList<TestEntity>();
     private String testId;
     private int bProblem = 0;
     private List<AnswerEntity> _answerList = new ArrayList<AnswerEntity>();
-    boolean isChange = true;
-    boolean isBackChange = true;
     private ArrayList<String> selectPath;
     private List<TestPaperEntity> _questionList = new ArrayList<TestPaperEntity>(); //重新处理数据
     private JSONObject submitResult; // 提交的答案
+    ComplexQuestionAdapter comlex;
     /**
      * enableClientJudge			是否开启客户端阅卷
      * keyVisible					阅卷时参考答案是否可见
@@ -242,7 +232,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     private boolean keyVisible;
     private boolean viewOneWithAnswerKey;
     private int paperModel = 1; //1表示查卷模式，2表示答题模式，3 表示阅卷模式
-
+    private List<String> multiAnswer = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -262,16 +252,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     @Override
     protected void initData() {
         super.initData();
-        type.put("JUDGE",1);
-        type.put("SINGLE_CHOICE",2);
-        type.put("MULIT_CHIOCE",3);
-        type.put("FILL_BLANK",4);
-        type.put("DESIGN",5);
-        type.put("COMPLEX",6);
-        type.put("PROGRAM_FILL_BLANK",7);
-        type.put("PROGRAM_CORRECT",8);
-        type.put("PROGRAM_DESIGN",9);
-        type.put("DOC_DESIGN",10);
+
         submitResult = new JSONObject();
         selectPath = new ArrayList<String>();
         JSONObject params = new JSONObject();
@@ -288,7 +269,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-
+        slMultiChoice.setVisibility(View.GONE);
         rlTestTitle.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
         slTestChoose.setVisibility(View.GONE);
@@ -312,16 +293,23 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                     tvChooseStanderAnswer.setVisibility(View.VISIBLE);
                     tvFillBlankStanderAnswer.setVisibility(View.VISIBLE);
                     tvPreview.setVisibility(View.VISIBLE);
+                    tvMultiChoiceStanderAnswer.setVisibility(View.VISIBLE);
+                    tvComplexStanderAnswer.setVisibility(View.VISIBLE);
                 } else {
                     tvChooseStanderAnswer.setVisibility(View.GONE);
                     tvFillBlankStanderAnswer.setVisibility(View.GONE);
                     tvPreview.setVisibility(View.GONE);
+                    tvMultiChoiceStanderAnswer.setVisibility(View.GONE);
+                    tvComplexStanderAnswer.setVisibility(View.GONE);
                 }
                 break;
             case 2: //答题模式
                 llFillBlankAnswer.setVisibility(View.GONE);
                 llChoiceAnswer.setVisibility(View.GONE);
+                llMultiChoiceAnswer.setVisibility(View.GONE);
                 tvPreview.setVisibility(View.GONE);
+                llComplexAnswer.setVisibility(View.GONE);
+
                 ivSave.setVisibility(View.VISIBLE);
                 if (enableClientJudge) {
                     tvAutoCommit.setVisibility(View.VISIBLE);
@@ -335,10 +323,14 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                     tvChooseStanderAnswer.setVisibility(View.VISIBLE);
                     tvFillBlankStanderAnswer.setVisibility(View.VISIBLE);
                     tvPreview.setVisibility(View.VISIBLE);
+                    tvMultiChoiceStanderAnswer.setVisibility(View.VISIBLE);
+                    tvComplexStanderAnswer.setVisibility(View.VISIBLE);
                 } else {
                     tvPreview.setVisibility(View.GONE);
                     tvFillBlankStanderAnswer.setVisibility(View.GONE);
                     tvChooseStanderAnswer.setVisibility(View.GONE);
+                    tvComplexStanderAnswer.setVisibility(View.GONE);
+                    tvMultiChoiceStanderAnswer.setVisibility(View.GONE);
                 }
                 break;
         }
@@ -405,6 +397,55 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 }
             }
         });
+
+        rbMultiChoiceA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    multiAnswer.add("A");
+                }else{
+                    if(multiAnswer.contains("A")){
+                        multiAnswer.remove("A");
+                    }
+                }
+            }
+        });
+        rbMultiChoiceB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    multiAnswer.add("B");
+                }else{
+                    if(multiAnswer.contains("B")){
+                        multiAnswer.remove("B");
+                    }
+                }
+            }
+        });
+        rbMultiChoiceC.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    multiAnswer.add("C");
+                }else{
+                    if(multiAnswer.contains("C")){
+                        multiAnswer.remove("C");
+                    }
+                }
+            }
+        });
+        rbMultiChoiceD.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    multiAnswer.add("D");
+                }else{
+                    if(multiAnswer.contains("D")){
+                        multiAnswer.remove("D");
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -421,21 +462,19 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             case AppConstant.POST_COMMIT_TEST_RESULT:
                 Log.e("result", "" + JSONObject.toJSONString(response));
                 if (response.getRetcode() == 0) {
-                    MiscUtils.showMessageToast("保存成功，请继续答题");
+                    MiscUtils.showMessageToast(response.getMessage());
                 } else {
-                    MiscUtils.showMessageToast("请答题后提交");
+                    MiscUtils.showMessageToast(response.getMessage());
                 }
                 break;
             case AppConstant.POST_AUTO_COMMIT_RESULT:
                 if (response.getRetcode() == 0) {
-
+                    Log.e("response"," " +JSONObject.toJSONString(response));
                 } else {
-                    MiscUtils.showMessageToast("请先保存答案，再阅卷");
+                    MiscUtils.showMessageToast(response.getMessage());
                 }
-                //  Log.e("response",""+JSONObject.toJSONString(response));
                 break;
         }
-
     }
 
     private void restData() {
@@ -466,7 +505,8 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         slQuestionAnswer.setVisibility(View.GONE);
         slTestChoose.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
-        llAutoCommit.setVisibility(View.GONE);
+        slComplex.setVisibility(View.GONE);
+        slMultiChoice.setVisibility(View.GONE);
         tvTestType.setText(_dataList.get(bProblem).getTitle());
         tvTestTypeInfo.setText(_dataList.get(bProblem).getDesc());
     }
@@ -479,14 +519,16 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
-        llAutoCommit.setVisibility(View.GONE);
         slQuestionAnswer.setVisibility(View.GONE);
+        slMultiChoice.setVisibility(View.GONE);
+        slComplex.setVisibility(View.GONE);
         if (test.isDesc()) {
             llTestType.setVisibility(View.VISIBLE);
             rlTestTitle.setVisibility(View.GONE);
             slQuestionAnswer.setVisibility(View.GONE);
             slTestChoose.setVisibility(View.GONE);
             slFillBlank.setVisibility(View.GONE);
+            slComplex.setVisibility(View.GONE);
             tvTestType.setText(test.getQuestionTitle());
             tvTestTypeInfo.setText(test.getQuestionDesc());
             return;
@@ -538,9 +580,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                     break;
                 }
             }
-
         }
-
     }
 
     /**
@@ -550,46 +590,95 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         slTestChoose.setVisibility(View.GONE);
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
-        llAutoCommit.setVisibility(View.GONE);
+        slComplex.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.VISIBLE);
         slQuestionAnswer.setVisibility(View.GONE);
+        slMultiChoice.setVisibility(View.GONE);
+        slComplex.setVisibility(View.GONE);
         if (test.isDesc()) {
             llTestType.setVisibility(View.VISIBLE);
             rlTestTitle.setVisibility(View.GONE);
             slQuestionAnswer.setVisibility(View.GONE);
             slTestChoose.setVisibility(View.GONE);
             slFillBlank.setVisibility(View.GONE);
+            slComplex.setVisibility(View.GONE);
             tvTestType.setText(test.getQuestionTitle());
             tvTestTypeInfo.setText(test.getQuestionDesc());
             return;
         }
+        String fb  = "";
+        for(AnswerEntity an :_answerList){
+            if(an.getQuestionid().equals(test.getId())){
+                fb = an.getAnswer();
+                break;
+            }
+        }
+
         switch (getBlankNumber(test.getStrandanswer())) {
             case 1:
+                if(MiscUtils.isNotEmpty(fb)){
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                        tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
+                    }
+                }
                 tvFillBlankAnswerA.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerB.setVisibility(View.GONE);
                 tvFillBlankAnswerC.setVisibility(View.GONE);
                 tvFillBlankAnswerD.setVisibility(View.GONE);
                 break;
             case 2:
+                if(MiscUtils.isNotEmpty(fb)){
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                        tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
+                    }
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[1])){
+                        tvFillBlankAnswerB.setText(fb.split("&&&")[1]);
+                    }
+                }
                 tvFillBlankAnswerA.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerB.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerC.setVisibility(View.GONE);
                 tvFillBlankAnswerD.setVisibility(View.GONE);
                 break;
             case 3:
+                if(MiscUtils.isNotEmpty(fb)){
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                        tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
+                    }
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[1])){
+                        tvFillBlankAnswerB.setText(fb.split("&&&")[1]);
+                    }
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[2])){
+                        tvFillBlankAnswerC.setText(fb.split("&&&")[2]);
+                    }
+                }
                 tvFillBlankAnswerA.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerB.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerC.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerD.setVisibility(View.GONE);
                 break;
             case 4:
+                if(MiscUtils.isNotEmpty(fb)){
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                        tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
+                    }
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[1])){
+                        tvFillBlankAnswerB.setText(fb.split("&&&")[1]);
+                    }
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[2])){
+                        tvFillBlankAnswerC.setText(fb.split("&&&")[2]);
+                    }
+                    if(MiscUtils.isNotEmpty(fb.split("&&&")[3])){
+                        tvFillBlankAnswerD.setText(fb.split("&&&")[3]);
+                    }
+                }
                 tvFillBlankAnswerA.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerB.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerC.setVisibility(View.VISIBLE);
                 tvFillBlankAnswerD.setVisibility(View.VISIBLE);
                 break;
         }
-        //getFillBlankResult(test.getAnswer());
+
         if (MiscUtils.isNotEmpty(test.getQuestionTitle())) { tvTestName.setText(test.getQuestionTitle()); }
         tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
         tvFillBlankTitle.setText(Html.fromHtml(test.getContent(), imgGetter, null));
@@ -604,14 +693,13 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             tvFillBlankStanderAnswer.setText("标准答案：" + Html.fromHtml(test.getStrandanswer()));
         }
     }
-
     Html.ImageGetter imgGetter = new Html.ImageGetter() {
         public Drawable getDrawable(String source) {
             Drawable drawable = null;
             URL url;
             try {
                 url = new URL(source);
-                drawable = Drawable.createFromStream(url.openStream(), ""); // 获取网路图片
+                drawable =new BitmapDrawable(ImageLoaderUtils.getImageLoader().loadImageSync(url.toString())); // 获取网路图片
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -630,44 +718,154 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
         slFillBlank.setVisibility(View.GONE);
-        llAutoCommit.setVisibility(View.GONE);
         slQuestionAnswer.setVisibility(View.VISIBLE);
+        slComplex.setVisibility(View.GONE);
+        slMultiChoice.setVisibility(View.GONE);
         if (test.isDesc()) {
             llTestType.setVisibility(View.VISIBLE);
             rlTestTitle.setVisibility(View.GONE);
             slQuestionAnswer.setVisibility(View.GONE);
             slTestChoose.setVisibility(View.GONE);
             slFillBlank.setVisibility(View.GONE);
+            slComplex.setVisibility(View.GONE);
             tvTestType.setText(test.getQuestionTitle());
             tvTestTypeInfo.setText(test.getQuestionDesc());
             return;
         }
+        for(AnswerEntity an :_answerList){
+            if(an.getQuestionid().equals(test.getId())){
+                reEditor.setHtml(an.getAnswer());
+                break;
+            }
+        }
         tvTestName.setText(test.getQuestionTitle());
         tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
         tvQuestionAnswerTitle.setText(Html.fromHtml(test.getContent(), imgGetter, null));
-        reEditor.setHtml(test.getAnswer());
         tvPreview.setText("标准答案：" + Html.fromHtml(test.getStrandanswer()));
     }
 
-    @OnClick({R.id.iv_left_arrow, R.id.iv_right_arrow, R.id.action_undo, R.id.action_redo, R.id.action_bold,
-            R.id.action_italic, R.id.action_subscript, R.id.action_superscript, R.id.action_strikethrough,
-            R.id.action_underline, R.id.action_heading1, R.id.action_heading2, R.id.action_heading3,
-            R.id.action_heading4, R.id.action_heading5, R.id.action_heading6, R.id.action_txt_color,
-            R.id.action_bg_color, R.id.action_indent, R.id.action_outdent, R.id.action_align_left,
-            R.id.action_align_center, R.id.action_align_right, R.id.action_insert_bullets, R.id.action_insert_numbers,
-            R.id.action_blockquote, R.id.action_insert_image, R.id.action_insert_link, R.id.action_insert_checkbox,
-            R.id.iv_save, R.id.iv_back, R.id.tv_auto_commit})
+    /**
+     * 阅读题
+     * @param test
+     */
+    private void setComplex(TestPaperEntity test) {
+        slTestChoose.setVisibility(View.GONE);
+        rlTestTitle.setVisibility(View.VISIBLE);
+        llTestType.setVisibility(View.GONE);
+        slFillBlank.setVisibility(View.GONE);
+        slQuestionAnswer.setVisibility(View.GONE);
+        slComplex.setVisibility(View.VISIBLE);
+        slMultiChoice.setVisibility(View.GONE);
+        if (test.isDesc()) {
+            llTestType.setVisibility(View.VISIBLE);
+            rlTestTitle.setVisibility(View.GONE);
+            slQuestionAnswer.setVisibility(View.GONE);
+            slTestChoose.setVisibility(View.GONE);
+            slFillBlank.setVisibility(View.GONE);
+            slComplex.setVisibility(View.GONE);
+            tvTestType.setText(test.getQuestionTitle());
+            tvTestTypeInfo.setText(test.getQuestionDesc());
+            return;
+        }
+        String ans = "";
+        for(AnswerEntity answer:_answerList){
+            if(answer.getQuestionid().equals(test.getId())){
+                ans = answer.getAnswer();
+                break;
+            }
+        }
+        comlex = new ComplexQuestionAdapter(this, imgGetter, this,ans);
+        lvComplex.setAdapter(comlex);
+        comlex.UpdateView(test.getSubquestions());
+        tvTestName.setText(test.getQuestionTitle());
+        tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
+        tvComplexContent.setText(Html.fromHtml(test.getContent(), imgGetter, null));
+
+    }
+
+    private void setMulti(TestPaperEntity test){
+        slTestChoose.setVisibility(View.GONE);
+        rlTestTitle.setVisibility(View.VISIBLE);
+        llTestType.setVisibility(View.GONE);
+        slFillBlank.setVisibility(View.GONE);
+        slQuestionAnswer.setVisibility(View.GONE);
+        slMultiChoice.setVisibility(View.VISIBLE);
+        slComplex.setVisibility(View.GONE);
+        if (test.isDesc()) {
+            llTestType.setVisibility(View.VISIBLE);
+            rlTestTitle.setVisibility(View.GONE);
+            slQuestionAnswer.setVisibility(View.GONE);
+            slTestChoose.setVisibility(View.GONE);
+            slFillBlank.setVisibility(View.GONE);
+            slComplex.setVisibility(View.GONE);
+            tvTestType.setText(test.getQuestionTitle());
+            tvTestTypeInfo.setText(test.getQuestionDesc());
+            return;
+        }
+        tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
+        tvMultiChoiceContent.setText(Html.fromHtml(test.getContent()));
+        if (MiscUtils.isNotEmpty(test.getOptiona())) {
+            rbMultiChoiceA.setVisibility(View.VISIBLE);
+            rbMultiChoiceA.setText(Html.fromHtml(test.getOptiona()));
+        }
+        if (MiscUtils.isNotEmpty(test.getOptionb())) {
+            rbMultiChoiceB.setVisibility(View.VISIBLE);
+            rbMultiChoiceB.setText(Html.fromHtml(test.getOptionb()));
+        }
+        if (MiscUtils.isNotEmpty(test.getOptionc())) {
+            rbMultiChoiceC.setVisibility(View.VISIBLE);
+            rbMultiChoiceC.setText(Html.fromHtml(test.getOptionc()));
+        }
+        if (MiscUtils.isNotEmpty(test.getOptiond())) {
+            rbMultiChoiceD.setVisibility(View.VISIBLE);
+            rbMultiChoiceD.setText(Html.fromHtml(test.getOptiond()));
+        }
+        if (MiscUtils.isNotEmpty(test.getAnswer())) {
+            tvMultiChoiceAnswer.setText("答案：" + test.getAnswer());
+        }
+        if (MiscUtils.isNotEmpty(test.getKnowledge())) { tvMultiChoiceAnswerKnowledge.setText("知识点：" + test.getKnowledge()); }
+        if (MiscUtils.isNotEmpty(test.getScore())) {
+            tvMultiChoiceScore.setText("得分：" + test.getScore() + "/" + test.getTotalscore());
+        }
+        if (MiscUtils.isNotEmpty(test.getStrandanswer())) {
+            tvMultiChoiceStanderAnswer.setText("标准答案：" + test.getStrandanswer());
+        } else { tvMultiChoiceStanderAnswer.setText("标准答案未开放"); }
+        tvTestName.setText(test.getQuestionTitle());
+        for (int i = 0; i < _answerList.size(); i++) {
+            if (MiscUtils.isNotEmpty(_answerList.get(i).getQuestionid())) {
+                if (_answerList.get(i).getQuestionid().equals(test.getId())) {
+                    if (_answerList.get(i).getAnswer().equals("A")) {
+                        rbMultiChoiceA.setChecked(true);
+                    } else if (_answerList.get(i).getAnswer().equals("B")) {
+                        rbMultiChoiceB.setChecked(true);
+                    } else if (_answerList.get(i).getAnswer().equals("C")) {
+                        rbMultiChoiceC.setChecked(true);
+                    } else if (_answerList.get(i).getAnswer().equals("D")) {
+                        rbMultiChoiceD.setChecked(true);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    @OnClick({R.id.iv_left_arrow, R.id.iv_right_arrow, R.id.action_undo, R.id.action_redo, R.id.action_insert_image,
+            R.id.action_insert_link, R.id.iv_save, R.id.iv_back, R.id.tv_auto_commit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left_arrow:
                 try {
                     if ((bProblem) > 0) {
                         bProblem = bProblem - 1;
-                        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
+                        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") || _questionList
+                                .get(bProblem).getQuestionType().equals("JUDGE")) {
                             setChooseTest(_questionList.get(bProblem));
-                        } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
+                        } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")||_questionList.get(bProblem).getQuestionType().equals("PROGRAM_FILL_BLANK")) {
                             setFillBlank(_questionList.get(bProblem));
-                        } else {
+                        } else if (_questionList.get(bProblem).getQuestionType().equals("COMPLEX")) {
+                            setComplex(_questionList.get(bProblem));
+                        } else if(_questionList.get(bProblem).getQuestionType().equals("MULIT_CHIOCE")){
+                            setMulti(_questionList.get(bProblem));
+                        }else{
                             setQA(_questionList.get(bProblem));
                         }
                         if (bProblem == _questionList.size()) {
@@ -689,7 +887,11 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                             setChooseTest(_questionList.get(bProblem));
                         } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
                             setFillBlank(_questionList.get(bProblem));
-                        } else {
+                        } else if (_questionList.get(bProblem).getQuestionType().equals("COMPLEX")) {
+                            setComplex(_questionList.get(bProblem));
+                        } else if(_questionList.get(bProblem).getQuestionType().equals("MULIT_CHIOCE")){
+                            setMulti(_questionList.get(bProblem));
+                        }else {
                             setQA(_questionList.get(bProblem));
                         }
                         if (bProblem == _questionList.size()) {
@@ -710,89 +912,14 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
             case R.id.action_redo:
                 reEditor.redo();
                 break;
-            case R.id.action_bold:
-                reEditor.setBold();
-                break;
-            case R.id.action_italic:
-                reEditor.setItalic();
-                break;
-            case R.id.action_subscript:
-                reEditor.setSubscript();
-                break;
-            case R.id.action_superscript:
-                reEditor.setSuperscript();
-                break;
-            case R.id.action_strikethrough:
-                reEditor.setStrikeThrough();
-                break;
-            case R.id.action_underline:
-                reEditor.setUnderline();
-                break;
-            case R.id.action_heading1:
-                reEditor.setHeading(1);
-                break;
-            case R.id.action_heading2:
-                reEditor.setHeading(2);
-                break;
-            case R.id.action_heading3:
-                reEditor.setHeading(3);
-                break;
-            case R.id.action_heading4:
-                reEditor.setHeading(4);
-                break;
-            case R.id.action_heading5:
-                reEditor.setHeading(5);
-                break;
-            case R.id.action_heading6:
-                reEditor.setHeading(6);
-                break;
-            case R.id.action_txt_color:
-                reEditor.setTextColor(isChange ? Color.BLACK : Color.RED);
-                isChange = !isChange;
-                break;
-            case R.id.action_bg_color:
-                reEditor.setTextBackgroundColor(isBackChange ? Color.TRANSPARENT : Color.YELLOW);
-                isBackChange = !isBackChange;
-                break;
-            case R.id.action_indent:
-                reEditor.setIndent();
-                break;
-            case R.id.action_outdent:
-                reEditor.setOutdent();
-                break;
-            case R.id.action_align_left:
-                reEditor.setAlignLeft();
-                break;
-            case R.id.action_align_center:
-                reEditor.setAlignCenter();
-                break;
-            case R.id.action_align_right:
-                reEditor.setAlignRight();
-                break;
-            case R.id.action_insert_bullets:
-                reEditor.setBullets();
-                break;
-            case R.id.action_insert_numbers:
-                reEditor.setNumbers();
-                break;
-            case R.id.action_blockquote:
-                reEditor.setBlockquote();
-                break;
             case R.id.action_insert_image:
                 pickImage();
                 //插入图片到富文本框
                 break;
             case R.id.action_insert_link:
                 break;
-            case R.id.action_insert_checkbox:
-                reEditor.insertTodo();
-                break;
             case R.id.iv_save:
-                try {
                     saveAnswer();
-                } catch (Exception e) {
-                    return;
-                }
                 break;
             case R.id.iv_back:
                 finish();
@@ -807,6 +934,7 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         }
     }
 
+    //提交答案
     private void saveAnswer() {
         AnswerEntity answerEntity = new AnswerEntity();
         answerEntity.setTestid(testId);
@@ -831,7 +959,28 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
                 stringBuilder.append(tvFillBlankAnswerD.getText().toString().trim());
             }
             answerEntity.setAnswer(stringBuilder.toString());
-        } else {
+        } else if (_questionList.get(bProblem).getQuestionType().equals("COMPLEX")) {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i< comlex.getComplexAnswer().size() ; i++){
+                sb.append(comlex.getComplexAnswer().get(i));
+                if(i != (comlex.getComplexAnswer().size()-1))
+                    sb.append("~~~");
+            }
+            answerEntity.setAnswer(sb.toString());
+        } else if(_questionList.get(bProblem).getQuestionType().equals("MULIT_CHIOCE")){
+            if(multiAnswer.size()>0){
+                StringBuilder multi = new StringBuilder();
+                for(int i = 0; i<multiAnswer.size();i++){
+                    multi.append(multiAnswer.get(i));
+                    if(i != (multiAnswer.size()-1))
+                        multi.append("&&&");
+                }
+                answerEntity.setAnswer(multi.toString());
+            }else{
+                MiscUtils.showMessageToast("请选择答案");
+            }
+
+        }else{
             answerEntity.setAnswer(reEditor.getHtml());
         }
         _answerList.add(answerEntity);
@@ -842,48 +991,21 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
          answer	:    答题内容
          */
         temp.put("testid", testId);
-        temp.put("questionid", _answerList.get(bProblem).getQuestionid());
-        temp.put("answer", _answerList.get(bProblem).getAnswer());
+        temp.put("questionid", _questionList.get(bProblem).getId());
+        temp.put("answer", answerEntity.getAnswer());
         submitResult.put("data", new String(Base64.encode(JSONObject.toJSONString(temp).getBytes(), Base64.DEFAULT)));
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.COMMIT_TEST_RESULE, submitResult, this, AppConstant.POST_COMMIT_TEST_RESULT);
     }
 
+    //自动阅卷
     private void auto_commit() {
-        AnswerEntity answerEntity = new AnswerEntity();
-        answerEntity.setTestid(testId);
-        answerEntity.setQuestionid(_questionList.get(bProblem).getId());
-        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
-
-        } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
-            StringBuilder stringBuilder = new StringBuilder();
-            if (MiscUtils.isNotEmpty(tvFillBlankAnswerA.getText().toString().trim())) {
-                stringBuilder.append(tvFillBlankAnswerA.getText().toString().trim());
-            }
-            if (MiscUtils.isNotEmpty(tvFillBlankAnswerB.getText().toString().trim())) {
-                stringBuilder.append("&&&");
-                stringBuilder.append(tvFillBlankAnswerB.getText().toString().trim());
-            }
-            if (MiscUtils.isNotEmpty(tvFillBlankAnswerC.getText().toString().trim())) {
-                stringBuilder.append("&&&");
-                stringBuilder.append(tvFillBlankAnswerC.getText().toString().trim());
-            }
-            if (MiscUtils.isNotEmpty(tvFillBlankAnswerD.getText().toString().trim())) {
-                stringBuilder.append("&&&");
-                stringBuilder.append(tvFillBlankAnswerD.getText().toString().trim());
-            }
-            answerEntity.setAnswer(stringBuilder.toString());
-        } else {
-            answerEntity.setAnswer(reEditor.getHtml());
-        }
-        _answerList.add(answerEntity);
         /**
          * testid	：	考试id
          questionid:  题目id
-         answer	:    答题内容
          */
         submitResult.put("testid", testId);
-        submitResult.put("questionid", _answerList.get(bProblem).getQuestionid());
+        submitResult.put("questionid", _questionList.get(bProblem).getId());
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.AUTO_COMMIT_RESULT, submitResult, this, AppConstant.POST_AUTO_COMMIT_RESULT);
     }
@@ -954,7 +1076,6 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         try {
             params.put("name", new File(selectPath.get(0)));
         } catch (IOException e) {
-
         }
         AsyHttpClient.get("upfile", params, handler);
     }
@@ -970,24 +1091,8 @@ public class TestDetailActivity extends BaseActivity implements EasyPermissions.
         }
     };
 
-    private void getFillBlankResult(String result) {
-        String[] temp = result.split("&&&");
-        for (int i = 0; i < temp.length; i++) {
-            Log.e("fill blank", temp[i]);
-        }
-    }
 
     private int getBlankNumber(String standerAnswer) {
         return standerAnswer.split("&&&").length;
-    }
-
-    private void autoCommit() {
-        llFillBlanks.setVisibility(View.GONE);
-        llTestType.setVisibility(View.GONE);
-        slQuestionAnswer.setVisibility(View.GONE);
-        slFillBlank.setVisibility(View.GONE);
-        slTestChoose.setVisibility(View.GONE);
-        rlTestTitle.setVisibility(View.GONE);
-        llAutoCommit.setVisibility(View.VISIBLE);
     }
 }

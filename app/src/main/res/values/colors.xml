@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#08ABF7</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#08ABF7</color>
 
     <color name="login_background">#f4f4f4</color>
     <color name="divider_color">#e4e4e4</color>

@@ -179,7 +179,7 @@ public class ApiResponse {
     private int pagecount;
     private int recordcount;
     private int retcode;
-
+    private String message;
     public ApiResponse(JSONObject jsonObject) {
 
         this.jsonObject = jsonObject;
@@ -192,7 +192,7 @@ public class ApiResponse {
         this.items =jsonObject.getJSONArray("items");
         this.pagecount=jsonObject.getIntValue("pagecount");
         this.recordcount = jsonObject.getIntValue("recordcount");
-
+        this.message = jsonObject.getString("message");
     }
 
     public String getAuthtoken() {
@@ -271,7 +271,13 @@ public class ApiResponse {
         this.retcode = retcode;
     }
 
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public <T>List<T> getListData(Class<T> cls){
         List<T> dataList = new ArrayList<T>();
