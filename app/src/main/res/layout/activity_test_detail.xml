@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/window_background_color"
     tools:context="hise.hznu.istudy.activity.course.TestDetailActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:padding="11dp"
         android:id="@+id/rl_top"
+        android:background="@color/unit_background_color"
         >
         <ImageView
             android:layout_width="wrap_content"
@@ -45,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="填空题"
+            android:text=""
             android:textColor="@color/text_important_color"
             android:textSize="14sp"
             android:id="@+id/tv_test_name"
@@ -78,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="单项选择"
+                android:text=""
                 android:id="@+id/tv_test_type"
                 android:textColor="@color/text_important_color"
                 android:textSize="16sp"
@@ -109,14 +111,14 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_important_color"
                     android:textSize="16sp"
-                    android:text="选一个对的蛋啊"
+                    android:text=""
                     android:id="@+id/tv_multi_choice_content"
                     />
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/rb_multi_choice_a"
-                        android:text="选项A"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <CheckBox
@@ -124,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rb_multi_choice_b"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <CheckBox
@@ -132,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rb_multi_choice_c"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <CheckBox
@@ -140,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rb_multi_choice_d"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <CheckBox
@@ -148,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rb_multi_choice_e"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                 <LinearLayout
@@ -161,7 +163,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="答案：A"
+                        android:text=""
                         android:id="@+id/tv_multi_choice_answer"
                         android:textColor="@color/text_important_color"
                         />
@@ -169,7 +171,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="知识点："
+                        android:text=""
                         android:id="@+id/tv_multi_choice_answer_knowledge"
                         android:textColor="@color/text_important_color"
                         />
@@ -177,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="得分："
+                        android:text=""
                         android:textColor="@color/text_important_color"
                         android:id="@+id/tv_multi_choice_score"
                         />
@@ -185,7 +187,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_important_color"
-                        android:text="标准答案未开放"
+                        android:text=""
                         android:layout_marginTop="8dp"
                         android:id="@+id/tv_multi_choice_stander_answer"
                         />
@@ -210,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_important_color"
                     android:textSize="16sp"
-                    android:text="选一个对的蛋啊"
+                    android:text=""
                     android:id="@+id/tv_test_content"
                     />
                 <RadioGroup
@@ -225,7 +227,7 @@
                         android:layout_height="wrap_content"
                         style="@style/radio_button"
                         android:id="@+id/rb_choose_a"
-                        android:text="选项A"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <RadioButton
@@ -234,7 +236,7 @@
                         style="@style/radio_button"
                         android:id="@+id/rb_choose_b"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <RadioButton
@@ -243,7 +245,7 @@
                         style="@style/radio_button"
                         android:id="@+id/rb_choose_c"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <RadioButton
@@ -252,7 +254,7 @@
                         style="@style/radio_button"
                         android:id="@+id/rb_choose_d"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                     <RadioButton
@@ -261,7 +263,7 @@
                         style="@style/radio_button"
                         android:id="@+id/rb_choose_e"
                         android:layout_marginTop="8dp"
-                        android:text="选项B"
+                        android:text=""
                         android:visibility="gone"
                         />
                 </RadioGroup>
@@ -275,7 +277,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="答案：A"
+                        android:text=""
                         android:id="@+id/tv_choose_answer"
                         android:textColor="@color/text_important_color"
                         />
@@ -283,7 +285,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="知识点："
+                        android:text=""
                         android:id="@+id/tv_answer_knowledge"
                         android:textColor="@color/text_important_color"
                         />
@@ -291,7 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="得分："
+                        android:text=""
                         android:textColor="@color/text_important_color"
                         android:id="@+id/tv_choose_score"
                         />
@@ -299,7 +301,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_important_color"
-                        android:text="标准答案未开放"
+                        android:text=""
                         android:layout_marginTop="8dp"
                         android:id="@+id/tv_choose_stander_answer"
                         />
@@ -323,7 +325,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="着他们的是个填空题"
+                    android:text=""
                     android:id="@+id/tv_fill_blank_title"
                     android:textColor="@color/text_important_color"
                     />
@@ -385,7 +387,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="答案：A"
+                        android:text=""
                         android:id="@+id/tv_fill_blank_answer"
                         android:textColor="@color/text_important_color"
                         />
@@ -393,7 +395,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="知识点："
+                        android:text=""
                         android:id="@+id/tv_fill_blank_knowledge"
                         android:textColor="@color/text_important_color"
                         />
@@ -401,7 +403,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="得分："
+                        android:text=""
                         android:textColor="@color/text_important_color"
                         android:id="@+id/tv_fill_blank_score"
                         />
@@ -409,7 +411,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_important_color"
-                        android:text="标准答案未开放"
+                        android:text=""
                         android:layout_marginTop="8dp"
                         android:id="@+id/tv_fill_blank_stander_answer"
                         />
@@ -432,7 +434,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="这是个问答提"
+                    android:text=""
                     android:textSize="16sp"
                     android:textColor="@color/text_important_color"
                     android:id="@+id/tv_question_answer_title"
@@ -498,7 +500,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="这是预览的效果"
+                    android:text=""
                     android:id="@+id/tv_preview"
                     android:layout_marginTop="15dp"
                     />
@@ -540,7 +542,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="答案：A"
+                        android:text=""
                         android:id="@+id/tv_complex_answer"
                         android:textColor="@color/text_important_color"
                         />
@@ -548,7 +550,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="知识点："
+                        android:text=""
                         android:id="@+id/tv_complex_knowledge"
                         android:textColor="@color/text_important_color"
                         />
@@ -556,7 +558,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="得分："
+                        android:text=""
                         android:textColor="@color/text_important_color"
                         android:id="@+id/tv_complex_score"
                         />
@@ -564,7 +566,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_important_color"
-                        android:text="标准答案未开放"
+                        android:text=""
                         android:layout_marginTop="8dp"
                         android:id="@+id/tv_complex_stander_answer"
                         />

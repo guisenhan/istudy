@@ -49,6 +49,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.UpLoadFileEntity;
 import hise.hznu.istudy.model.course.AnswerEntity;
+import hise.hznu.istudy.model.course.JudgeTestEntity;
 import hise.hznu.istudy.model.course.TestEntity;
 import hise.hznu.istudy.model.course.TestPaperEntity;
 import hise.hznu.istudy.util.AppUtils;
@@ -233,6 +234,7 @@ public class TestDetailActivity extends BaseActivity
     private boolean viewOneWithAnswerKey;
     private int paperModel = 1; //1表示查卷模式，2表示答题模式，3 表示阅卷模式
     private List<String> multiAnswer = new ArrayList<String>();
+    private JudgeTestEntity judge = new JudgeTestEntity(); // 阅卷的结果
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -468,8 +470,59 @@ public class TestDetailActivity extends BaseActivity
                 }
                 break;
             case AppConstant.POST_AUTO_COMMIT_RESULT:
+                //阅卷的地方 代码优化空间很大，XML文件挖得坑 只能这么写了 等改版的时候在优化
                 if (response.getRetcode() == 0) {
-                    Log.e("response"," " +JSONObject.toJSONString(response));
+                    Log.e("response",JSONObject.toJSONString(response));
+                    judge = response.getInfo(JudgeTestEntity.class);
+                    if(_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")||_questionList.get(bProblem).getQuestionType().equals("JUDGE")){
+                        llChoiceAnswer.setVisibility(View.VISIBLE);
+                        tvChooseAnswer.setText("答案："+judge.getPoints().get(0).getComment());
+                        tvChooseScore.setText("得分："+judge.getPoints().get(0).getGotscore()+"/"+judge.getPoints().get(0).getFullscore());
+                        tvAnswerKnowledge.setText("知识点："+judge.getPoints().get(0).getKnowledge());
+                        tvChooseStanderAnswer.setText("标准答案："+judge.getPoints().get(0).getKey());
+
+                    }else if(_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")||_questionList.get(bProblem).getQuestionType().equals("PROGRAM_FILL_BLANK")){
+                        llFillBlankAnswer.setVisibility(View.VISIBLE);
+                        StringBuilder score = new StringBuilder();
+                        StringBuilder answer = new StringBuilder();
+                        StringBuilder knowledge = new StringBuilder();
+                        StringBuilder stander = new StringBuilder();
+                        for(JudgeTestEntity.Points points:judge.getPoints()){
+                            score.append(points.getGotscore()+"/"+points.getFullscore()+"  ");
+                            answer.append(points.getComment()+"  ");
+                            knowledge.append(points.getKnowledge()+" ");
+                            stander.append(points.getKey());
+                        }
+                        tvFillBlankAnswer.setText("答案"+answer.toString());
+                        tvFillBlankKnowledge.setText("知识点："+knowledge.toString());
+                        tvFillBlankScore.setText("得分："+score.toString());
+                        tvFillBlankStanderAnswer.setText("标准答案："+stander.toString());
+                    }else if(_questionList.get(bProblem).getQuestionType().equals("COMPLEX")){
+                        llComplexAnswer.setVisibility(View.VISIBLE);
+                        StringBuilder score = new StringBuilder();
+                        StringBuilder answer = new StringBuilder();
+                        StringBuilder knowledge = new StringBuilder();
+                        StringBuilder stander = new StringBuilder();
+                        for(JudgeTestEntity.Points points:judge.getPoints()){
+                            score.append(points.getGotscore()+"/"+points.getFullscore()+"  ");
+                            answer.append(points.getComment()+"  ");
+                            knowledge.append(points.getKnowledge()+" ");
+                            stander.append(points.getKey());
+                        }
+                        tvComplexAnswer.setText("答案："+answer.toString());
+                        tvComplexKnowledge.setText("知识点："+knowledge.toString());
+                        tvComplexScore.setText("得分："+score.toString());
+                        tvComplexStanderAnswer.setText("标准答案："+stander.toString());
+                    }else if(_questionList.get(bProblem).getQuestionType().equals("MULIT_CHIOCE")){
+                        llMultiChoiceAnswer.setVisibility(View.VISIBLE);
+                        tvMultiChoiceStanderAnswer.setText("标准答案："+judge.getPoints().get(0).getKey());
+                        tvMultiChoiceAnswerKnowledge.setText("知识点："+judge.getPoints().get(0).getKnowledge());
+                        tvMultiChoiceScore.setText("得分："+judge.getPoints().get(0).getGotscore()+"/"+judge.getPoints().get(0).getFullscore());
+                        tvMultiChoiceAnswer.setText("答案："+judge.getPoints().get(0).getComment());
+                    }else{
+                        tvPreview.setVisibility(View.VISIBLE);
+                        tvPreview.setText("答案："+Html.fromHtml(judge.getPoints().get(0).getKey()));
+                    }
                 } else {
                     MiscUtils.showMessageToast(response.getMessage());
                 }
@@ -856,6 +909,13 @@ public class TestDetailActivity extends BaseActivity
                 try {
                     if ((bProblem) > 0) {
                         bProblem = bProblem - 1;
+                        if(paperModel == 2){
+                            llFillBlankAnswer.setVisibility(View.GONE);
+                            llChoiceAnswer.setVisibility(View.GONE);
+                            llComplexAnswer.setVisibility(View.GONE);
+                            llMultiChoiceAnswer.setVisibility(View.GONE);
+                            tvPreview.setVisibility(View.GONE);
+                        }
                         if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") || _questionList
                                 .get(bProblem).getQuestionType().equals("JUDGE")) {
                             setChooseTest(_questionList.get(bProblem));
@@ -881,6 +941,13 @@ public class TestDetailActivity extends BaseActivity
             case R.id.iv_right_arrow:
                 try {
                     if (bProblem + 1 < _questionList.size()) {
+                        if(paperModel == 2){
+                            llFillBlankAnswer.setVisibility(View.GONE);
+                            llChoiceAnswer.setVisibility(View.GONE);
+                            llComplexAnswer.setVisibility(View.GONE);
+                            llMultiChoiceAnswer.setVisibility(View.GONE);
+                            tvPreview.setVisibility(View.GONE);
+                        }
                         bProblem = bProblem + 1;
                         if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") || _questionList
                                 .get(bProblem).getQuestionType().equals("JUDGE")) {
