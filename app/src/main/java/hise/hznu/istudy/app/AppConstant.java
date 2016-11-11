@@ -1,5 +1,9 @@
 package hise.hznu.istudy.app;
 
+import android.os.Environment;
+
+import java.io.File;
+
 /**
  * Created by PC on 2016/7/21.
  */
@@ -8,7 +12,7 @@ public class AppConstant {
     public static final int SERVER_ERROR_ERROR =12; //服务器内部错误
     public static final int SERVER_TOKEN_OOD = 13;// 服务
 
-
+    public static final String FILE_STORED = Environment.getExternalStorageDirectory()+ File.separator+"istudy";
     public static final String SERVER_URL="http://dodo.hznu.edu.cn/api/"; //服务器地址
 
     public static final String LOGIN_ACTION = "login"; //登录
