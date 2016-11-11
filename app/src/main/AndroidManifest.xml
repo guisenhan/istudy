@@ -92,6 +92,10 @@
 		</activity>
 		<activity android:name=".activity.mine.ChangePassActivity">
 		</activity>
+		<activity android:name=".activity.course.CommentActivity">
+		</activity>
+		<activity android:name=".activity.course.CommentListActivity">
+		</activity>
 	</application>
 
 </manifest>

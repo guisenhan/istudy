@@ -1,7 +1,9 @@
 package hise.hznu.istudy.activity.course;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -63,6 +65,14 @@ public class CommentEachActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        lvComment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(CommentEachActivity.this,CommentListActivity.class);
+                intent.putExtra("hupingId",_dataList.get(i).getTestid());
+                startActivity(intent);
             }
         });
     }

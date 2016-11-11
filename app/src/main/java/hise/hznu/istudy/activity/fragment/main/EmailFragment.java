@@ -51,14 +51,6 @@ public class EmailFragment extends BaseFragment {
     private EmailAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
-        return super.onCreateView(inflater, container, savedInstanceState);
-
-    }
-
-    @Override
     protected void initData() {
         super.initData();
         adapter = new EmailAdapter(getActivity());

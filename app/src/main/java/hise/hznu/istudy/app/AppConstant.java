@@ -57,5 +57,10 @@ public class AppConstant {
     public static final int POST_CHANGE_PASSWORD = 23;
     public static final String QUERY_EMAIL_SEND = "messagesendquery";// 发信查询
     public static final int POST_QUERY_EMAIL_SEND = 24;
-
+    public static final String QUERY_COMMENT_LIST = "hupinginfo" ; // 查询互评列表
+    public static final int POST_QUERY_COMMENT_LIST = 25;
+    public static final String QUERY_USER_TESTER_COMMENT = "hupingusertest" ; //互评试卷查询同学试卷题目
+    public static final int POST_QUERY_USER_TESTER_COMMENT = 26;
+    public static final String QUERY_SUBMIT_HUPING = "submithuping" ; //提交互评数据
+    public static final int POST_SUBMIT_HUPING = 27;
 }
