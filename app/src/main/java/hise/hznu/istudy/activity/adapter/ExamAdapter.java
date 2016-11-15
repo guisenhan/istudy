@@ -77,8 +77,6 @@ public class ExamAdapter extends BaseAdapter {
         view.tvTeacherName.setText(_dataList.get(position).getTeacher());
         return convertView;
     }
-
-
     final class ViewHolder {
         TextView tvExamName;
         TextView tvDate;

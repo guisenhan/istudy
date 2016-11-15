@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     tools:context="hise.hznu.istudy.activity.course.StudyDatumActivity"
     android:orientation="vertical"
+              android:background="@color/window_background_color"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/topbar_height"
         android:padding="11dp"
+        android:background="@color/unit_background_color"
         >
         <TextView
             android:layout_width="wrap_content"

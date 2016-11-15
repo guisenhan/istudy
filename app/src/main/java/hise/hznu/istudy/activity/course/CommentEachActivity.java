@@ -28,14 +28,6 @@ public class CommentEachActivity extends BaseActivity {
     TextView tvBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.exam_name)
-    TextView examName;
-    @BindView(R.id.exam_teacher)
-    TextView examTeacher;
-    @BindView(R.id.exam_start_time)
-    TextView examStartTime;
-    @BindView(R.id.exam_end_time)
-    TextView examEndTime;
     @BindView(R.id.lv_comment)
     ListView lvComment;
     private CommentEachAdapter adapter;

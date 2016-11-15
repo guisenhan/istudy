@@ -61,6 +61,7 @@
                 android:drawableLeft="@mipmap/icon_password"
                 android:drawablePadding="@dimen/login_drawable_padding"
                 android:layout_alignParentBottom="true"
+                android:inputType="textPassword"
                 />
             <View
                 android:layout_width="match_parent"

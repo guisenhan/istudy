@@ -9,7 +9,7 @@
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="48dp"
-		android:background="@color/colorPrimary"
+		android:background="@color/unit_background_color"
 		android:padding="11dp"
 		>
 		<TextView
@@ -20,6 +20,7 @@
 			android:textColor="@color/text_white_color"
 			android:id="@+id/tv_back"
 			android:textSize="16sp"
+			android:drawableLeft="@mipmap/arrow_left"
 			/>
 		<TextView
 			android:layout_width="wrap_content"

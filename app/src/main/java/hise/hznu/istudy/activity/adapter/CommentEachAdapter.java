@@ -13,6 +13,7 @@ import java.util.List;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.model.course.CommentTaskEntity;
 import hise.hznu.istudy.model.course.HomeWorkEntity;
+import hise.hznu.istudy.util.AppUtils;
 
 /**
  * Created by PC on 2016/9/21.
@@ -60,22 +61,24 @@ public class CommentEachAdapter extends BaseAdapter {
         ViewHolder view = null;
         if (convertView == null) {
             view = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_home_work, null);
-            view.tvHomeworkName = (TextView) convertView.findViewById(R.id.tv_homework_name);
-            view.tvHomeworkInfo = (TextView) convertView.findViewById(R.id.tv_homework_info);
-            view.tvSeeDetail = (TextView) convertView.findViewById(R.id.tv_see_detail);
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_comment_each, null);
+            view.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+            view.tvInfo = (TextView) convertView.findViewById(R.id.tv_info);
+            view.tvDate = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        view.tvHomeworkName.setText(_dataList.get(position).getTitle());
-        view.tvHomeworkInfo.setText(_dataList.get(position).getMemo() + _dataList.get(position).getTeacher());
+        view.tvTitle.setText(_dataList.get(position).getTitle());
+        view.tvInfo.setText("任课老师："+_dataList.get(position).getTeacher());
+        view.tvDate.setText( "时间："+AppUtils.dateFormat(_dataList.get(position).getDatestart())+"—"+AppUtils
+                .dateFormat(_dataList.get(position).getDateend()));
         return convertView;
     }
 
     static class ViewHolder {
-        TextView tvHomeworkName;
-        TextView tvHomeworkInfo;
-        TextView tvSeeDetail;
+        TextView tvTitle;
+        TextView tvInfo;
+        TextView tvDate;
     }
 }
