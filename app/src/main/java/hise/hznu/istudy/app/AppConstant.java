@@ -67,4 +67,10 @@ public class AppConstant {
     public static final int POST_QUERY_USER_TESTER_COMMENT = 26;
     public static final String QUERY_SUBMIT_HUPING = "submithuping" ; //提交互评数据
     public static final int POST_SUBMIT_HUPING = 27;
+    public static final String DELETE_EMAIL = "messagedelete";//删除邮件
+    public static final int POST_DELETE_EMAIL = 28;
+    public static final String EMAIL_READED = "messagereaded" ; //标记邮件已读
+    public static final int POST_EMAIL_READED = 29;
+    public static final String MESSAGE_SEND = "messagesend";//发送邮件
+    public static final int POST_MESSAGE_SEND = 30;
 }

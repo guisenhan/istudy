@@ -87,19 +87,11 @@ public class MyExerciseActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.tv_back, R.id.exam_name, R.id.exam_teacher, R.id.exam_start_time, R.id.exam_end_time})
+    @OnClick({R.id.tv_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
                 finish();
-                break;
-            case R.id.exam_name:
-                break;
-            case R.id.exam_teacher:
-                break;
-            case R.id.exam_start_time:
-                break;
-            case R.id.exam_end_time:
                 break;
         }
     }
