@@ -73,4 +73,7 @@ public class AppConstant {
     public static final int POST_EMAIL_READED = 29;
     public static final String MESSAGE_SEND = "messagesend";//发送邮件
     public static final int POST_MESSAGE_SEND = 30;
+    public static final String GET_CONTACTOR = "messagecontact";//获取联系人
+    public static final int POST_GET_CONTACTOR = 31;
+
 }

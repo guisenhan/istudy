@@ -1,6 +1,8 @@
 package hise.hznu.istudy.activity.course;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,14 +11,20 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.Base64;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.adapter.CommentRuleAdapter;
 import hise.hznu.istudy.api.ApiResponse;
@@ -25,6 +33,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CommentPaperEntity;
 import hise.hznu.istudy.model.course.CommentResultEntity;
+import hise.hznu.istudy.util.AppUtils;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.widget.MyListView;
 
@@ -64,6 +73,8 @@ public class CommentActivity extends BaseActivity {
     private JSONObject result = new JSONObject();
     private List<CommentResultEntity> resultList;
     private int bProblem= 0;
+    private File file1;
+    AsyncHttpClient http = new AsyncHttpClient();
     @Override
     protected void initData() {
         super.initData();
@@ -129,7 +140,7 @@ public class CommentActivity extends BaseActivity {
         super.onFailure(errorMsg, actionId);
     }
 
-    @OnClick({R.id.tv_back, R.id.iv_left_arrow, R.id.iv_right_arrow, R.id.tv_auto_commit,R.id.iv_save})
+    @OnClick({R.id.tv_back, R.id.iv_left_arrow, R.id.iv_right_arrow, R.id.tv_auto_commit,R.id.iv_save,R.id.ll_addtional})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
@@ -168,6 +179,39 @@ public class CommentActivity extends BaseActivity {
                 break;
             case R.id.iv_save:
                 setResult();
+                break;
+            case R.id.ll_addtional:
+                Intent intent = new Intent(this,ImageActivity.class);
+                intent.putExtra("img",_dataList.get(bProblem).getAnswerext());
+                startActivity(intent);
+//                file1 = new File(AppConstant.FILE_STORED +_dataList.get(bProblem).getAnswerext());
+//                if(file1.exists()){
+//                    return;
+//                }
+//                http.get(CommentActivity.this,_dataList.get(bProblem).getAnswerext(), new FileAsyncHttpResponseHandler
+//                        (CommentActivity.this) {
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, File file) {
+//                        Log.e("filePath",file.getAbsolutePath());
+//                        try {
+//                            FileInputStream in = new FileInputStream(file);
+//                            FileOutputStream out = new FileOutputStream(file1);
+//                            int length = in.available();
+//                            byte[] by = new byte[length];
+//                            in.read(by);
+//
+//                            out.write(by);
+//                        }catch (Exception  e){
+//
+//                        }
+//                        AppUtils.openFile(file1);
+//                    }
+//                });
                 break;
         }
     }
@@ -216,5 +260,13 @@ public class CommentActivity extends BaseActivity {
             resultList.add(com);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(file1.exists()){
+            file1.delete();
+        }
     }
 }

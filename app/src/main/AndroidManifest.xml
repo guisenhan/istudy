@@ -92,13 +92,17 @@
 		</activity>
 		<activity android:name=".activity.mine.ChangePassActivity">
 		</activity>
-		<activity android:name=".activity.course.CommentActivity">
+		<activity android:name=".activity.course.CommentActivity"
+				  android:configChanges="orientation|keyboardHidden"
+			>
 		</activity>
 		<activity android:name=".activity.course.CommentListActivity">
 		</activity>
 		<activity android:name=".activity.email.SendEmailActivity">
 		</activity>
 		<activity android:name=".activity.email.ContactActivity">
+		</activity>
+		<activity android:name=".activity.course.ImageActivity">
 		</activity>
 	</application>
 

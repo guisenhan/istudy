@@ -5,6 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
+	android:background="@color/window_background_color"
 	tools:context="hise.hznu.istudy.activity.email.ContactActivity">
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -45,7 +46,9 @@
 		android:background="@color/divider_color"/>
 	<ListView
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:id="@+id/lv_contact"
+		android:divider="@color/divider_color"
+		android:dividerHeight="@dimen/divider_height"
 		/>
 </LinearLayout>

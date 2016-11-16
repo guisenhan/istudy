@@ -1,5 +1,8 @@
 package hise.hznu.istudy.activity.email;
 
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.net.URL;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,6 +25,8 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.email.EmailEntity;
+import hise.hznu.istudy.model.email.SendEmailEntity;
+import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
 
 public class EmailActivity extends BaseActivity {
@@ -36,8 +43,6 @@ public class EmailActivity extends BaseActivity {
     TextView tvEmailSender;
     @BindView(R.id.tv_date)
     TextView tvDate;
-    @BindView(R.id.tv_hide)
-    TextView tvHide;
     @BindView(R.id.ll_top)
     LinearLayout llTop;
     @BindView(R.id.divider)
@@ -50,22 +55,32 @@ public class EmailActivity extends BaseActivity {
     ImageView ivDelete;
 
     private EmailEntity data;
+    private SendEmailEntity sendEmailEntity;
     private String msgId;
+    private int type;
     @Override
     protected void initData() {
         super.initData();
-        JSONObject read = new JSONObject();
-        msgId = data.getId();
-        read.put("msgid",msgId);
-        RequestManager.getmInstance().apiPostData(AppConstant.EMAIL_READED,read,this,AppConstant.POST_EMAIL_READED);
-        //邮件阅读标记
+        if(type==1){
+            JSONObject read = new JSONObject();
+            msgId = data.getId();
+            read.put("msgid",msgId);
+            RequestManager.getmInstance().apiPostData(AppConstant.EMAIL_READED,read,this,AppConstant.POST_EMAIL_READED);
+        }
+
     }
 
     @Override
     protected void initExtras(Bundle extras) {
         super.initExtras(extras);
         data = new EmailEntity();
-        data = (EmailEntity) extras.get("email");
+        sendEmailEntity = new SendEmailEntity();
+        type = extras.getInt("type");
+        if(type ==1){
+            data = (EmailEntity) extras.get("email");
+        }else if(type ==2){
+            sendEmailEntity = (SendEmailEntity)extras.get("email");
+        }
     }
 
     @Override
@@ -76,12 +91,40 @@ public class EmailActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        tvName.setText(data.getSubject());
-        tvContent.setText(Html.fromHtml(data.getContent()));
-        tvEmailSender.setText("发件人："+data.getSendername());
+        if(type ==1) {
+            tvName.setText(data.getSubject());
+            tvContent.setText(Html.fromHtml(data.getContent(),imgGetter,null));
+            tvEmailSender.setText("发件人：" + data.getSendername());
+        }else if(type ==2){
+            tvName.setText(sendEmailEntity.getSubject());
+            tvContent.setText(Html.fromHtml(sendEmailEntity.getContent(),imgGetter,null));
+            StringBuilder sb = new StringBuilder();
+            for(int i= 0 ; i < sendEmailEntity.getReceives().size(); i++){
+                sb.append(sendEmailEntity.getReceives().get(i).getName());
+                if(i!= sendEmailEntity.getReceives().size()-1){
+                    sb.append("，");
+                }
+            }
+            tvEmailSender.setText("收件人："+sb.toString());
+        }
 
     }
-
+    Html.ImageGetter imgGetter = new Html.ImageGetter() {
+        public Drawable getDrawable(String source) {
+            Drawable drawable = null;
+            URL url;
+            try {
+                url = new URL(source);
+                drawable =new BitmapDrawable(ImageLoaderUtils.getImageLoader().loadImageSync(url.toString())); // 获取网路图片
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            drawable.setBounds(0, 0, MiscUtils.getScreenWidth(),
+                    (drawable.getIntrinsicHeight() * MiscUtils.getScreenWidth()) / drawable.getIntrinsicWidth());
+            return drawable;
+        }
+    };
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
@@ -103,6 +146,10 @@ public class EmailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_email_back:
+                Intent intent = new Intent(this,SendEmailActivity.class);
+                intent.putExtra("isBack",true);
+                intent.putExtra("parentCode",data.getId());
+                startActivity(intent);
                 break;
             case R.id.iv_delete:
                 JSONObject delete = new JSONObject();

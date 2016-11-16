@@ -2,9 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:orientation="horizontal"
 			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
+			  android:layout_height="wrap_content"
 			  android:padding="11dp"
+			  android:gravity="center_vertical"
 	>
+	<CheckBox
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:button="@drawable/checkbox_blue"
+		android:id="@+id/cb_choose"
+		/>
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="11dp"
+		>
+		<hise.hznu.istudy.widget.CircleImageView
+			android:layout_width="30dp"
+			android:layout_height="30dp"
+			android:id="@+id/civ_photo"
+			android:src="@mipmap/icon_default_photo"
+			/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text=""
+			android:id="@+id/tv_char"
+			/>
+	</RelativeLayout>
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -12,5 +37,6 @@
 		android:textColor="@color/text_important_color"
 		android:textSize="15sp"
 		android:id="@+id/tv_name"
+		android:layout_marginLeft="11dp"
 		/>
 </LinearLayout>
