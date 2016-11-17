@@ -51,6 +51,7 @@ public class FindPasswordActivity extends BaseActivity {
 
     private String token;
     private int type = 1;
+    private String email;
     @Override
     protected void initExtras(Bundle extras) {
         super.initExtras(extras);
@@ -79,6 +80,7 @@ public class FindPasswordActivity extends BaseActivity {
                 if(response.getRetcode() ==0){
                     type = 2 ;
                     setView(type);
+                    email= edEmail.getText().toString();
                 }
                 MiscUtils.showMessageToast(response.getMessage());
                 break;
@@ -167,7 +169,7 @@ public class FindPasswordActivity extends BaseActivity {
             return;
         }
         JSONObject params = new JSONObject();
-        params.put("email",edEmail.getText().toString());
+        params.put("email",email);
         params.put("validcode",edValidate.getText().toString());
         RequestManager.getmInstance().apiPostData(AppConstant.VALIDATE_VERIFY_CODE,params,this,AppConstant
                 .POST_VALIDATE_VERIFY_CODE);
