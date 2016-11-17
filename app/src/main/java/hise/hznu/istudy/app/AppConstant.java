@@ -75,5 +75,10 @@ public class AppConstant {
     public static final int POST_MESSAGE_SEND = 30;
     public static final String GET_CONTACTOR = "messagecontact";//获取联系人
     public static final int POST_GET_CONTACTOR = 31;
-
+    public static final String GET_VALIDATE_CODE = "sendvalidcode"; //获取验证码
+    public static final int POST_GET_VALIDATE_CODE = 32;
+    public static final String VALIDATE_VERIFY_CODE = "validcode"; // 验证验证码
+    public static final int POST_VALIDATE_VERIFY_CODE = 33;
+    public static final String SETPASSWORD = "resetpassword";  // 重置密码
+    public static final int  POST_SET_PASSWORD = 34;
 }

@@ -1,9 +1,11 @@
 package hise.hznu.istudy.activity.fragment.study;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -15,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.adapter.CourseNoticeAdapter;
+import hise.hznu.istudy.activity.course.MessageActivity;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
@@ -51,6 +54,14 @@ public class CourseMessageFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         super.initView(view);
+        lvCourseMessage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                intent.putExtra("messageId",_dataList.get(i).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -92,9 +92,9 @@
 		</activity>
 		<activity android:name=".activity.mine.ChangePassActivity">
 		</activity>
-		<activity android:name=".activity.course.CommentActivity"
-				  android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"
-			>
+		<activity
+			android:name=".activity.course.CommentActivity"
+			android:windowSoftInputMode="stateHidden|adjustResize">
 		</activity>
 		<activity android:name=".activity.course.CommentListActivity">
 		</activity>
@@ -103,6 +103,10 @@
 		<activity android:name=".activity.email.ContactActivity">
 		</activity>
 		<activity android:name=".activity.course.ImageActivity">
+		</activity>
+		<activity android:name=".activity.course.MessageActivity">
+		</activity>
+		<activity android:name=".activity.FindPasswordActivity">
 		</activity>
 	</application>
 

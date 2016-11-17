@@ -8,25 +8,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 import com.alibaba.fastjson.JSONObject;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.app.AppManager;
 import hise.hznu.istudy.base.BaseActivity;
-import hise.hznu.istudy.model.LoginModel;
 import hise.hznu.istudy.util.SharePreUtil;
 import hise.hznu.istudy.util.UIUtils;
 
 /**
- *  Create by GuisenHan on 2016/7/25
+ * Create by GuisenHan on 2016/7/25
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -36,6 +33,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText edPassword;
     @BindView(R.id.tv_login)
     TextView tvLogin;
+    @BindView(R.id.tv_find_password)
+    TextView tvFindPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +66,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     public void initViews() {
         tvLogin.setOnClickListener(this);
+        tvFindPassword.setOnClickListener(this);
     }
 
     @Override
@@ -74,6 +74,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.tv_login:
                 loginAction(edUsername.getText().toString(), edPassword.getText().toString());
+                break;
+            case R.id.tv_find_password:
+                Intent intent = new Intent(this,FindPasswordActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -93,7 +97,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         params.put("username", username);
         params.put("password", password);
         params.put("clienttype", "1");
-        RequestManager.getmInstance().apiPostData(AppConstant.LOGIN_ACTION, params, this, AppConstant.POST_LOGIN_ACTION);
+        RequestManager.getmInstance()
+                .apiPostData(AppConstant.LOGIN_ACTION, params, this, AppConstant.POST_LOGIN_ACTION);
     }
 
     @Override
@@ -111,20 +116,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Log.e("response", response.toString());
         switch (actionId) {
             case AppConstant.POST_LOGIN_ACTION:
-                Log.e("response"," " +response);
+                Log.e("response", " " + response);
                 ApiResponse apiResponse = new ApiResponse(response);
 //                LoginModel login = new Gson().fromJson(response.toString(), new TypeToken<LoginModel>() {
 //                }.getType());
-                if(apiResponse.getAuthtoken()!=null && apiResponse.getRetcode()==0){
+                if (apiResponse.getAuthtoken() != null && apiResponse.getRetcode() == 0) {
                     SharePreUtil.saveAuthorToken(this, apiResponse.getAuthtoken());
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     AppManager.getInstance().finishActivty();
-                }else{
+                } else {
                     UIUtils.showToast("登录出错！");
                 }
                 break;
         }
 
     }
+
 }

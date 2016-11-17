@@ -187,7 +187,7 @@ public class CommentActivity extends BaseActivity {
     private void commit(){
         JSONObject result = new JSONObject();
         result.put("usertestid",usertestId);
-        result.put("questions",JSONObject.toJSONString(resultList));
+        result.put("questions",resultList);
 
         JSONObject params = new JSONObject();
 
@@ -208,12 +208,12 @@ public class CommentActivity extends BaseActivity {
             }
         }
         com.setQuestionid(_dataList.get(bProblem).getId());
-//        if(MiscUtils.isEmpty(edComment.getText().toString())){
-//            MiscUtils.showMessageToast("请输入评语");
-//            return;
-//        }
+        if(MiscUtils.isEmpty(edComment.getText().toString())){
+            MiscUtils.showMessageToast("请输入评语");
+            return;
+        }
         com.setComments(edComment.getText().toString());
-        com.setIsauthorvisible("0");
+        com.setIsauthorvisible("false");
         List<CommentResultEntity.rules> rule1 = new ArrayList<CommentResultEntity.rules>();
         for(int i= 0 ; i < adapter.get_dataList().size();i++){
             CommentResultEntity.rules rules1 = new CommentResultEntity.rules();
