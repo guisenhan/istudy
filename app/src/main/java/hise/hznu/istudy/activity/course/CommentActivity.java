@@ -70,11 +70,9 @@ public class CommentActivity extends BaseActivity {
     private String usertestId;
     private List<CommentPaperEntity> _dataList = new ArrayList<CommentPaperEntity>();
     private CommentRuleAdapter adapter;
-    private JSONObject result = new JSONObject();
     private List<CommentResultEntity> resultList;
     private int bProblem= 0;
-    private File file1;
-    AsyncHttpClient http = new AsyncHttpClient();
+
     @Override
     protected void initData() {
         super.initData();
@@ -172,9 +170,7 @@ public class CommentActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_auto_commit:
-                if(_dataList.size() ==1){
-                    setResult();
-                }
+                setResult();
                 commit();
                 break;
             case R.id.iv_save:
@@ -184,42 +180,19 @@ public class CommentActivity extends BaseActivity {
                 Intent intent = new Intent(this,ImageActivity.class);
                 intent.putExtra("img",_dataList.get(bProblem).getAnswerext());
                 startActivity(intent);
-//                file1 = new File(AppConstant.FILE_STORED +_dataList.get(bProblem).getAnswerext());
-//                if(file1.exists()){
-//                    return;
-//                }
-//                http.get(CommentActivity.this,_dataList.get(bProblem).getAnswerext(), new FileAsyncHttpResponseHandler
-//                        (CommentActivity.this) {
-//                    @Override
-//                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(int statusCode, Header[] headers, File file) {
-//                        Log.e("filePath",file.getAbsolutePath());
-//                        try {
-//                            FileInputStream in = new FileInputStream(file);
-//                            FileOutputStream out = new FileOutputStream(file1);
-//                            int length = in.available();
-//                            byte[] by = new byte[length];
-//                            in.read(by);
-//
-//                            out.write(by);
-//                        }catch (Exception  e){
-//
-//                        }
-//                        AppUtils.openFile(file1);
-//                    }
-//                });
+
                 break;
         }
     }
     private void commit(){
+        JSONObject result = new JSONObject();
         result.put("usertestid",usertestId);
         result.put("questions",JSONObject.toJSONString(resultList));
+
         JSONObject params = new JSONObject();
-        params.put("data",new String(Base64.encode(JSONObject.toJSONString(params).getBytes(), Base64.DEFAULT)));
+
+        params.put("data",new String(Base64.encode(JSONObject.toJSONString(result).getBytes(), Base64.DEFAULT)));
+        Log.e("questions","" +JSONObject.toJSONString(result));
         RequestManager.getmInstance().apiPostData(AppConstant.QUERY_SUBMIT_HUPING,params,this,AppConstant
                 .POST_SUBMIT_HUPING);
 
@@ -235,12 +208,12 @@ public class CommentActivity extends BaseActivity {
             }
         }
         com.setQuestionid(_dataList.get(bProblem).getId());
-        if(MiscUtils.isEmpty(edComment.getText().toString())){
-            MiscUtils.showMessageToast("请输入评语");
-            return;
-        }
+//        if(MiscUtils.isEmpty(edComment.getText().toString())){
+//            MiscUtils.showMessageToast("请输入评语");
+//            return;
+//        }
         com.setComments(edComment.getText().toString());
-        com.setIsauthorvisible(false);
+        com.setIsauthorvisible("0");
         List<CommentResultEntity.rules> rule1 = new ArrayList<CommentResultEntity.rules>();
         for(int i= 0 ; i < adapter.get_dataList().size();i++){
             CommentResultEntity.rules rules1 = new CommentResultEntity.rules();
@@ -253,7 +226,6 @@ public class CommentActivity extends BaseActivity {
             rule1.add(rules1);
         }
         com.setRules(rule1);
-        resultList.add(com);
         if(temp!=-1){
             resultList.set(temp,com);
         }else{
@@ -262,11 +234,5 @@ public class CommentActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(file1.exists()){
-            file1.delete();
-        }
-    }
+
 }

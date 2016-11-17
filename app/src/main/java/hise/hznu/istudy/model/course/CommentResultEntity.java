@@ -22,7 +22,7 @@ public class CommentResultEntity implements Serializable{
      */
     private String questionid;
     private String comments;
-    private boolean isauthorvisible;
+    private String isauthorvisible;
     private List<rules> rules;
 
     public String getComments() {
@@ -33,11 +33,11 @@ public class CommentResultEntity implements Serializable{
         this.comments = comments;
     }
 
-    public boolean isauthorvisible() {
+    public String getIsauthorvisible() {
         return isauthorvisible;
     }
 
-    public void setIsauthorvisible(boolean isauthorvisible) {
+    public void setIsauthorvisible(String isauthorvisible) {
         this.isauthorvisible = isauthorvisible;
     }
 
