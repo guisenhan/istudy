@@ -75,6 +75,7 @@ public class EmailSendAdapter extends BaseAdapter {
         }
         view.tvDate.setText("时间："+AppUtils.dateFormat(_dataList.get(position).getDate()));
         view.tvContent.setText(_dataList.get(position).getSubject());
+        //view.tvEmailSender.setText(_dataList.get(position).getReceives());
         //view.setText(_dataList.get(position).getSendername());
 //        if(_dataList.get(position).isread()){
 //            view.ivEmail.setImageResource(R.mipmap.icon_email_readed);

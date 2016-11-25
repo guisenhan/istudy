@@ -19,6 +19,7 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.app.AppManager;
 import hise.hznu.istudy.base.BaseActivity;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.SharePreUtil;
 import hise.hznu.istudy.util.UIUtils;
 
@@ -121,7 +122,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                LoginModel login = new Gson().fromJson(response.toString(), new TypeToken<LoginModel>() {
 //                }.getType());
                 if (apiResponse.getAuthtoken() != null && apiResponse.getRetcode() == 0) {
-                    SharePreUtil.saveAuthorToken(this, apiResponse.getAuthtoken());
+                    MiscUtils.setSharedPreferenceValue("token","tokens",apiResponse.getAuthtoken());
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     AppManager.getInstance().finishActivty();

@@ -74,6 +74,7 @@
                 android:textColor="@color/text_other_color"
                 android:layout_marginTop="6dp"
                 android:textSize="12sp"
+                android:id="@+id/tv_account"
                 />
         </LinearLayout>
 

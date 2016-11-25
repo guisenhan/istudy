@@ -22,6 +22,7 @@ import java.util.Map;
 import hise.hznu.istudy.app.AppConfig;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.app.IStudyApplication;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.SharePreUtil;
 
 /**
@@ -75,7 +76,7 @@ public class RequestManager {
         /*
         * 在这里根据接口的要求规范进行相应的处理 ，比如添加head 和map的字符串化
         * */
-        String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
+        String authenToken = MiscUtils.getSharepreferenceValue("token","tokens","");
         Log.e("authtoken",""+authenToken);
         jsonObject.put("authtoken", authenToken);
         return this.postJsonRequest(url,JSONObject.toJSONString(jsonObject),jsonObject,null,new ApiListenerHolder(requestListener),false,TIMEOUT_COUNT,RETRY_TIMES,actionId);

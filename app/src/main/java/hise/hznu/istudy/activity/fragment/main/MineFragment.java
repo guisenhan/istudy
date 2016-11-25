@@ -43,7 +43,8 @@ public class MineFragment extends BaseFragment {
     LinearLayout llPersonInfo;
     @BindView(R.id.tv_switch)
     TextView tvSwitch;
-
+    @BindView(R.id.tv_account)
+    TextView tvAccount;
     @Override
     protected void initData() {
         super.initData();
@@ -80,18 +81,19 @@ public class MineFragment extends BaseFragment {
         if (MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl())) {
             ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(), rivUserPhoto);
         }
+        if(MiscUtils.isNotEmpty(userInfoEntity.getUsername())){
+            tvAccount.setText(userInfoEntity.getUsername());
+        }
     }
 
-    @OnClick({R.id.tv_user_name, R.id.ll_person_info, R.id.tv_safe_setting, R.id.tv_exit,R.id.tv_switch})
+    @OnClick({ R.id.ll_person_info, R.id.tv_safe_setting, R.id.tv_exit,R.id.tv_switch})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_switch:
                 Intent Login = new Intent(getActivity(), LoginActivity.class);
+                MiscUtils.setSharedPreferenceValue("token","tokens"," ");
                 startActivity(Login);
                 getActivity().finish();
-                break;
-            case R.id.tv_user_name:
-
                 break;
             case R.id.ll_person_info:
                 Intent intent = new Intent(getActivity(), PersonInfoActivity.class);

@@ -26,10 +26,10 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="我的实验"
+			android:text="编辑回复"
 			android:layout_toRightOf="@+id/iv_back"
 			android:textSize="16sp"
-			android:textColor="@color/text_important_color"
+			android:textColor="@color/black"
 			android:id="@+id/tv_title"
 			android:layout_centerVertical="true"
 			/>

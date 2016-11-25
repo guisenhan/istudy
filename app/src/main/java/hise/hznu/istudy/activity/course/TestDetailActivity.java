@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
 import com.loopj.android.http.Base64;
 import com.loopj.android.http.RequestParams;
 
@@ -215,7 +216,10 @@ public class TestDetailActivity extends BaseActivity
     LinearLayout llMultiChoiceAnswer;
     @BindView(R.id.sl_multi_choice)
     ScrollView slMultiChoice;
-
+    @BindView(R.id.acl_load_view)
+    AnimatedCircleLoadingView aclLoadView;
+    @BindView(R.id.rl_animation)
+    RelativeLayout rlAnimation;
     private List<TestEntity> _dataList = new ArrayList<TestEntity>();
     private String testId;
     private int bProblem = 0;
@@ -261,6 +265,7 @@ public class TestDetailActivity extends BaseActivity
         params.put("testid", testId);
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.GET_TEST_DETAIL, params, this, AppConstant.POST_GET_TEST_DETAIL);
+        aclLoadView.startDeterminate();
     }
 
     @Override
@@ -277,7 +282,14 @@ public class TestDetailActivity extends BaseActivity
         slTestChoose.setVisibility(View.GONE);
         slTestChoose.setVisibility(View.GONE);
         llTestType.setVisibility(View.GONE);
+        aclLoadView.setAnimationListener(new AnimatedCircleLoadingView.AnimationListener() {
 
+            @Override
+            public void onAnimationEnd(boolean success) {
+                rlAnimation.setVisibility(View.GONE);
+                initTestView();
+            }
+        });
         //判断是答题模式还是阅卷模式
         switch (paperModel) {
             case 1: //查卷模式
@@ -458,7 +470,8 @@ public class TestDetailActivity extends BaseActivity
                 _dataList = response.getListData(TestEntity.class);
                 if (_dataList.size() > 0) {
                     restData();
-                    initTestView();
+                    aclLoadView.stopOk();
+
                 }
                 break;
             case AppConstant.POST_COMMIT_TEST_RESULT:
@@ -640,6 +653,8 @@ public class TestDetailActivity extends BaseActivity
      * 显示填空题
      */
     private void setFillBlank(TestPaperEntity test) {
+
+
         slTestChoose.setVisibility(View.GONE);
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);
@@ -659,6 +674,10 @@ public class TestDetailActivity extends BaseActivity
             tvTestTypeInfo.setText(test.getQuestionDesc());
             return;
         }
+        tvFillBlankAnswerA.setText("");
+        tvFillBlankAnswerB.setText("");
+        tvFillBlankAnswerC.setText("");
+        tvFillBlankAnswerD.setText("");
         String fb  = "";
         for(AnswerEntity an :_answerList){
             if(an.getQuestionid().equals(test.getId())){
@@ -844,6 +863,7 @@ public class TestDetailActivity extends BaseActivity
         slQuestionAnswer.setVisibility(View.GONE);
         slMultiChoice.setVisibility(View.VISIBLE);
         slComplex.setVisibility(View.GONE);
+
         if (test.isDesc()) {
             llTestType.setVisibility(View.VISIBLE);
             rlTestTitle.setVisibility(View.GONE);
@@ -855,6 +875,10 @@ public class TestDetailActivity extends BaseActivity
             tvTestTypeInfo.setText(test.getQuestionDesc());
             return;
         }
+        rbMultiChoiceA.setChecked(false);
+        rbMultiChoiceB.setChecked(false);
+        rbMultiChoiceC.setChecked(false);
+        rbMultiChoiceD.setChecked(false);
         tvNumber.setText(test.getNumber() + "/" + test.getTotalNumber());
         tvMultiChoiceContent.setText(Html.fromHtml(test.getContent()));
         if (MiscUtils.isNotEmpty(test.getOptiona())) {

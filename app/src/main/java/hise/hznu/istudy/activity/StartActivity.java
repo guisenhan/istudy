@@ -21,12 +21,12 @@ public class StartActivity extends BaseActivity {
     protected void initData() {
         super.initData();
         timer= new Timer(true);
-        String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
+        String authenToken = MiscUtils.getSharepreferenceValue("token","tokens","");
         Log.e("authtoken",""+authenToken);
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                if(!MiscUtils.isEmpty(SharePreUtil.getAuthorToken(StartActivity.this, SharePreUtil.SP_NAME.AUTHOR_TOKEN))){
+                if(!MiscUtils.isEmpty(MiscUtils.getSharepreferenceValue("token","tokens",""))){
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

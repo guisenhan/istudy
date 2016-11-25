@@ -178,12 +178,6 @@ public class CallBackActivity extends BaseActivity implements EasyPermissions.Pe
         mlvComment.setAdapter(adapter);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.iv_back, R.id.action_undo, R.id.action_redo, R.id.action_bold, R.id.action_italic,
             R.id.action_subscript, R.id.action_superscript, R.id.action_strikethrough, R.id.action_underline,

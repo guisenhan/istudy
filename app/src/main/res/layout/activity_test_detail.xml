@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的实验"
+            android:text="答题"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/iv_back"
@@ -68,6 +68,22 @@
         android:layout_below="@+id/rl_test_title"
         android:layout_above="@+id/ll_bottom"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_animation"
+            >
+            <com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/acl_load_view"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:secondaryColor="@color/window_background_color"
+                app:mainColor="@color/colorPrimary"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -486,9 +502,8 @@
                             android:background="@null"
                             android:contentDescription="@null"
                             android:src="@mipmap/icon_insert_link"
+                            android:visibility="gone"
                             />
-
-
                     </LinearLayout>
                 </HorizontalScrollView>
                 <jp.wasabeef.richeditor.RichEditor
