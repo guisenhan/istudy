@@ -14,6 +14,15 @@ public class CommentRuleEntity implements Serializable{
     private String ruleid;
     private String contents;
     private String score;
+    private String totalscore;
+
+    public String getTotalscore() {
+        return totalscore;
+    }
+
+    public void setTotalscore(String totalscore) {
+        this.totalscore = totalscore;
+    }
 
     public String getContents() {
         return contents;

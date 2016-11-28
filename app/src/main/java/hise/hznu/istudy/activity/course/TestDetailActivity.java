@@ -474,7 +474,6 @@ public class TestDetailActivity extends BaseActivity
                 if (_dataList.size() > 0) {
                     restData();
                     aclLoadView.stopOk();
-
                 }
                 break;
             case AppConstant.POST_COMMIT_TEST_RESULT:
@@ -563,9 +562,17 @@ public class TestDetailActivity extends BaseActivity
                 question.setQuestionType(_dataList.get(i).getType());
                 question.setTotalNumber("" + _dataList.get(i).getQuestions().size());
                 question.setNumber("" + (j + 1));
+                if(MiscUtils.isNotEmpty(question.getAnswer())){
+                    AnswerEntity answerEntity = new AnswerEntity();
+                    answerEntity.setAnswer(question.getAnswer());
+                    answerEntity.setQuestionid(question.getId());
+                    answerEntity.setTestid(testId);
+                    _answerList.add(answerEntity);
+                }
                 _questionList.add(question);
             }
         }
+        Log.e("answer",JSONObject.toJSONString(_answerList));
     }
 
     private void initTestView() {
@@ -632,6 +639,7 @@ public class TestDetailActivity extends BaseActivity
         } else { tvChooseStanderAnswer.setText("标准答案未开放"); }
         tvTestName.setText(test.getQuestionTitle());
         rgAnswer.clearCheck();
+
         for (int i = 0; i < _answerList.size(); i++) {
             if (MiscUtils.isNotEmpty(_answerList.get(i).getQuestionid())) {
                 if (_answerList.get(i).getQuestionid().equals(test.getId())) {
@@ -1032,7 +1040,11 @@ public class TestDetailActivity extends BaseActivity
         answerEntity.setTestid(testId);
         answerEntity.setQuestionid(_questionList.get(bProblem).getId());
         if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
-
+            for(int i = 0 ; i < _answerList.size();i++){
+                if(_answerList.get(i).getQuestionid().equals(_questionList.get(bProblem).getId())){
+                    answerEntity  = _answerList.get(i);
+                }
+            }
         } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
             StringBuilder stringBuilder = new StringBuilder();
             if (MiscUtils.isNotEmpty(tvFillBlankAnswerA.getText().toString().trim())) {

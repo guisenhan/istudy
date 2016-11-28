@@ -476,6 +476,7 @@
                             android:background="@null"
                             android:contentDescription="@null"
                             android:src="@mipmap/icon_undo"
+                            android:visibility="gone"
                             />
 
                         <ImageButton
@@ -485,6 +486,7 @@
                             android:background="@null"
                             android:contentDescription="@null"
                             android:src="@mipmap/icon_redo"
+                            android:visibility="gone"
                             />
                         <ImageButton
                             android:id="@+id/action_insert_image"

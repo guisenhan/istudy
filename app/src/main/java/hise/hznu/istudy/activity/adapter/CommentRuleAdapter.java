@@ -77,9 +77,11 @@ public class CommentRuleAdapter extends BaseAdapter {
             view = (ViewHolder) convertView.getTag();
         }
         view.tvTitle.setText("("+position+")."+_dataList.get(position).getContents());
-        if(MiscUtils.isNotEmpty(_dataList.get(position).getScore()))
+        if(MiscUtils.isNotEmpty(_dataList.get(position).getScore())){
             view.ed_score.setText(_dataList.get(position).getScore());
-
+        }
+        view.ed_score.setHint("输入的分数不能超过"+_dataList.get(position).getTotalscore());
+        final EditText editText = view.ed_score;
         view.ed_score.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -93,7 +95,10 @@ public class CommentRuleAdapter extends BaseAdapter {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                _dataList.get(position).setScore(editable.toString());
+                if(Integer.valueOf(_dataList.get(position).getScore())<Integer.valueOf(editable.toString())){
+                    editText.setText(_dataList.get(position).getScore());
+                    _dataList.get(position).setScore(editable.toString());
+                }
             }
         });
         return convertView;

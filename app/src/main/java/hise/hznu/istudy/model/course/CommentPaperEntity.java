@@ -3,6 +3,8 @@ package hise.hznu.istudy.model.course;
 import java.io.Serializable;
 import java.util.List;
 
+import hise.hznu.istudy.model.FileEntity;
+
 /**
  * Created by PC on 2016/9/26.
  */
@@ -32,11 +34,21 @@ public class CommentPaperEntity implements Serializable{
     private String totalscore;
     private String answer;
     private String answerext;
+    private List<FileEntity> answerfiles;
+
     private String score;
     private String strandanswer;
     private String isauthorvisible;
     private String comment;
     private List<CommentRuleEntity> rules;
+
+    public List<FileEntity> getAnswerfiles() {
+        return answerfiles;
+    }
+
+    public void setAnswerfiles(List<FileEntity> answerfiles) {
+        this.answerfiles = answerfiles;
+    }
 
     public String getAnswer() {
         return answer;
