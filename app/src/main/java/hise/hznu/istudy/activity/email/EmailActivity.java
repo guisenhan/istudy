@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,7 +64,6 @@ public class EmailActivity extends BaseActivity {
         super.initData();
         if(type==1){
             JSONObject read = new JSONObject();
-            msgId = data.getId();
             read.put("msgid",msgId);
             RequestManager.getmInstance().apiPostData(AppConstant.EMAIL_READED,read,this,AppConstant.POST_EMAIL_READED);
         }
@@ -78,8 +78,10 @@ public class EmailActivity extends BaseActivity {
         type = extras.getInt("type");
         if(type ==1){
             data = (EmailEntity) extras.get("email");
+            msgId = data.getId();
         }else if(type ==2){
             sendEmailEntity = (SendEmailEntity)extras.get("email");
+            msgId = sendEmailEntity.getId();
         }
     }
 

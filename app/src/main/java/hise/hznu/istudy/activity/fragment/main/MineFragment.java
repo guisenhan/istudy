@@ -45,12 +45,20 @@ public class MineFragment extends BaseFragment {
     TextView tvSwitch;
     @BindView(R.id.tv_account)
     TextView tvAccount;
+    private UserInfoEntity userInfoEntity;
     @Override
     protected void initData() {
         super.initData();
-        JSONObject params = new JSONObject();
-        RequestManager.getmInstance()
-                .apiPostData(AppConstant.GET_USERINFO, params, this, AppConstant.POST_GET_USERINFO);
+        userInfoEntity = JSONObject.toJavaObject(JSONObject.parseObject(MiscUtils.getSharepreferenceValue
+                ("userInfo","userInfo","")), UserInfoEntity.class);
+        if (MiscUtils.isNotEmpty(userInfoEntity.getName())) { tvUserName.setText(userInfoEntity.getName()); }
+        if (MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl())) {
+            ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(), rivUserPhoto);
+        }
+        if(MiscUtils.isNotEmpty(userInfoEntity.getUsername())){
+            tvAccount.setText(userInfoEntity.getUsername());
+        }
+
     }
 
     @Override
@@ -76,14 +84,8 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
-        UserInfoEntity userInfoEntity = apiResponse.getInfo(UserInfoEntity.class);
-        if (MiscUtils.isNotEmpty(userInfoEntity.getName())) { tvUserName.setText(userInfoEntity.getName()); }
-        if (MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl())) {
-            ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(), rivUserPhoto);
-        }
-        if(MiscUtils.isNotEmpty(userInfoEntity.getUsername())){
-            tvAccount.setText(userInfoEntity.getUsername());
-        }
+
+
     }
 
     @OnClick({ R.id.ll_person_info, R.id.tv_safe_setting, R.id.tv_exit,R.id.tv_switch})
@@ -101,9 +103,11 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_safe_setting:
                 Intent intent1 = new Intent(getActivity(), ChangePassActivity.class);
+
                 startActivity(intent1);
                 break;
             case R.id.tv_exit:
+                MiscUtils.setSharedPreferenceValue("token","tokens"," ");
                 AppManager.getInstance().finishAllActivity();
                 break;
         }

@@ -61,6 +61,7 @@ public class MyExerciseActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MyExerciseActivity.this,TestDetailActivity.class);
                 intent.putExtra("testId",_dataList.get(i).getId());
+                intent.putExtra("title","我的练习");
                 intent.putExtra("enableClientJudge",_dataList.get(i).isEnableClientJudge()); //是否开启客户端阅卷
                 intent.putExtra("keyVisible",_dataList.get(i).isKeyVisible()); //阅卷时参考答案是否可见
                 intent.putExtra("viewOneWithAnswerKey",_dataList.get(i).isViewOneWithAnswerKey()); //查卷时参考答案是否可见

@@ -1,10 +1,12 @@
 package hise.hznu.istudy.activity.fragment.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,11 +20,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.activity.adapter.ExamAdapter;
+import hise.hznu.istudy.activity.course.TestDetailActivity;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseFragment;
 import hise.hznu.istudy.model.exam.ExamEntity;
+import hise.hznu.istudy.util.AppUtils;
 
 /**
  * Created by GuisenHan on 2016/7/25.

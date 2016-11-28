@@ -239,6 +239,7 @@ public class TestDetailActivity extends BaseActivity
     private int paperModel = 1; //1表示查卷模式，2表示答题模式，3 表示阅卷模式
     private List<String> multiAnswer = new ArrayList<String>();
     private JudgeTestEntity judge = new JudgeTestEntity(); // 阅卷的结果
+    private String title = "答题";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -253,6 +254,8 @@ public class TestDetailActivity extends BaseActivity
         keyVisible = extras.getBoolean("keyVisible");
         viewOneWithAnswerKey = extras.getBoolean("viewOneWithAnswerKey");
         paperModel = extras.getInt("paperModel", 2); // 默认为答题模式
+        title = extras.getString("title");
+        tvTitle.setText(title);
     }
 
     @Override
@@ -653,8 +656,6 @@ public class TestDetailActivity extends BaseActivity
      * 显示填空题
      */
     private void setFillBlank(TestPaperEntity test) {
-
-
         slTestChoose.setVisibility(View.GONE);
         rlTestTitle.setVisibility(View.VISIBLE);
         llTestType.setVisibility(View.GONE);

@@ -17,6 +17,7 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 
 import hise.hznu.istudy.app.IStudyApplication;
+import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.util.UIUtils;
 
 /**
@@ -26,6 +27,7 @@ public class BaseFragment extends Fragment implements RequestManager.ApiRequestL
     public View rootView =null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         if (rootView == null) {
             rootView = inflater.inflate(initLayout(),container,false);
             // 通过注解绑定控件
@@ -33,6 +35,7 @@ public class BaseFragment extends Fragment implements RequestManager.ApiRequestL
             initView(rootView);
             initData();
         }
+
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
             parent.removeView(rootView);
@@ -48,7 +51,9 @@ public class BaseFragment extends Fragment implements RequestManager.ApiRequestL
 
     protected void initView(View view){}
 
-    protected void initData(){}
+    protected void initData(){
+
+    }
 
 
     @Override
@@ -62,6 +67,7 @@ public class BaseFragment extends Fragment implements RequestManager.ApiRequestL
         }else {
             onApiResponseSuccess(apiResponse, actionId);
         }
+
     }
 
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {

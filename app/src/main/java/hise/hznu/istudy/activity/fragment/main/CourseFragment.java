@@ -24,7 +24,10 @@ import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseFragment;
+import hise.hznu.istudy.model.UserInfo;
+import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.model.course.CourseEntity;
+import hise.hznu.istudy.util.MiscUtils;
 
 /**
  * Created by Guisen Han on 2016/7/25.
@@ -40,6 +43,8 @@ public class CourseFragment extends BaseFragment {
         super.initData();
         JSONObject params = new JSONObject();
         RequestManager.getmInstance().apiPostData(AppConstant.GET_COURSE_ACTION, params, this, AppConstant.POST_GET_COURSE_ACTION);
+        RequestManager.getmInstance()
+                .apiPostData(AppConstant.GET_USERINFO, params, this, AppConstant.POST_GET_USERINFO);
     }
 
     @Override
@@ -64,7 +69,17 @@ public class CourseFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
-        _dataList = apiResponse.getListData(CourseEntity.class);
-        adapter.UpdateView(_dataList);
+        switch (actionId){
+            case AppConstant.POST_GET_USERINFO:
+                UserInfoEntity userInfoEntity;
+                userInfoEntity = apiResponse.getInfo(UserInfoEntity.class);
+                MiscUtils.setSharedPreferenceValue("userInfo","userInfo",JSONObject.toJSONString(userInfoEntity));
+                break;
+            case AppConstant.POST_GET_COURSE_ACTION:
+                _dataList = apiResponse.getListData(CourseEntity.class);
+                adapter.UpdateView(_dataList);
+                break;
+        }
+
     }
 }

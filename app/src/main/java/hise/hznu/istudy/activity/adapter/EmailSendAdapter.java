@@ -23,9 +23,10 @@ public class EmailSendAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<SendEmailEntity> _dataList = new ArrayList<SendEmailEntity>();
-
-    public EmailSendAdapter(Context context) {
+    private String userNmae;
+    public EmailSendAdapter(Context context,String userName) {
         this.context = context;
+        this.userNmae = userName;
     }
 
     @Override
@@ -73,6 +74,8 @@ public class EmailSendAdapter extends BaseAdapter {
         } else {
             view = (ViewHolder) convertView.getTag();
         }
+
+        view.tvEmailSender.setText(userNmae);
         view.tvDate.setText("时间："+AppUtils.dateFormat(_dataList.get(position).getDate()));
         view.tvContent.setText(_dataList.get(position).getSubject());
         //view.tvEmailSender.setText(_dataList.get(position).getReceives());

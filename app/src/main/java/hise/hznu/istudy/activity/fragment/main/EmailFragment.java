@@ -29,8 +29,10 @@ import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseFragment;
+import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.model.email.EmailEntity;
 import hise.hznu.istudy.model.email.SendEmailEntity;
+import hise.hznu.istudy.util.MiscUtils;
 
 /**
  * Created by GuisenHan on 2016/7/25.
@@ -62,7 +64,9 @@ public class EmailFragment extends BaseFragment {
     protected void initData() {
         super.initData();
         adapter = new EmailAdapter(getActivity());
-        emailSendAdapter = new EmailSendAdapter(getActivity());
+        UserInfoEntity userInfoEntity = JSONObject.toJavaObject(JSONObject.parseObject(MiscUtils.getSharepreferenceValue
+                ("userInfo","userInfo","")), UserInfoEntity.class);
+        emailSendAdapter = new EmailSendAdapter(getActivity(),userInfoEntity.getName());
         lvEmail.setAdapter(adapter);
         JSONObject params = new JSONObject();
         params.put("count", "30");
