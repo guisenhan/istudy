@@ -12,6 +12,8 @@ import android.graphics.PorterDuff.Mode;
 import android.util.AttributeSet;
 import android.view.View;
 
+import hise.hznu.istudy.util.MiscUtils;
+
 public class ClipView extends View {
     private Paint paint;
     private Paint borderPaint;
@@ -51,17 +53,26 @@ public class ClipView extends View {
         canvas.saveLayer(0.0F, 0.0F, (float)this.width, (float)this.height, (Paint)null, 31);
         canvas.drawColor(Color.parseColor("#a8000000"));
         this.paint.setXfermode(this.xfermode);
-        canvas.drawCircle((float)(this.width / 2), (float)(this.height / 2), (float)this.width * this.radiusWidthRatio, this.paint);
-        canvas.drawCircle((float)(this.width / 2), (float)(this.height / 2), (float)this.width * this.radiusWidthRatio + (float)this.clipBorderWidth, this.borderPaint);
+//        canvas.drawCircle((float)(this.width / 2), (float)(this.height / 2), (float)this.width * this.radiusWidthRatio, this.paint);
+//      //  canvas.drawCircle((float)(this.width / 2), (float)(this.height / 2), (float)this.width * this
+//                .radiusWidthRatio + (float)this.clipBorderWidth, this.borderPaint);
+        canvas.drawRect((this.width/2) - MiscUtils.dpToPx(80,getResources()), this.height/2 - MiscUtils.dpToPx(80,
+                getResources()), this.width/2+MiscUtils.dpToPx(80,getResources()),this.height/2+MiscUtils.dpToPx(80,
+                getResources()),
+                this.paint);
+        canvas.drawRect((this.width/2) - MiscUtils.dpToPx(80,getResources())+2, this.height/2 - MiscUtils.dpToPx(80,
+                getResources())+2, this.width/2+MiscUtils.dpToPx(80,getResources())+2,this.height/2+MiscUtils.dpToPx(80,
+                getResources())+2,
+                this.borderPaint);
         canvas.restore();
     }
 
     public Rect getClipRect() {
         Rect rect = new Rect();
-        rect.left = (int)((float)(this.width / 2) - (float)this.width * this.radiusWidthRatio);
-        rect.right = (int)((float)(this.width / 2) + (float)this.width * this.radiusWidthRatio);
-        rect.top = (int)((float)(this.height / 2) - (float)this.width * this.radiusWidthRatio);
-        rect.bottom = (int)((float)(this.height / 2) + (float)this.width * this.radiusWidthRatio);
+        rect.left = (int)((float)(this.width / 2) - MiscUtils.dpToPx(80,getResources()));
+        rect.right = (int)((float)(this.width / 2) + MiscUtils.dpToPx(80,getResources()));
+        rect.top = (int)((float)(this.height / 2) - MiscUtils.dpToPx(80,getResources()));
+        rect.bottom = (int)((float)(this.height / 2) + MiscUtils.dpToPx(80,getResources()));
         return rect;
     }
 }

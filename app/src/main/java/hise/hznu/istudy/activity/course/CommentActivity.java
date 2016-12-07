@@ -194,7 +194,6 @@ public class CommentActivity extends BaseActivity {
         result.put("questions", resultList);
 
         JSONObject params = new JSONObject();
-
         params.put("data", new String(Base64.encode(JSONObject.toJSONString(result).getBytes(), Base64.DEFAULT)));
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.QUERY_SUBMIT_HUPING, params, this, AppConstant.POST_SUBMIT_HUPING);
@@ -233,13 +232,5 @@ public class CommentActivity extends BaseActivity {
             resultList.add(com);
         }
 
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

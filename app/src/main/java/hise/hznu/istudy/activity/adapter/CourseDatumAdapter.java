@@ -74,14 +74,14 @@ public class CourseDatumAdapter extends BaseAdapter {
             view = (ViewHolder) convertView.getTag();
         }
 
-        if(course.getExtensions().equals("doc") || course.getExtensions().equals("docx"))
+        if(course.getExtensions().equals("doc") || course.getExtensions().equals("docx")){
             view.icon.setImageResource(R.mipmap.icon_word);
-        else if(course.getExtensions().equals("pptx"))
+        } else if(course.getExtensions().equals("pptx")){
             view.icon.setImageResource(R.mipmap.icon_ppt);
-        else if(course.getExtensions().equals("pdf"))
+        } else if(course.getExtensions().equals("pdf")) {
             view.icon.setImageResource(R.mipmap.icon_pdf);
-        else if(course.getExtensions().equals("xls"))
-            view.icon.setImageResource(R.mipmap.icon_excel);
+        }else if(course.getExtensions().equals("xls")){
+            view.icon.setImageResource(R.mipmap.icon_excel);}
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         view.info.setText("类型："+course.getExtensions()+"创建时间："+simpleDateFormat.format(new Date(course.getDatecreated()))+"文件大小："+course.getFilesize());
 

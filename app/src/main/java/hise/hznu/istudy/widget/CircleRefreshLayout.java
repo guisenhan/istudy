@@ -66,8 +66,10 @@ public class CircleRefreshLayout extends FrameLayout {
             throw new RuntimeException("you can only attach one child");
         }
         setAttrs(attrs);
-        mPullHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, context.getResources().getDisplayMetrics());
-        mHeaderHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context.getResources().getDisplayMetrics());
+        mPullHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context.getResources()
+                .getDisplayMetrics());
+        mHeaderHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, context.getResources()
+                .getDisplayMetrics());
 
         this.post(new Runnable() {
             @Override
@@ -200,17 +202,12 @@ public class CircleRefreshLayout extends FrameLayout {
                 float dy = mTouchCurY - mTouchStartY;
                 dy = Math.min(mPullHeight * 2, dy);
                 dy = Math.max(0, dy);
-
-
                 if (mChildView != null) {
                     float offsetY = decelerateInterpolator.getInterpolation(dy / 2 / mPullHeight) * dy / 2;
                     mChildView.setTranslationY(offsetY);
-
                     mHeader.getLayoutParams().height = (int) offsetY;
                     mHeader.requestLayout();
                 }
-
-
                 return true;
 
             case MotionEvent.ACTION_UP:
@@ -256,7 +253,8 @@ public class CircleRefreshLayout extends FrameLayout {
         mIsRefreshing = false;
         mHeader.setRefreshing(false);
     }
-
+    public void stopRefreshing(){
+    }
     private OnCircleRefreshListener onCircleRefreshListener;
 
     public void setOnRefreshListener(OnCircleRefreshListener onCircleRefreshListener) {

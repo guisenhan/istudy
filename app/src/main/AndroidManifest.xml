@@ -72,6 +72,9 @@
 			android:label="@string/title_activity_person_info"
 			android:theme="@style/AppTheme"/>
 		<activity android:name=".activity.mine.pickimg.MultiImageSelectorActivity"/>
+		<activity
+			android:name="com.yalantis.ucrop.UCropActivity"
+			android:screenOrientation="portrait"/>
 		<activity android:name=".util.clip.ClipActivity"/>
 		<activity android:name=".util.clip.ClipHeaderActivity"/>
 		<activity android:name=".activity.course.MyExperimentActivity"/>
@@ -107,6 +110,8 @@
 		<activity android:name=".activity.course.MessageActivity">
 		</activity>
 		<activity android:name=".activity.FindPasswordActivity">
+		</activity>
+		<activity android:name=".util.clip.CropActivity">
 		</activity>
 	</application>
 

@@ -1,6 +1,8 @@
 package hise.hznu.istudy.activity.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,7 @@ import hise.hznu.istudy.model.course.CommentBackEntity;
 import hise.hznu.istudy.model.course.CommentCardEntity;
 import hise.hznu.istudy.util.AppUtils;
 import hise.hznu.istudy.util.ImageLoaderUtils;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.widget.CircleImageView;
 
 /**
@@ -79,7 +83,23 @@ public class CommentBackListAdapter extends BaseAdapter {
         view.tvDate.setText(_dataList.get(position).getAuthor() + " 于" + AppUtils.dateFormat(_dataList.get
                 (position)
                 .getDate()) +"发表");
-        view.tvContent.setText(Html.fromHtml(_dataList.get(position).getContent()));
+        Html.ImageGetter imgGetter = new Html.ImageGetter() {
+            public Drawable getDrawable(String source) {
+                Drawable drawable = null;
+                URL url;
+                try {
+                    url = new URL(source);
+                    drawable =new BitmapDrawable(ImageLoaderUtils.getImageLoader().loadImageSync(url.toString())); // 获取网路图片
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+                drawable.setBounds(0, 0, MiscUtils.getScreenWidth(),
+                        (drawable.getIntrinsicHeight() * MiscUtils.getScreenWidth()) / drawable.getIntrinsicWidth());
+                return drawable;
+            }
+        };
+        view.tvContent.setText(Html.fromHtml(_dataList.get(position).getContent(),imgGetter,null));
         return convertView;
     }
 

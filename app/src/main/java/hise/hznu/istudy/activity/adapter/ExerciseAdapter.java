@@ -70,6 +70,11 @@ public class ExerciseAdapter extends BaseAdapter {
         }
         view.tvHomeworkName.setText(_dataList.get(position).getTitle());
         view.tvHomeworkInfo.setText("老师："+_dataList.get(position).getTeacher()+"  开始时间："+ AppUtils.dateFormat(_dataList.get(position).getDatestart()) +" \n 结束时间："+AppUtils.dateFormat(_dataList.get(position).getDateend()));
+        if(System.currentTimeMillis()>AppUtils.DateFormat(_dataList.get(position).getDateend())){
+            view.tvSeeDetail.setText("已完成");
+        }else{
+            view.tvSeeDetail.setText("去答题");
+        }
         return convertView;
     }
 

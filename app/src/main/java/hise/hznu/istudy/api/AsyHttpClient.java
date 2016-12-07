@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import hise.hznu.istudy.app.AppConfig;
+import hise.hznu.istudy.model.UpLoadFileEntity;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.SharePreUtil;
 
 /**
@@ -26,7 +28,7 @@ public class AsyHttpClient {
         private static AsyncHttpClient client = new AsyncHttpClient();
 
         public static void get(final String url, RequestParams params, final Handler handler) {
-            String authenToken = SharePreUtil.getAuthorToken(AppConfig.getContext(),SharePreUtil.SP_NAME.AUTHOR_TOKEN);
+            String authenToken = MiscUtils.getSharepreferenceValue("token","tokens","");
             params.put("authtoken", authenToken);
             client.post(getAbsoluteUrl(url), params, new JsonHttpResponseHandler() {
                 @Override
@@ -49,10 +51,11 @@ public class AsyHttpClient {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
-                    Log.i("rsadsad equest success", "url:"+url +" response:" + response);
-                   ApiResponse response1 = new ApiResponse(JSON.parseObject(com.alibaba.fastjson.JSONObject.toJSONString(response)));
+                    Log.i("request success", "url:"+url +" response:" + response);
+                   ApiResponse response1 = new ApiResponse(JSON.parseObject(response.toString()));
+                    Log.e("response1", com.alibaba.fastjson.JSONObject.toJSONString(response1));
                     Message message = new Message();
-                    message.obj = response;
+                    message.obj = response1.getInfo(UpLoadFileEntity.class);
                     handler.sendMessage(message);
 //                   // ApiResponse response1 = new ApiResponse(com.alibaba.fastjson.JSONObject.parseObject(response
 //                            .toString()));

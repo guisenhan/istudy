@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -29,6 +30,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
 import com.loopj.android.http.Base64;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import jp.wasabeef.richeditor.RichEditor;
@@ -57,6 +59,7 @@ import hise.hznu.istudy.util.AppUtils;
 import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.UIUtils;
+import hise.hznu.istudy.util.clip.MCrop;
 import hise.hznu.istudy.widget.MyListView;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -304,6 +307,11 @@ public class TestDetailActivity extends BaseActivity
                 rbChooseD.setEnabled(false);
                 rbChooseC.setEnabled(false);
                 rbChooseB.setEnabled(false);
+                rbMultiChoiceA.setEnabled(false);
+                rbMultiChoiceB.setEnabled(false);
+                rbMultiChoiceC.setEnabled(false);
+                rbMultiChoiceD.setEnabled(false);
+                rbMultiChoiceE.setEnabled(false);
                 tvAutoCommit.setVisibility(View.GONE);
                 llFillBlanks.setVisibility(View.GONE);
                 if (viewOneWithAnswerKey) { //查卷时参考答案是否可见
@@ -357,23 +365,31 @@ public class TestDetailActivity extends BaseActivity
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (radioGroup.getCheckedRadioButtonId() == rbChooseA.getId() && rbChooseA.isPressed()) {
                     AnswerEntity answerEntity = new AnswerEntity();
+                    int temp = -1;
                     for (int j = 0; j < _answerList.size(); j++) {
-                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getAnswer())) {
-                            answerEntity = _answerList.get(j);
+                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getQuestionid())) {
+                           // answerEntity = _answerList.get(j);
+                            temp = j;
                             break;
                         }
                     }
-                    if (MiscUtils.isEmpty(answerEntity.getQuestionid())) {
-                        answerEntity.setTestid(testId);
-                        answerEntity.setQuestionid(_questionList.get(bProblem).getId());
-                    }
+                    answerEntity.setTestid(testId);
+                    answerEntity.setQuestionid(_questionList.get(bProblem).getId());
                     answerEntity.setAnswer("A");
-                    _answerList.add(answerEntity);
+                    Log.e("temp",""+temp);
+                    if(temp != -1){
+                        _answerList.set(temp,answerEntity);
+                    }else{
+                        _answerList.add(answerEntity);
+                    }
+
                 } else if (radioGroup.getCheckedRadioButtonId() == rbChooseB.getId() && rbChooseB.isPressed()) {
                     AnswerEntity answerEntity = new AnswerEntity();
+                    int temp = -1 ;
                     for (int j = 0; j < _answerList.size(); j++) {
-                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getAnswer())) {
+                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getQuestionid())) {
                             answerEntity = _answerList.get(j);
+                            temp = j;
                             break;
                         }
                     }
@@ -382,12 +398,18 @@ public class TestDetailActivity extends BaseActivity
                         answerEntity.setQuestionid(_questionList.get(bProblem).getId());
                     }
                     answerEntity.setAnswer("B");
-                    _answerList.add(answerEntity);
+                    if(temp != -1){
+                        _answerList.set(temp,answerEntity);
+                    }else{
+                        _answerList.add(answerEntity);
+                    }
                 } else if (radioGroup.getCheckedRadioButtonId() == rbChooseC.getId() && rbChooseC.isPressed()) {
                     AnswerEntity answerEntity = new AnswerEntity();
+                    int temp = -1;
                     for (int j = 0; j < _answerList.size(); j++) {
-                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getAnswer())) {
+                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getQuestionid())) {
                             answerEntity = _answerList.get(j);
+                            temp = j;
                             break;
                         }
                     }
@@ -396,12 +418,18 @@ public class TestDetailActivity extends BaseActivity
                         answerEntity.setQuestionid(_questionList.get(bProblem).getId());
                     }
                     answerEntity.setAnswer("C");
-                    _answerList.add(answerEntity);
+                    if(temp != -1){
+                        _answerList.set(temp,answerEntity);
+                    }else{
+                        _answerList.add(answerEntity);
+                    }
                 } else if (radioGroup.getCheckedRadioButtonId() == rbChooseD.getId() && rbChooseD.isPressed()) {
+                    int temp = -1;
                     AnswerEntity answerEntity = new AnswerEntity();
                     for (int j = 0; j < _answerList.size(); j++) {
-                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getAnswer())) {
+                        if (_questionList.get(bProblem).getId().equals(_answerList.get(j).getQuestionid())) {
                             answerEntity = _answerList.get(j);
+                            temp = j;
                             break;
                         }
                     }
@@ -410,7 +438,11 @@ public class TestDetailActivity extends BaseActivity
                         answerEntity.setQuestionid(_questionList.get(bProblem).getId());
                     }
                     answerEntity.setAnswer("D");
-                    _answerList.add(answerEntity);
+                    if(temp != -1){
+                        _answerList.set(temp,answerEntity);
+                    }else{
+                        _answerList.add(answerEntity);
+                    }
                 }
             }
         });
@@ -694,10 +726,11 @@ public class TestDetailActivity extends BaseActivity
                 break;
             }
         }
+        Log.e("fb",fb);
 
         switch (getBlankNumber(test.getStrandanswer())) {
             case 1:
-                if(MiscUtils.isNotEmpty(fb)){
+                if(fb.split("&&&").length >0 && MiscUtils.isNotEmpty(fb)){
                     if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
                         tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
                     }
@@ -709,10 +742,10 @@ public class TestDetailActivity extends BaseActivity
                 break;
             case 2:
                 if(MiscUtils.isNotEmpty(fb)){
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                    if(fb.split("&&&").length >0 && MiscUtils.isNotEmpty(fb.split("&&&")[0])){
                         tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
                     }
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[1])){
+                    if(fb.split("&&&").length>1 && MiscUtils.isNotEmpty(fb.split("&&&")[1])){
                         tvFillBlankAnswerB.setText(fb.split("&&&")[1]);
                     }
                 }
@@ -723,13 +756,13 @@ public class TestDetailActivity extends BaseActivity
                 break;
             case 3:
                 if(MiscUtils.isNotEmpty(fb)){
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                    if(fb.split("&&&").length >0 && MiscUtils.isNotEmpty(fb.split("&&&")[0])){
                         tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
                     }
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[1])){
+                    if(fb.split("&&&").length>1 && MiscUtils.isNotEmpty(fb.split("&&&")[1])){
                         tvFillBlankAnswerB.setText(fb.split("&&&")[1]);
                     }
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[2])){
+                    if(fb.split("&&&").length>2 && MiscUtils.isNotEmpty(fb.split("&&&")[2]) ){
                         tvFillBlankAnswerC.setText(fb.split("&&&")[2]);
                     }
                 }
@@ -740,16 +773,16 @@ public class TestDetailActivity extends BaseActivity
                 break;
             case 4:
                 if(MiscUtils.isNotEmpty(fb)){
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[0])){
+                    if(fb.split("&&&").length >0 && MiscUtils.isNotEmpty(fb.split("&&&")[0])){
                         tvFillBlankAnswerA.setText(fb.split("&&&")[0]);
                     }
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[1])){
+                    if(fb.split("&&&").length>1 &&MiscUtils.isNotEmpty(fb.split("&&&")[1])&& fb.split("&&&").length>1){
                         tvFillBlankAnswerB.setText(fb.split("&&&")[1]);
                     }
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[2])){
+                    if(fb.split("&&&").length>2 &&MiscUtils.isNotEmpty(fb.split("&&&")[2])){
                         tvFillBlankAnswerC.setText(fb.split("&&&")[2]);
                     }
-                    if(MiscUtils.isNotEmpty(fb.split("&&&")[3])){
+                    if(fb.split("&&&").length>3 && MiscUtils.isNotEmpty(fb.split("&&&")[3])&&fb.split("&&&").length>3){
                         tvFillBlankAnswerD.setText(fb.split("&&&")[3]);
                     }
                 }
@@ -802,6 +835,7 @@ public class TestDetailActivity extends BaseActivity
         slQuestionAnswer.setVisibility(View.VISIBLE);
         slComplex.setVisibility(View.GONE);
         slMultiChoice.setVisibility(View.GONE);
+
         if (test.isDesc()) {
             llTestType.setVisibility(View.VISIBLE);
             rlTestTitle.setVisibility(View.GONE);
@@ -813,6 +847,7 @@ public class TestDetailActivity extends BaseActivity
             tvTestTypeInfo.setText(test.getQuestionDesc());
             return;
         }
+        reEditor.setHtml("");
         for(AnswerEntity an :_answerList){
             if(an.getQuestionid().equals(test.getId())){
                 reEditor.setHtml(an.getAnswer());
@@ -920,13 +955,13 @@ public class TestDetailActivity extends BaseActivity
         for (int i = 0; i < _answerList.size(); i++) {
             if (MiscUtils.isNotEmpty(_answerList.get(i).getQuestionid())) {
                 if (_answerList.get(i).getQuestionid().equals(test.getId())) {
-                    if (_answerList.get(i).getAnswer().equals("A")) {
+                    if (_answerList.get(i).getAnswer().contains("A")) {
                         rbMultiChoiceA.setChecked(true);
-                    } else if (_answerList.get(i).getAnswer().equals("B")) {
+                    } else if (_answerList.get(i).getAnswer().contains("B")) {
                         rbMultiChoiceB.setChecked(true);
-                    } else if (_answerList.get(i).getAnswer().equals("C")) {
+                    } else if (_answerList.get(i).getAnswer().contains("C")) {
                         rbMultiChoiceC.setChecked(true);
-                    } else if (_answerList.get(i).getAnswer().equals("D")) {
+                    } else if (_answerList.get(i).getAnswer().contains("D")) {
                         rbMultiChoiceD.setChecked(true);
                     }
                     break;
@@ -972,7 +1007,6 @@ public class TestDetailActivity extends BaseActivity
                 }
                 break;
             case R.id.iv_right_arrow:
-                try {
                     if (bProblem + 1 < _questionList.size()) {
                         if(paperModel == 2){
                             llFillBlankAnswer.setVisibility(View.GONE);
@@ -1002,9 +1036,6 @@ public class TestDetailActivity extends BaseActivity
                     } else {
                         MiscUtils.showMessageToast("没有更多了！");
                     }
-                } catch (IndexOutOfBoundsException e) {
-                    MiscUtils.showMessageToast("没有更多了！");
-                }
                 break;
             case R.id.action_undo:
                 reEditor.undo();
@@ -1039,28 +1070,39 @@ public class TestDetailActivity extends BaseActivity
         AnswerEntity answerEntity = new AnswerEntity();
         answerEntity.setTestid(testId);
         answerEntity.setQuestionid(_questionList.get(bProblem).getId());
-        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")) {
-            for(int i = 0 ; i < _answerList.size();i++){
-                if(_answerList.get(i).getQuestionid().equals(_questionList.get(bProblem).getId())){
-                    answerEntity  = _answerList.get(i);
-                }
+        for(int i = 0 ; i < _answerList.size();i++){
+            if(_answerList.get(i).getQuestionid().equals(_questionList.get(bProblem).getId())){
+                answerEntity  = _answerList.get(i);
+                answerEntity.setTestid(testId);
+                answerEntity.setQuestionid(_questionList.get(bProblem).getId());
             }
+        }
+        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") ||_questionList.get(bProblem).getQuestionType().equals("JUDGE") ) {
+
         } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
             StringBuilder stringBuilder = new StringBuilder();
             if (MiscUtils.isNotEmpty(tvFillBlankAnswerA.getText().toString().trim())) {
                 stringBuilder.append(tvFillBlankAnswerA.getText().toString().trim());
+            }else{
+                stringBuilder.append("");
             }
             if (MiscUtils.isNotEmpty(tvFillBlankAnswerB.getText().toString().trim())) {
                 stringBuilder.append("&&&");
                 stringBuilder.append(tvFillBlankAnswerB.getText().toString().trim());
+            }else{
+                stringBuilder.append("&&&");
             }
             if (MiscUtils.isNotEmpty(tvFillBlankAnswerC.getText().toString().trim())) {
                 stringBuilder.append("&&&");
                 stringBuilder.append(tvFillBlankAnswerC.getText().toString().trim());
+            }else{
+                stringBuilder.append("&&&");
             }
             if (MiscUtils.isNotEmpty(tvFillBlankAnswerD.getText().toString().trim())) {
                 stringBuilder.append("&&&");
                 stringBuilder.append(tvFillBlankAnswerD.getText().toString().trim());
+            }else{
+                stringBuilder.append("&&&");
             }
             answerEntity.setAnswer(stringBuilder.toString());
         } else if (_questionList.get(bProblem).getQuestionType().equals("COMPLEX")) {
@@ -1083,7 +1125,6 @@ public class TestDetailActivity extends BaseActivity
             }else{
                 MiscUtils.showMessageToast("请选择答案");
             }
-
         }else{
             answerEntity.setAnswer(reEditor.getHtml());
         }
@@ -1156,29 +1197,42 @@ public class TestDetailActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE) {
-                selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-                if (MiscUtils.isNotEmpty(selectPath)) {
-                    AppUtils.startClipAvatarActivity(this, new File(selectPath.get(0)));
+        if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE) {
+            selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
+            if (MiscUtils.isNotEmpty(selectPath)) {
+                File outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                if (!outDir.exists()) {
+                    outDir.mkdirs();
                 }
-            } else if (requestCode == AppUtils.REQUEST_CODE_CLIP_PHOTO) {
-                if (data != null) {
-                    Uri uri = data.getData();
-                    if (uri == null) {
-                        UIUtils.showToast("选取失败");
-                    } else {
-                        doUpLoad();
-                    }
+                File outFile = new File(outDir, System.currentTimeMillis() + ".jpg");
+                //裁剪后图片的绝对路径
+                //  String cameraScalePath = outFile.getAbsolutePath();
+                Uri destinationUri = Uri.fromFile(outFile);
+                MCrop.of(Uri.fromFile(new File(selectPath.get(0))),destinationUri).withAspectRatio(1,1)
+                        .withMaxResultSize
+                                (200,200).start(this);
+            }
+        } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
+            Log.e("path"," exe");
+            if (data != null) {
+                Uri uri = MCrop.getOutput(data);
+                if (uri == null) {
+                    UIUtils.showToast("选取失败");
+                } else {
+                    Log.e("path"," " +uri.getPath());
+                    String path = uri.getPath();
+                    //上传图像
+                    doUpLoad(path);
                 }
             }
         }
     }
 
-    private void doUpLoad() {
+    private void doUpLoad(String uri) {
         RequestParams params = new RequestParams();
         try {
-            params.put("name", new File(selectPath.get(0)));
+            params.put("name", new File(uri));
+            params.put("type","2");
         } catch (IOException e) {
         }
         AsyHttpClient.get("upfile", params, handler);
@@ -1188,9 +1242,8 @@ public class TestDetailActivity extends BaseActivity
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            org.json.JSONObject response = (org.json.JSONObject) msg.obj;
-            UpLoadFileEntity upLoadFileEntity = new UpLoadFileEntity();
-            upLoadFileEntity = new ApiResponse(JSON.parseObject(response.toString())).getInfo(UpLoadFileEntity.class);
+            UpLoadFileEntity upLoadFileEntity =(UpLoadFileEntity) msg.obj;
+            Log.e("uploadUrk",JSONObject.toJSONString(upLoadFileEntity));
             reEditor.insertImage(upLoadFileEntity.getUploadedurl(), upLoadFileEntity.getUploadedfilename());
         }
     };

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -37,6 +38,7 @@ import hise.hznu.istudy.util.AppUtils;
 import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.UIUtils;
+import hise.hznu.istudy.util.clip.MCrop;
 import hise.hznu.istudy.widget.CircleImageView;
 import hise.hznu.istudy.widget.SexDialog;
 import me.nereo.multi_image_selector.MultiImageSelector;
@@ -121,14 +123,16 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
             tvZipCode.setText(userInfoEntity.getZipcode());
         if(MiscUtils.isNotEmpty(userInfoEntity.getAvtarurl()))
             ImageLoaderUtils.getImageLoader().displayImage(userInfoEntity.getAvtarurl(),ivUserPhoto);
-
-        if(userInfoEntity.getGender().equals("女")){
-            seex =0;
-        }else if(userInfoEntity.getGender().equals("男")){
-            seex =1 ;
-        }else{
-            seex =2;
+        if(MiscUtils.isNotEmpty(userInfoEntity.getGender())){
+            if(userInfoEntity.getGender().equals("女")){
+                seex =0;
+            }else if(userInfoEntity.getGender().equals("男")){
+                seex =1 ;
+            }else{
+                seex =2;
+            }
         }
+
     }
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
@@ -160,8 +164,6 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
     public void onFailure(String errorMsg, int actionId) {
         super.onFailure(errorMsg, actionId);
     }
-
-
     @OnClick({R.id.iv_user_photo, R.id.tv_user_account, R.id.tv_user_name, R.id.tv_sex, R.id.tv_mobile, R.id.tv_email,
             R.id.tv_address, R.id.tv_qq, R.id.tv_zip_code,R.id.rl_phone, R.id.rl_email, R.id.rl_address, R.id.rl_qq,
             R.id.rl_zipcode,R.id.tv_back
@@ -209,7 +211,7 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
                 break;
             case R.id.tv_sex:
 
-                 dialog = new SexDialog(this, seex, this, new SexDialog.OnChooseSex() {
+                dialog = new SexDialog(this, seex, this, new SexDialog.OnChooseSex() {
                     @Override
                     public void callBack(int sex) {
                         seex = sex;
@@ -267,24 +269,34 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE) {
-                selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-                if (MiscUtils.isNotEmpty(selectPath)) {
-                    AppUtils.startClipAvatarActivity(this, new File(selectPath.get(0)));
+        if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE) {
+            selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
+            if (MiscUtils.isNotEmpty(selectPath)) {
+                File outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                if (!outDir.exists()) {
+                    outDir.mkdirs();
                 }
-            } else if (requestCode == AppUtils.REQUEST_CODE_CLIP_PHOTO) {
-                if (data != null) {
-                    Uri uri = data.getData();
-                    if (uri == null) {
-                        UIUtils.showToast("选取失败");
-                    } else {
-                        String path = uri.getPath();
-                        avatarClipResult = new File(path);
-                        ImageLoaderUtils.getImageLoader().displayImage("file://" + path, ivUserPhoto);
-                        //上传图像
-                        doUpLoad();
-                    }
+                File outFile = new File(outDir, System.currentTimeMillis() + ".jpg");
+                //裁剪后图片的绝对路径
+              //  String cameraScalePath = outFile.getAbsolutePath();
+                Uri destinationUri = Uri.fromFile(outFile);
+                MCrop.of(Uri.fromFile(new File(selectPath.get(0))),destinationUri).withAspectRatio(1,1)
+                        .withMaxResultSize
+                        (200,200).start(this);
+            }
+        } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
+            Log.e("path"," exe");
+            if (data != null) {
+                Uri uri = MCrop.getOutput(data);
+                if (uri == null) {
+                    UIUtils.showToast("选取失败");
+                } else {
+                    Log.e("path"," " +uri.getPath());
+                    String path = uri.getPath();
+                    avatarClipResult = new File(path);
+                    ImageLoaderUtils.getImageLoader().displayImage("file://" + path, ivUserPhoto);
+                    //上传图像
+                    doUpLoad();
                 }
             }
         }
@@ -295,6 +307,7 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
         RequestParams params = new RequestParams();
         try {
             params.put("name", avatarClipResult);
+            params.put("type","1");
         } catch (IOException e) {
 
         }
@@ -306,11 +319,8 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             JSONObject params = new JSONObject();
-           org.json.JSONObject response = (org.json.JSONObject) msg.obj;
-            UpLoadFileEntity upLoadFileEntity = new UpLoadFileEntity();
-            upLoadFileEntity = new ApiResponse(JSON.parseObject(response.toString())).getInfo(UpLoadFileEntity.class);
+            UpLoadFileEntity upLoadFileEntity =(UpLoadFileEntity) msg.obj;
             params.put("avtarurl", upLoadFileEntity.getUploadedurl());
-
             JSONObject temp = new JSONObject();
             temp.put("data",new String(Base64.encode(JSONObject.toJSONString(params).getBytes(),Base64.DEFAULT)));
             RequestManager.getmInstance().apiPostData(AppConstant.SAVE_PERSON_INFO, temp, PersonInfoActivity.this,

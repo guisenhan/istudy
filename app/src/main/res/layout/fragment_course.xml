@@ -33,13 +33,7 @@
         android:layout_height="@dimen/divider_height"
         android:background="@color/divider_color"
         />
-    <hise.hznu.istudy.widget.CircleRefreshLayout
-        android:layout_width="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:AniBackColor="@color/colorPrimary"
-        app:AniForeColor = "@color/white"
-        app:CircleSmaller ="6"
-        android:layout_height="match_parent">
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,6 +42,6 @@
             android:dividerHeight="@dimen/divider_height"
             >
         </ListView>
-    </hise.hznu.istudy.widget.CircleRefreshLayout>
+
 
 </LinearLayout>

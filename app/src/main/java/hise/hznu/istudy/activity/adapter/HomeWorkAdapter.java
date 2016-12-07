@@ -76,7 +76,9 @@ public class HomeWorkAdapter extends BaseAdapter {
         if(System.currentTimeMillis()>AppUtils.DateFormat(_dataList.get(position).getDateend())){
             view.tvScore.setVisibility(View.VISIBLE);
             view.tvScore.setText("成绩："+_dataList.get(position).getMyscore());
+            view.tvSeeDetail.setText("已完成");
         }else{
+            view.tvSeeDetail.setText("去答题");
             view.tvScore.setVisibility(View.GONE);
         }
 

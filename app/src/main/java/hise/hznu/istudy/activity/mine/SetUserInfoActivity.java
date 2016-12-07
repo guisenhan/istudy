@@ -62,7 +62,7 @@ public class SetUserInfoActivity extends BaseActivity {
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
         if(response.getRetcode()==0){
-            MiscUtils.showMessageToast("保存成功");
+            MiscUtils.showMessageToast(response.getMessage());
             finish();
         }
     }

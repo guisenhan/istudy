@@ -2,6 +2,7 @@ package hise.hznu.istudy.activity.fragment.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import hise.hznu.istudy.model.UserInfo;
 import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.model.course.CourseEntity;
 import hise.hznu.istudy.util.MiscUtils;
+import hise.hznu.istudy.widget.CircleRefreshLayout;
 
 /**
  * Created by Guisen Han on 2016/7/25.
@@ -65,6 +67,7 @@ public class CourseFragment extends BaseFragment {
                 startActivity(study);
             }
         });
+
     }
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {

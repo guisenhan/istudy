@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -38,8 +39,10 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.UpLoadFileEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.util.UIUtils;
+import hise.hznu.istudy.util.clip.MCrop;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -53,66 +56,13 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
     TextView tvTitle;
     @BindView(R.id.rl_top)
     RelativeLayout rlTop;
-    @BindView(R.id.action_undo)
-    ImageButton actionUndo;
-    @BindView(R.id.action_redo)
-    ImageButton actionRedo;
-    @BindView(R.id.action_bold)
-    ImageButton actionBold;
-    @BindView(R.id.action_italic)
-    ImageButton actionItalic;
-    @BindView(R.id.action_subscript)
-    ImageButton actionSubscript;
-    @BindView(R.id.action_superscript)
-    ImageButton actionSuperscript;
-    @BindView(R.id.action_strikethrough)
-    ImageButton actionStrikethrough;
-    @BindView(R.id.action_underline)
-    ImageButton actionUnderline;
-    @BindView(R.id.action_heading1)
-    ImageButton actionHeading1;
-    @BindView(R.id.action_heading2)
-    ImageButton actionHeading2;
-    @BindView(R.id.action_heading3)
-    ImageButton actionHeading3;
-    @BindView(R.id.action_heading4)
-    ImageButton actionHeading4;
-    @BindView(R.id.action_heading5)
-    ImageButton actionHeading5;
-    @BindView(R.id.action_heading6)
-    ImageButton actionHeading6;
-    @BindView(R.id.action_txt_color)
-    ImageButton actionTxtColor;
-    @BindView(R.id.action_bg_color)
-    ImageButton actionBgColor;
-    @BindView(R.id.action_indent)
-    ImageButton actionIndent;
-    @BindView(R.id.action_outdent)
-    ImageButton actionOutdent;
-    @BindView(R.id.action_align_left)
-    ImageButton actionAlignLeft;
-    @BindView(R.id.action_align_center)
-    ImageButton actionAlignCenter;
-    @BindView(R.id.action_align_right)
-    ImageButton actionAlignRight;
-    @BindView(R.id.action_insert_bullets)
-    ImageButton actionInsertBullets;
-    @BindView(R.id.action_insert_numbers)
-    ImageButton actionInsertNumbers;
-    @BindView(R.id.action_blockquote)
-    ImageButton actionBlockquote;
+
     @BindView(R.id.action_insert_image)
     ImageButton actionInsertImage;
-    @BindView(R.id.action_insert_link)
-    ImageButton actionInsertLink;
-    @BindView(R.id.action_insert_checkbox)
-    ImageButton actionInsertCheckbox;
     @BindView(R.id.re_editor)
     RichEditor reEditor;
     @BindView(R.id.tv_email_send)
     TextView tvEmailSend;
-    boolean isChange = true;
-    boolean isBackChange = true;
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 102;
     @BindView(R.id.ed_title)
     EditText edTitle;
@@ -145,107 +95,28 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
         Log.e("response",""+JSONObject.toJSONString(response));
-        MiscUtils.showMessageToast("发帖成功！");
+        if(response.getRetcode() == 0 ){
+            MiscUtils.showMessageToast(response.getMessage());
+            finish();
+        }
+
+
     }
 
     @Override
     public void onFailure(String errorMsg, int actionId) {
         super.onFailure(errorMsg, actionId);
     }
-    @OnClick({R.id.iv_back, R.id.action_undo, R.id.action_redo, R.id.action_bold, R.id.action_italic,
-            R.id.action_subscript, R.id.action_superscript, R.id.action_strikethrough, R.id.action_underline,
-            R.id.action_heading1, R.id.action_heading2, R.id.action_heading3, R.id.action_heading4,
-            R.id.action_heading5, R.id.action_heading6, R.id.action_txt_color, R.id.action_bg_color, R.id.action_indent,
-            R.id.action_outdent, R.id.action_align_left, R.id.action_align_center, R.id.action_align_right,
-            R.id.action_insert_bullets, R.id.action_insert_numbers, R.id.action_blockquote, R.id.action_insert_image,
-            R.id.action_insert_link, R.id.action_insert_checkbox, R.id.tv_email_send})
+    @OnClick({R.id.iv_back, R.id.action_insert_image,
+            R.id.tv_email_send})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.action_undo:
-                reEditor.undo();
-                break;
-            case R.id.action_redo:
-                reEditor.redo();
-                break;
-            case R.id.action_bold:
-                reEditor.setBold();
-                break;
-            case R.id.action_italic:
-                reEditor.setItalic();
-                break;
-            case R.id.action_subscript:
-                reEditor.setSubscript();
-                break;
-            case R.id.action_superscript:
-                reEditor.setSuperscript();
-                break;
-            case R.id.action_strikethrough:
-                reEditor.setStrikeThrough();
-                break;
-            case R.id.action_underline:
-                reEditor.setUnderline();
-                break;
-            case R.id.action_heading1:
-                reEditor.setHeading(1);
-                break;
-            case R.id.action_heading2:
-                reEditor.setHeading(2);
-                break;
-            case R.id.action_heading3:
-                reEditor.setHeading(3);
-                break;
-            case R.id.action_heading4:
-                reEditor.setHeading(4);
-                break;
-            case R.id.action_heading5:
-                reEditor.setHeading(5);
-                break;
-            case R.id.action_heading6:
-                reEditor.setHeading(6);
-                break;
-            case R.id.action_txt_color:
-                reEditor.setTextColor(isChange ? Color.BLACK : Color.RED);
-                isChange = !isChange;
-                break;
-            case R.id.action_bg_color:
-                reEditor.setTextBackgroundColor(isBackChange ? Color.TRANSPARENT : Color.YELLOW);
-                isBackChange = !isBackChange;
-                break;
-            case R.id.action_indent:
-                reEditor.setIndent();
-                break;
-            case R.id.action_outdent:
-                reEditor.setOutdent();
-                break;
-            case R.id.action_align_left:
-                reEditor.setAlignLeft();
-                break;
-            case R.id.action_align_center:
-                reEditor.setAlignCenter();
-                break;
-            case R.id.action_align_right:
-                reEditor.setAlignRight();
-                break;
-            case R.id.action_insert_bullets:
-                reEditor.setBullets();
-                break;
-            case R.id.action_insert_numbers:
-                reEditor.setNumbers();
-                break;
-            case R.id.action_blockquote:
-                reEditor.setBlockquote();
-                break;
             case R.id.action_insert_image:
                 pickImage();
                 //插入图片到富文本框
-                break;
-            case R.id.action_insert_link:
-                break;
-            case R.id.action_insert_checkbox:
-                reEditor.insertTodo();
                 break;
             case R.id.tv_email_send:
                 commit();
@@ -286,29 +157,41 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE) {
-                selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
-                if (MiscUtils.isNotEmpty(selectPath)) {
-                    AppUtils.startClipAvatarActivity(this, new File(selectPath.get(0)));
+        if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE) {
+            selectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
+            if (MiscUtils.isNotEmpty(selectPath)) {
+                File outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                if (!outDir.exists()) {
+                    outDir.mkdirs();
                 }
-            } else if (requestCode == AppUtils.REQUEST_CODE_CLIP_PHOTO) {
-                if (data != null) {
-                    Uri uri = data.getData();
-                    if (uri == null) {
-                        UIUtils.showToast("选取失败");
-                    } else {
-                        doUpLoad();
-                    }
+                File outFile = new File(outDir, System.currentTimeMillis() + ".jpg");
+                //裁剪后图片的绝对路径
+                //  String cameraScalePath = outFile.getAbsolutePath();
+                Uri destinationUri = Uri.fromFile(outFile);
+                MCrop.of(Uri.fromFile(new File(selectPath.get(0))),destinationUri).withAspectRatio(1,1)
+                        .withMaxResultSize
+                                (200,200).start(this);
+            }
+        } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
+            Log.e("path"," exe");
+            if (data != null) {
+                Uri uri = MCrop.getOutput(data);
+                if (uri == null) {
+                    UIUtils.showToast("选取失败");
+                } else {
+                    Log.e("path"," " +uri.getPath());
+                    String path = uri.getPath();
+                    doUpLoad(path);
                 }
             }
         }
     }
 
-    private void doUpLoad() {
+    private void doUpLoad(String path) {
         RequestParams params = new RequestParams();
         try {
-            params.put("name", new File(selectPath.get(0)));
+            params.put("name", new File(path));
+            params.put("type","3");
         } catch (IOException e) {
 
         }
@@ -319,9 +202,8 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            org.json.JSONObject response = (org.json.JSONObject) msg.obj;
-            UpLoadFileEntity upLoadFileEntity = new UpLoadFileEntity();
-            upLoadFileEntity = new ApiResponse(JSON.parseObject(response.toString())).getInfo(UpLoadFileEntity.class);
+            UpLoadFileEntity upLoadFileEntity =(UpLoadFileEntity) msg.obj;
+            Log.e("uploadUrk",JSONObject.toJSONString(upLoadFileEntity));
             reEditor.insertImage(upLoadFileEntity.getUploadedurl(), upLoadFileEntity.getUploadedfilename());
         }
     };

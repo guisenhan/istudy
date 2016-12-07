@@ -57,7 +57,6 @@ public class StudyDatumActivity extends BaseActivity {
         lvDatum.setAdapter(adapter);
         courseId = getIntent().getExtras().getString("courseId");
         JSONObject params = new JSONObject();
-        Log.e("courseId",""+courseId);
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_STUDY_DATUM_ACTION,params,this,AppConstant.POST_GET_STUDY_DATUM);
     }
@@ -79,8 +78,10 @@ public class StudyDatumActivity extends BaseActivity {
         lvDatum.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,final int i, long l) {
+                Log.e("file urls",""+_dataList.get(i).getUrl());
                  file1 = new File(AppConstant.FILE_STORED + _dataList.get(i).getFilename());
                 if(file1.exists()){
+                    AppUtils.openFile(file1);
                     return;
                 }
                 http.get(StudyDatumActivity.this, _dataList.get(i).getUrl(), new FileAsyncHttpResponseHandler
@@ -92,7 +93,6 @@ public class StudyDatumActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, File file) {
-                        Log.e("filePath",file.getAbsolutePath());
                         try {
                             FileInputStream  in = new FileInputStream(file);
                             FileOutputStream out = new FileOutputStream(file1);
@@ -114,12 +114,18 @@ public class StudyDatumActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-        Log.e("response",""+JSONObject.toJSONString(response));
+
         _dataList = response.getListData(CourseDatumEntity.class);
-        adapter.UpdateView(_dataList);
+        Log.e("response",JSONObject.toJSONString(response));
+        adapter.UpdateView(resetData(_dataList));
         tvTitle.setText("学习资料（共"+_dataList.size()+"个）");
     }
-
-
-
+    private List<CourseDatumEntity> resetData(List<CourseDatumEntity> list){
+        for(int i = 0 ; i < list.size() ; i++){
+            if(list.get(i).getExtensions().equals("DIR")){
+                list.remove(i);
+            }
+        }
+        return list;
+    }
 }

@@ -80,6 +80,7 @@ public class ComplexQuestionAdapter extends BaseAdapter {
             complexAnswer.add(" ");
         }
         if(MiscUtils.isNotEmpty(answer)){
+            complexAnswer = new ArrayList<String>();
             complexAnswer = getAnswer(answer);
         }
         this.notifyDataSetChanged();
@@ -524,7 +525,6 @@ public class ComplexQuestionAdapter extends BaseAdapter {
         List<String> ans = new ArrayList<String>();
         String[] array = answer.split("~~~");
         for(int i = 0 ; i < array.length;i++){
-            if(MiscUtils.isNotEmpty(array[i]))
                 ans.add(array[i]);
         }
         return  ans;
