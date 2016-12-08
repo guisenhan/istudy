@@ -64,6 +64,7 @@ public class ExerciseAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_exercise, null);
             view.tvHomeworkName = (TextView) convertView.findViewById(R.id.tv_homework_name);
             view.tvHomeworkInfo = (TextView) convertView.findViewById(R.id.tv_homework_info);
+            view.tvSeeDetail =(TextView)convertView.findViewById(R.id.tv_see_detail);
             convertView.setTag(view);
         } else {
             view = (ViewHolder) convertView.getTag();

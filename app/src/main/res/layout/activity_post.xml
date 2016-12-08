@@ -28,7 +28,7 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="互评列表"
+			android:text="帖子"
 			android:textSize="18sp"
 			android:textColor="@color/black"
 			android:layout_toRightOf="@+id/tv_back"

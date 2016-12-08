@@ -646,18 +646,26 @@ public class TestDetailActivity extends BaseActivity
         if (MiscUtils.isNotEmpty(test.getOptiona())) {
             rbChooseA.setVisibility(View.VISIBLE);
             rbChooseA.setText(Html.fromHtml(test.getOptiona()));
+        }else{
+            rbChooseA.setVisibility(View.GONE);
         }
         if (MiscUtils.isNotEmpty(test.getOptionb())) {
             rbChooseB.setVisibility(View.VISIBLE);
             rbChooseB.setText(Html.fromHtml(test.getOptionb()));
+        }else{
+            rbChooseB.setVisibility(View.GONE);
         }
         if (MiscUtils.isNotEmpty(test.getOptionc())) {
             rbChooseC.setVisibility(View.VISIBLE);
             rbChooseC.setText(Html.fromHtml(test.getOptionc()));
+        }else{
+            rbChooseC.setVisibility(View.GONE);
         }
         if (MiscUtils.isNotEmpty(test.getOptiond())) {
             rbChooseD.setVisibility(View.VISIBLE);
             rbChooseD.setText(Html.fromHtml(test.getOptiond()));
+        }else{
+            rbChooseD.setVisibility(View.GONE);
         }
         if (MiscUtils.isNotEmpty(test.getAnswer())) {
             tvChooseAnswer.setText("答案：" + test.getAnswer());
@@ -673,12 +681,12 @@ public class TestDetailActivity extends BaseActivity
         rgAnswer.clearCheck();
 
         for (int i = 0; i < _answerList.size(); i++) {
-            if (MiscUtils.isNotEmpty(_answerList.get(i).getQuestionid())) {
+            if (MiscUtils.isNotEmpty(_answerList.get(i).getQuestionid())&& MiscUtils.isNotEmpty(_answerList.get(i)
+                    .getAnswer())) {
                 if (_answerList.get(i).getQuestionid().equals(test.getId())) {
                     if (_answerList.get(i).getAnswer().equals("A")) {
                         rgAnswer.check(rbChooseA.getId());
                     } else if (_answerList.get(i).getAnswer().equals("B")) {
-                        rbChooseB.setChecked(true);
                         rgAnswer.check(rbChooseB.getId());
                     } else if (_answerList.get(i).getAnswer().equals("C")) {
                         rgAnswer.check(rbChooseC.getId());
@@ -819,7 +827,9 @@ public class TestDetailActivity extends BaseActivity
                 return null;
             }
             drawable.setBounds(0, 0, MiscUtils.getScreenWidth(),
-                    (drawable.getIntrinsicHeight() * MiscUtils.getScreenWidth()) / drawable.getIntrinsicWidth());
+                    (drawable.getIntrinsicHeight() * (MiscUtils.getScreenWidth() - MiscUtils.dpToPx(20,getResources()))) / drawable
+                            .getIntrinsicWidth
+                            ());
             return drawable;
         }
     };
@@ -976,6 +986,9 @@ public class TestDetailActivity extends BaseActivity
             case R.id.iv_left_arrow:
                 try {
                     if ((bProblem) > 0) {
+                        if(bProblem <= _questionList.size()){
+                            saveAnswerNotCommit();
+                        }
                         bProblem = bProblem - 1;
                         if(paperModel == 2){
                             llFillBlankAnswer.setVisibility(View.GONE);
@@ -1015,6 +1028,9 @@ public class TestDetailActivity extends BaseActivity
                             llMultiChoiceAnswer.setVisibility(View.GONE);
                             tvPreview.setVisibility(View.GONE);
                         }
+                        if(bProblem >=0){
+                            saveAnswerNotCommit();
+                        }
                         bProblem = bProblem + 1;
                         if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") || _questionList
                                 .get(bProblem).getQuestionType().equals("JUDGE")) {
@@ -1050,7 +1066,7 @@ public class TestDetailActivity extends BaseActivity
             case R.id.action_insert_link:
                 break;
             case R.id.iv_save:
-                    saveAnswer();
+                saveAnswerAndCommit();
                 break;
             case R.id.iv_back:
                 finish();
@@ -1064,9 +1080,79 @@ public class TestDetailActivity extends BaseActivity
                 break;
         }
     }
+    private void saveAnswerNotCommit(){
+        if(MiscUtils.isEmpty(_questionList.get(bProblem).getId())){
+            return;
+        }
+        AnswerEntity answerEntity = new AnswerEntity();
+        answerEntity.setTestid(testId);
+        answerEntity.setQuestionid(_questionList.get(bProblem).getId());
 
+        for(int i = 0 ; i < _answerList.size();i++){
+            if(_answerList.get(i).getQuestionid().equals(_questionList.get(bProblem).getId())){
+                answerEntity  = _answerList.get(i);
+                answerEntity.setTestid(testId);
+                answerEntity.setQuestionid(_questionList.get(bProblem).getId());
+            }
+        }
+        if (_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE") ||_questionList.get(bProblem).getQuestionType().equals("JUDGE") ) {
+
+        } else if (_questionList.get(bProblem).getQuestionType().equals("FILL_BLANK")) {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerA.getText().toString().trim())) {
+                stringBuilder.append(tvFillBlankAnswerA.getText().toString().trim());
+            }else{
+                stringBuilder.append("");
+            }
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerB.getText().toString().trim())) {
+                stringBuilder.append("&&&");
+                stringBuilder.append(tvFillBlankAnswerB.getText().toString().trim());
+            }else{
+                stringBuilder.append("&&&");
+            }
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerC.getText().toString().trim())) {
+                stringBuilder.append("&&&");
+                stringBuilder.append(tvFillBlankAnswerC.getText().toString().trim());
+            }else{
+                stringBuilder.append("&&&");
+            }
+            if (MiscUtils.isNotEmpty(tvFillBlankAnswerD.getText().toString().trim())) {
+                stringBuilder.append("&&&");
+                stringBuilder.append(tvFillBlankAnswerD.getText().toString().trim());
+            }else{
+                stringBuilder.append("&&&");
+            }
+            answerEntity.setAnswer(stringBuilder.toString());
+        } else if (_questionList.get(bProblem).getQuestionType().equals("COMPLEX")) {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i< comlex.getComplexAnswer().size() ; i++){
+                sb.append(comlex.getComplexAnswer().get(i));
+                if(i != (comlex.getComplexAnswer().size()-1))
+                    sb.append("~~~");
+            }
+            answerEntity.setAnswer(sb.toString());
+        } else if(_questionList.get(bProblem).getQuestionType().equals("MULIT_CHIOCE")){
+            if(multiAnswer.size()>0){
+                StringBuilder multi = new StringBuilder();
+                for(int i = 0; i<multiAnswer.size();i++){
+                    multi.append(multiAnswer.get(i));
+                    if(i != (multiAnswer.size()-1))
+                        multi.append("&&&");
+                }
+                answerEntity.setAnswer(multi.toString());
+            }else{
+                MiscUtils.showMessageToast("请选择答案");
+            }
+        }else{
+            answerEntity.setAnswer(reEditor.getHtml());
+        }
+        _answerList.add(answerEntity);
+    }
     //提交答案
-    private void saveAnswer() {
+    private void saveAnswerAndCommit() {
+        if(MiscUtils.isEmpty(_questionList.get(bProblem).getId())){
+            return;
+        }
         AnswerEntity answerEntity = new AnswerEntity();
         answerEntity.setTestid(testId);
         answerEntity.setQuestionid(_questionList.get(bProblem).getId());

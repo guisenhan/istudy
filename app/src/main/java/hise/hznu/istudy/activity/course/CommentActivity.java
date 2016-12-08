@@ -1,7 +1,10 @@
 package hise.hznu.istudy.activity.course;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.loopj.android.http.Base64;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CommentPaperEntity;
 import hise.hznu.istudy.model.course.CommentResultEntity;
+import hise.hznu.istudy.util.ImageLoaderUtils;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.widget.MyGridView;
 import hise.hznu.istudy.widget.MyListView;
@@ -134,9 +139,9 @@ public class CommentActivity extends BaseActivity {
     }
 
     private void setContent(CommentPaperEntity commentPaperEntity) {
-        tvCommentTitle.setText(commentPaperEntity.getContent());
+        tvCommentTitle.setText(Html.fromHtml(commentPaperEntity.getContent(),imgGetter,null));
         if (MiscUtils.isNotEmpty(commentPaperEntity.getAnswer())) {
-            tvStudentAnswer.setText(commentPaperEntity.getAnswer());
+            tvStudentAnswer.setText(Html.fromHtml(commentPaperEntity.getAnswer(),imgGetter,null));
         } else { llAnswer.setVisibility(View.GONE); }
         adapter.UpdateView(commentPaperEntity.getRules());
         additionalAdapter.UpdateView(commentPaperEntity.getAnswerfiles());
@@ -233,4 +238,22 @@ public class CommentActivity extends BaseActivity {
         }
 
     }
+    Html.ImageGetter imgGetter = new Html.ImageGetter() {
+        public Drawable getDrawable(String source) {
+            Drawable drawable = null;
+            URL url;
+            try {
+                url = new URL(source);
+                drawable =new BitmapDrawable(ImageLoaderUtils.getImageLoader().loadImageSync(url.toString())); // 获取网路图片
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            drawable.setBounds(0, 0, MiscUtils.getScreenWidth(),
+                    (drawable.getIntrinsicHeight() * (MiscUtils.getScreenWidth() - MiscUtils.dpToPx(20,getResources()))) / drawable
+                            .getIntrinsicWidth
+                                    ());
+            return drawable;
+        }
+    };
 }

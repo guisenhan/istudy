@@ -110,19 +110,28 @@ public class ComplexQuestionAdapter extends BaseAdapter {
             view.tvTestContent.setText(Html.fromHtml(test.getContent()));
             if (MiscUtils.isNotEmpty(test.getOptiona())) {
                 view.rbChooseA.setVisibility(View.VISIBLE);
-                view.rbChooseA.setText(Html.fromHtml(test.getOptiona()));
+                view.rbChooseA.setText(Html.fromHtml(test.getOptiona(),imgGetter,null));
+            }else{
+                view.rbChooseA.setVisibility(View.GONE);
             }
             if (MiscUtils.isNotEmpty(test.getOptionb())) {
                 view.rbChooseB.setVisibility(View.VISIBLE);
-                view.rbChooseB.setText(Html.fromHtml(test.getOptionb()));
+                view.rbChooseB.setText(Html.fromHtml(test.getOptionb(),imgGetter,null));
+            }
+            else{
+                view.rbChooseB.setVisibility(View.GONE);
             }
             if (MiscUtils.isNotEmpty(test.getOptionc())) {
                 view.rbChooseC.setVisibility(View.VISIBLE);
-                view.rbChooseC.setText(Html.fromHtml(test.getOptionc()));
+                view.rbChooseC.setText(Html.fromHtml(test.getOptionc(),imgGetter,null));
+            }else{
+                view.rbChooseC.setVisibility(View.GONE);
             }
             if (MiscUtils.isNotEmpty(test.getOptiond())) {
                 view.rbChooseD.setVisibility(View.VISIBLE);
-                view.rbChooseD.setText(Html.fromHtml(test.getOptiond()));
+                view.rbChooseD.setText(Html.fromHtml(test.getOptiond(),imgGetter,null));
+            }else{
+                view.rbChooseD.setVisibility(View.GONE);
             }
             if(MiscUtils.isNotEmpty(answer)){
                 if(complexAnswer.get(position).equals("A")){

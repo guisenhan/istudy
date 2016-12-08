@@ -30,7 +30,7 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="互评列表"
+			android:text="互评"
 			android:textSize="18sp"
 			android:textColor="@color/black"
 			android:id="@+id/tv_title"
@@ -49,6 +49,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_below="@+id/divider"
+		android:layout_above="@+id/ll_bottom"
 		>
 		<LinearLayout
 			android:layout_width="match_parent"

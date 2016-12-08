@@ -259,7 +259,7 @@ public abstract class MyCropImageView extends TransformImageView {
     public void postScale(float deltaScale, float px, float py) {
         if (deltaScale > 1 && getCurrentScale() * deltaScale <= getMaxScale()) {
             super.postScale(deltaScale, px, py);
-        } else if (deltaScale < 1 && getCurrentScale() * deltaScale >= getMinScale()) {
+        } else{
             super.postScale(deltaScale, px, py);
         }
     }
