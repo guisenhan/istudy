@@ -1,12 +1,18 @@
 package hise.hznu.istudy.activity.course;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,6 +21,8 @@ import hise.hznu.istudy.R;
 import hise.hznu.istudy.api.ApiResponse;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CommentCardEntity;
+import hise.hznu.istudy.util.ImageLoaderUtils;
+import hise.hznu.istudy.util.MiscUtils;
 
 public class PostActivity extends BaseActivity {
     @BindView(R.id.tv_back)
@@ -22,7 +30,7 @@ public class PostActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_content)
-    TextView tvContent;
+    WebView tvContent;
     @BindView(R.id.iv_comment)
     ImageView ivComment;
 
@@ -48,10 +56,10 @@ public class PostActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        tvContent.setText(Html.fromHtml(comment.getContent()));
-
+        Log.e("content","" + comment.getContent());
+      //  tvContent.setText(Html.fromHtml(comment.getContent(),imgGetter,null));
+        tvContent.loadDataWithBaseURL(null,comment.getContent(), "text/html", "utf-8", null);
     }
-
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
