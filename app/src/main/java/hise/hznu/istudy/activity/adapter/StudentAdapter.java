@@ -16,6 +16,7 @@ import java.util.List;
 import hise.hznu.istudy.R;
 import hise.hznu.istudy.model.email.ContacterEntity;
 import hise.hznu.istudy.util.ImageLoaderUtils;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.widget.CircleImageView;
 import hise.hznu.istudy.widget.MyListView;
 
@@ -78,7 +79,8 @@ public class StudentAdapter extends BaseAdapter {
             view = (ViewHolder) convertView.getTag();
         }
         view.tvName.setText(_dataList.get(position).getName());
-        ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getFace(),view.ivPhoto);
+        if(MiscUtils.isNotEmpty(_dataList.get(position).getFace()))
+            ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getFace(),view.ivPhoto);
         view.cbChoose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

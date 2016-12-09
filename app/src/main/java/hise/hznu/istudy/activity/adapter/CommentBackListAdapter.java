@@ -78,7 +78,8 @@ public class CommentBackListAdapter extends BaseAdapter {
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getAvatar_url(),view.ivPhoto);
+        if(MiscUtils.isNotEmpty(_dataList.get(position).getAvatar_url()))
+            ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getAvatar_url(),view.ivPhoto);
         view.tvName.setText(_dataList.get(position).getAuthor());
         view.tvDate.setText(_dataList.get(position).getAuthor() + " 于" + AppUtils.dateFormat(_dataList.get
                 (position)

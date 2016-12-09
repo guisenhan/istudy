@@ -16,6 +16,7 @@ import hise.hznu.istudy.model.course.CommentCardEntity;
 import hise.hznu.istudy.model.course.CommentTaskEntity;
 import hise.hznu.istudy.util.AppUtils;
 import hise.hznu.istudy.util.ImageLoaderUtils;
+import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.widget.CircleImageView;
 
 /**
@@ -86,7 +87,8 @@ public class TalkZoneAdapter extends BaseAdapter {
             view.tvPrise.setVisibility(View.GONE);
             view.ivPhoto.setVisibility(View.VISIBLE);
         }
-        ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getAvatar_url(),view.ivPhoto);
+        if(MiscUtils.isNotEmpty(_dataList.get(position).getAvatar_url()))
+            ImageLoaderUtils.getImageLoader().displayImage(_dataList.get(position).getAvatar_url(),view.ivPhoto);
         view.tvName.setText(_dataList.get(position).getTitle());
         view.tvDetail.setText(_dataList.get(position).getAuthor() + " 于" + AppUtils.dateFormat(_dataList.get
                 (position)

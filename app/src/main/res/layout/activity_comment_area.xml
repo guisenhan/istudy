@@ -53,7 +53,7 @@
 			android:background="@color/colorPrimary"
 			android:gravity="center"
 			android:textSize="14sp"
-			android:textColor="@color/text_important_color"
+			android:textColor="@color/text_white_color"
 			android:id="@+id/tv_class_name"
 			/>
 		<LinearLayout
