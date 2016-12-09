@@ -189,6 +189,7 @@ public class CommentActivity extends BaseActivity {
                 break;
             case R.id.iv_save:
                 setResult();
+                commit();
                 break;
         }
     }

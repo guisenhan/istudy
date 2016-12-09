@@ -967,11 +967,12 @@ public class TestDetailActivity extends BaseActivity
                 if (_answerList.get(i).getQuestionid().equals(test.getId())) {
                     if (_answerList.get(i).getAnswer().contains("A")) {
                         rbMultiChoiceA.setChecked(true);
-                    } else if (_answerList.get(i).getAnswer().contains("B")) {
+                    } if (_answerList.get(i).getAnswer().contains("B")) {
                         rbMultiChoiceB.setChecked(true);
-                    } else if (_answerList.get(i).getAnswer().contains("C")) {
+                    }  if (_answerList.get(i).getAnswer().contains("C")) {
                         rbMultiChoiceC.setChecked(true);
-                    } else if (_answerList.get(i).getAnswer().contains("D")) {
+                    }
+                    if (_answerList.get(i).getAnswer().contains("D")) {
                         rbMultiChoiceD.setChecked(true);
                     }
                     break;

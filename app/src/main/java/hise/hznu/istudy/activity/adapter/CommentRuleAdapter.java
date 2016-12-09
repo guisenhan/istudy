@@ -96,9 +96,9 @@ public class CommentRuleAdapter extends BaseAdapter {
             @Override
             public void afterTextChanged(Editable editable) {
                 if(MiscUtils.isNotEmpty(editable.toString())){
-                    if(Integer.valueOf(_dataList.get(position).getScore())<Integer.valueOf(editable.toString())){
-                        editText.setText(_dataList.get(position).getScore());
-                        _dataList.get(position).setScore(editable.toString());
+                    if(Integer.valueOf(_dataList.get(position).getTotalscore())<Integer.valueOf(editable.toString())){
+                        editText.setText(_dataList.get(position).getTotalscore());
+                        _dataList.get(position).setScore(editText.getText().toString());
                     }
                 }
             }
