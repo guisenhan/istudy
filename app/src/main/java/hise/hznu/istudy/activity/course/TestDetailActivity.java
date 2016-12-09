@@ -645,25 +645,43 @@ public class TestDetailActivity extends BaseActivity
         tvTestContent.setText(Html.fromHtml(test.getContent()));
         if (MiscUtils.isNotEmpty(test.getOptiona())) {
             rbChooseA.setVisibility(View.VISIBLE);
-            rbChooseA.setText(Html.fromHtml(test.getOptiona()));
+            if(test.getQuestionType() .equals("JUDGE")){
+                rbChooseA.setText(Html.fromHtml(test.getOptiona()));
+            }else{
+                rbChooseA.setText(Html.fromHtml("A:"+test.getOptiona()));
+            }
+
         }else{
             rbChooseA.setVisibility(View.GONE);
         }
         if (MiscUtils.isNotEmpty(test.getOptionb())) {
             rbChooseB.setVisibility(View.VISIBLE);
-            rbChooseB.setText(Html.fromHtml(test.getOptionb()));
+            if(test.getQuestionType() .equals("JUDGE")){
+                rbChooseB.setText(Html.fromHtml(test.getOptionb()));
+            }else{
+                rbChooseB.setText(Html.fromHtml("B:"+test.getOptionb()));
+            }
         }else{
             rbChooseB.setVisibility(View.GONE);
         }
         if (MiscUtils.isNotEmpty(test.getOptionc())) {
             rbChooseC.setVisibility(View.VISIBLE);
-            rbChooseC.setText(Html.fromHtml(test.getOptionc()));
+            if(test.getQuestionType() .equals("JUDGE")){
+                rbChooseC.setText(Html.fromHtml(test.getOptionc()));
+            }else{
+                rbChooseC.setText(Html.fromHtml("C:"+test.getOptionc()));
+            }
         }else{
             rbChooseC.setVisibility(View.GONE);
+
         }
         if (MiscUtils.isNotEmpty(test.getOptiond())) {
             rbChooseD.setVisibility(View.VISIBLE);
-            rbChooseD.setText(Html.fromHtml(test.getOptiond()));
+            if(test.getQuestionType() .equals("JUDGE")){
+                rbChooseD.setText(Html.fromHtml(test.getOptiond()));
+            }else{
+                rbChooseD.setText(Html.fromHtml("D:"+test.getOptiond()));
+            }
         }else{
             rbChooseD.setVisibility(View.GONE);
         }
@@ -937,19 +955,19 @@ public class TestDetailActivity extends BaseActivity
         tvMultiChoiceContent.setText(Html.fromHtml(test.getContent()));
         if (MiscUtils.isNotEmpty(test.getOptiona())) {
             rbMultiChoiceA.setVisibility(View.VISIBLE);
-            rbMultiChoiceA.setText(Html.fromHtml(test.getOptiona()));
+            rbMultiChoiceA.setText(Html.fromHtml("A:"+test.getOptiona()));
         }
         if (MiscUtils.isNotEmpty(test.getOptionb())) {
             rbMultiChoiceB.setVisibility(View.VISIBLE);
-            rbMultiChoiceB.setText(Html.fromHtml(test.getOptionb()));
+            rbMultiChoiceB.setText(Html.fromHtml("B:"+test.getOptionb()));
         }
         if (MiscUtils.isNotEmpty(test.getOptionc())) {
             rbMultiChoiceC.setVisibility(View.VISIBLE);
-            rbMultiChoiceC.setText(Html.fromHtml(test.getOptionc()));
+            rbMultiChoiceC.setText(Html.fromHtml("C:"+test.getOptionc()));
         }
         if (MiscUtils.isNotEmpty(test.getOptiond())) {
             rbMultiChoiceD.setVisibility(View.VISIBLE);
-            rbMultiChoiceD.setText(Html.fromHtml(test.getOptiond()));
+            rbMultiChoiceD.setText(Html.fromHtml("D:"+test.getOptiond()));
         }
         if (MiscUtils.isNotEmpty(test.getAnswer())) {
             tvMultiChoiceAnswer.setText("答案：" + test.getAnswer());
