@@ -21,6 +21,7 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CommentTaskEntity;
+import hise.hznu.istudy.widget.LoadView;
 
 public class CommentEachActivity extends BaseActivity {
 
@@ -30,6 +31,8 @@ public class CommentEachActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.lv_comment)
     ListView lvComment;
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private CommentEachAdapter adapter;
     private List<CommentTaskEntity> _dataList = new ArrayList<CommentTaskEntity>();
     String courseId;
@@ -43,6 +46,7 @@ public class CommentEachActivity extends BaseActivity {
         courseId = getIntent().getExtras().getString("courseId");
         params.put("courseid", courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_COMMENT_EACH, params, this, AppConstant.POST_COMMENT_EACH);
+        loadView.showLoading();
     }
 
     @Override
@@ -72,8 +76,15 @@ public class CommentEachActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        loadView.clearLoad();
         _dataList = response.getListData(CommentTaskEntity.class);
-        adapter.UpdateView(_dataList);
+        if(_dataList.size() == 0){
+            loadView.showNoData();
+            loadView.setNoDataText("暂无互评任务！又可以出去浪了，哈哈！");
+        }else{
+            adapter.UpdateView(_dataList);
+        }
+
     }
 
 }

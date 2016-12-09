@@ -24,6 +24,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.ExprementEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.widget.LoadView;
 
 public class MyExperimentActivity extends BaseActivity {
     @BindView(R.id.tv_back)
@@ -32,6 +33,8 @@ public class MyExperimentActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.lv_experiment)
     ListView lvExperiment;
+    @BindView(R.id.load_view)
+    LoadView loadView;
 
     private String courseId;
     private List<ExprementEntity> _dataList = new ArrayList<ExprementEntity>();
@@ -43,6 +46,7 @@ public class MyExperimentActivity extends BaseActivity {
         JSONObject params = new JSONObject();
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_MY_EXPERIMENT,params,this,AppConstant.POST_GET_MY_EXPERIMENT);
+        loadView.showLoading();
     }
 
     @Override
@@ -76,8 +80,15 @@ public class MyExperimentActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        loadView.clearLoad();
         _dataList = response.getListData(ExprementEntity.class);
-        adapter.UpdateView(_dataList);
+        if(_dataList.size() == 0){
+            loadView.showNoData();
+            loadView.setNoDataText("运气不错，老师还没发实验，快出去浪！");
+        }else{
+            adapter.UpdateView(_dataList);
+        }
+
     }
 
     @Override

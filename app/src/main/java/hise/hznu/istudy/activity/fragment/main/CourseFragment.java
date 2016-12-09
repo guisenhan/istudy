@@ -30,6 +30,7 @@ import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.model.course.CourseEntity;
 import hise.hznu.istudy.util.MiscUtils;
 import hise.hznu.istudy.widget.CircleRefreshLayout;
+import hise.hznu.istudy.widget.LoadView;
 
 /**
  * Created by Guisen Han on 2016/7/25.
@@ -37,6 +38,8 @@ import hise.hznu.istudy.widget.CircleRefreshLayout;
 public class CourseFragment extends BaseFragment {
     @BindView(R.id.lv_course)
     ListView lvCourse;
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private List<CourseEntity> _dataList = new ArrayList<CourseEntity>();
     private CourseAdapter adapter;
 
@@ -47,6 +50,7 @@ public class CourseFragment extends BaseFragment {
         RequestManager.getmInstance().apiPostData(AppConstant.GET_COURSE_ACTION, params, this, AppConstant.POST_GET_COURSE_ACTION);
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.GET_USERINFO, params, this, AppConstant.POST_GET_USERINFO);
+        loadView.showLoading();
     }
 
     @Override
@@ -80,7 +84,12 @@ public class CourseFragment extends BaseFragment {
                 break;
             case AppConstant.POST_GET_COURSE_ACTION:
                 _dataList = apiResponse.getListData(CourseEntity.class);
-                adapter.UpdateView(_dataList);
+                loadView.clearLoad();
+                if(_dataList.size() == 0 ){
+                    loadView.showNoData();
+                }else{
+                    adapter.UpdateView(_dataList);
+                }
                 break;
         }
 

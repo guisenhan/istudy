@@ -23,6 +23,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.HomeWorkEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.widget.LoadView;
 
 public class MyHomeWorkActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_back)
@@ -31,7 +32,8 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
     TextView tvTitle;
     @BindView(R.id.lv_homework)
     ListView lvHomework;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private String courseId;
     private HomeWorkAdapter adapter;
     private List<HomeWorkEntity> _dataList = new ArrayList<HomeWorkEntity>();
@@ -55,6 +57,7 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
         JSONObject params = new JSONObject();
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_HOMEWORK_ACTION,params,this,AppConstant.POST_HOMEWORK_ACTION);
+        loadView.showLoading();
         lvHomework.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -76,8 +79,14 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        loadView.clearLoad();
         _dataList = response.getListData(HomeWorkEntity.class);
-        adapter.UpdateView(_dataList);
+        if(_dataList.size() == 0){
+            loadView.showNoData();
+            loadView.setNoDataText("还没有作业，恭喜啊！");
+        }else{
+            adapter.UpdateView(_dataList);
+        }
     }
 
     @Override

@@ -33,6 +33,7 @@ import hise.hznu.istudy.model.UserInfoEntity;
 import hise.hznu.istudy.model.email.EmailEntity;
 import hise.hznu.istudy.model.email.SendEmailEntity;
 import hise.hznu.istudy.util.MiscUtils;
+import hise.hznu.istudy.widget.LoadView;
 
 /**
  * Created by GuisenHan on 2016/7/25.
@@ -54,7 +55,8 @@ public class EmailFragment extends BaseFragment {
     TextView tvWriteEmail;
     @BindView(R.id.iv_search)
     ImageView ivSearch;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private List<EmailEntity> _datalist = new ArrayList<EmailEntity>();
     private List<SendEmailEntity> _dataSend = new ArrayList<SendEmailEntity>();
     private EmailSendAdapter emailSendAdapter;
@@ -74,6 +76,7 @@ public class EmailFragment extends BaseFragment {
         params.put("unreadonly", "2");
         RequestManager.getmInstance()
                 .apiPostData(AppConstant.GET_EMAIL_ACTION, params, this, AppConstant.POST_GET_EMAIL_ACTION);
+        loadView.showLoading();
     }
 
     @Override
@@ -109,17 +112,31 @@ public class EmailFragment extends BaseFragment {
         switch (actionId){
             case AppConstant.POST_GET_EMAIL_ACTION:
                 type = 1;
+                loadView.clearLoad();
                 lvEmail.setAdapter(adapter);
                 _datalist.clear();
                 _datalist = apiResponse.getListData(EmailEntity.class);
-                adapter.UpdateView(_datalist);
+                if(_datalist.size() == 0 ){
+                    loadView.showNoData();
+                    loadView.setNoDataText("暂无邮件信息！");
+                }else{
+                    adapter.UpdateView(_datalist);
+                }
+
                 break;
             case AppConstant.POST_QUERY_EMAIL_SEND:
                 lvEmail.setAdapter(emailSendAdapter);
+                loadView.clearLoad();
                 _dataSend.clear();
                 type = 2;
                 _dataSend = apiResponse.getListData(SendEmailEntity.class);
-                emailSendAdapter.UpdateView(_dataSend);
+                if(_dataSend.size() == 0){
+                    loadView.showNoData();
+                    loadView.setNoDataText("暂无邮件信息！");
+                }else{
+                    emailSendAdapter.UpdateView(_dataSend);
+                }
+
                 break;
 
         }
@@ -148,6 +165,7 @@ public class EmailFragment extends BaseFragment {
 
                 RequestManager.getmInstance()
                         .apiPostData(AppConstant.GET_EMAIL_ACTION, params, this, AppConstant.POST_GET_EMAIL_ACTION);
+                loadView.showLoading();
                 break;
             case R.id.tv_send_email:
                 JSONObject jsonObject = new JSONObject();
@@ -161,6 +179,7 @@ public class EmailFragment extends BaseFragment {
                 jsonObject.put("page", "0");
                 RequestManager.getmInstance()
                         .apiPostData(AppConstant.QUERY_EMAIL_SEND, jsonObject, this, AppConstant.POST_QUERY_EMAIL_SEND);
+                loadView.showLoading();
                 break;
             case R.id.tv_write_email:
                 Intent intent = new Intent(getActivity(), SendEmailActivity.class);

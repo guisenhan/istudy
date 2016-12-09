@@ -27,6 +27,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseFragment;
 import hise.hznu.istudy.model.exam.ExamEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.widget.LoadView;
 
 /**
  * Created by GuisenHan on 2016/7/25.
@@ -34,7 +35,8 @@ import hise.hznu.istudy.util.AppUtils;
 public class ExamFragment extends BaseFragment {
     @BindView(R.id.lv_exam)
     ListView lvExam;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private List<ExamEntity> _dataList = new ArrayList<ExamEntity>();
     private ExamAdapter adapter;
     @Override
@@ -44,6 +46,7 @@ public class ExamFragment extends BaseFragment {
         lvExam.setAdapter(adapter);
         JSONObject params = new JSONObject();
         RequestManager.getmInstance().apiPostData(AppConstant.GET_EXAM_LIST_ACTION,params,this,AppConstant.POST_EXAM_LIST_ACTION);
+        loadView.showLoading();
     }
 
     @Override
@@ -70,7 +73,14 @@ public class ExamFragment extends BaseFragment {
     @Override
     protected void onApiResponseSuccess(ApiResponse apiResponse, int actionId) {
         super.onApiResponseSuccess(apiResponse, actionId);
+        loadView.clearLoad();
         _dataList = apiResponse.getListData(ExamEntity.class);
-        adapter.UpdateView(_dataList);
+        if(_dataList.size()==0){
+            loadView.showNoData();
+            loadView.setNoDataText("暂无考试信息！");
+        }else{
+            adapter.UpdateView(_dataList);
+        }
+
     }
 }

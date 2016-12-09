@@ -81,21 +81,35 @@
 				/>
 		</LinearLayout>
 	</LinearLayout>
-	<ListView
-		android:layout_below="@+id/ll_top"
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/lv_comment"
+		android:layout_below="@+id/ll_top"
 		android:layout_above="@+id/ll_bottom"
-		></ListView>
+		>
+		<ListView
+			android:layout_below="@+id/ll_top"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/lv_comment"
+			android:layout_above="@+id/ll_bottom"
+			></ListView>
+		<hise.hznu.istudy.widget.LoadView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/load_view"
+			/>
+	</FrameLayout>
+
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
 		android:background="@color/text_white_color"
-		android:layout_alignParentBottom="true"
 		android:id="@+id/ll_bottom"
 		android:gravity="center"
-		>
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true">
 		<ImageView
 			android:layout_width="40dp"
 			android:layout_height="40dp"

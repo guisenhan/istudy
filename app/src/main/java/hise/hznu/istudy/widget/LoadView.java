@@ -24,7 +24,7 @@ public class LoadView extends FrameLayout {
 
     private ImageView loadingImage;
     private TextView loadingViewText;
-
+    private TextView noDataText;
     private LoadViewStatus currentLoadViewStatus = LoadViewStatus.NONE;
 
     private OnLoadViewListener onLoadViewListener;
@@ -65,7 +65,8 @@ public class LoadView extends FrameLayout {
         noDataLayout.setVisibility(GONE);
 
 //        loadingImage = (ImageView)findViewById(R.id.loading_image);
-//        loadingViewText = (TextView) findViewById(R.id.loading_view_text);
+        loadingViewText = (TextView) findViewById(R.id.loading_view_text);
+        noDataText = (TextView)findViewById(R.id.loading_view_no_data_text);
     }
 
     public void showLoading() {
@@ -106,7 +107,9 @@ public class LoadView extends FrameLayout {
         }
         currentLoadViewStatus = LoadViewStatus.NET_ERROR;
     }
-
+    public void setNoDataText(String str){
+        noDataText.setText(str);
+    }
     public void showNoData() {
         if (loadingLayout != null) {
             loadingLayout.setVisibility(GONE);

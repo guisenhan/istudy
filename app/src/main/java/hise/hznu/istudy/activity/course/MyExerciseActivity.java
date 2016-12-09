@@ -23,6 +23,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.ExerciseEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.widget.LoadView;
 
 public class MyExerciseActivity extends BaseActivity {
     @BindView(R.id.tv_back)
@@ -32,7 +33,8 @@ public class MyExerciseActivity extends BaseActivity {
 
     @BindView(R.id.lv_exercise)
     ListView lvExercise;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private List<ExerciseEntity> _dataList = new ArrayList<ExerciseEntity>();
     private ExerciseAdapter adapter;
     private String courseId;
@@ -44,6 +46,7 @@ public class MyExerciseActivity extends BaseActivity {
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_MY_EXERCISE,params,this,AppConstant
                 .POST_GET_MY_EXERCISE);
+        loadView.showLoading();
     }
 
     @Override
@@ -77,8 +80,15 @@ public class MyExerciseActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        loadView.clearLoad();
         _dataList = response.getListData(ExerciseEntity.class);
-        adapter.UpdateView(_dataList);
+        if(_dataList.size() == 0 ){
+            loadView.showNoData();
+            loadView.setNoDataText("暂无练习任务！出去浪吧！哈哈哈...");
+        }else{
+            adapter.UpdateView(_dataList);
+        }
+
     }
 
     @Override

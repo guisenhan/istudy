@@ -35,6 +35,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CourseDatumEntity;
 import hise.hznu.istudy.util.AppUtils;
+import hise.hznu.istudy.widget.LoadView;
 
 public class StudyDatumActivity extends BaseActivity {
 
@@ -44,7 +45,8 @@ public class StudyDatumActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.lv_datum)
     ListView lvDatum;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private String courseId;
     private List<CourseDatumEntity> _dataList = new ArrayList<CourseDatumEntity>();
     private CourseDatumAdapter adapter;
@@ -59,6 +61,7 @@ public class StudyDatumActivity extends BaseActivity {
         JSONObject params = new JSONObject();
         params.put("courseid",courseId);
         RequestManager.getmInstance().apiPostData(AppConstant.GET_STUDY_DATUM_ACTION,params,this,AppConstant.POST_GET_STUDY_DATUM);
+        loadView.showLoading();
     }
 
     @Override
@@ -113,10 +116,17 @@ public class StudyDatumActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        loadView.clearLoad();
         _dataList = response.getListData(CourseDatumEntity.class);
-        adapter.UpdateView(resetData(_dataList));
-        tvTitle.setText("学习资料（共"+_dataList.size()+"个）");
+        if(_dataList.size() == 0 ){
+            loadView.showNoData();
+            loadView.setNoDataText("卧槽！竟然没有学习资料！找老师去！");
+        }else{
+            adapter.UpdateView(resetData(_dataList));
+            tvTitle.setText("学习资料（共"+_dataList.size()+"个）");
+        }
     }
+
     private List<CourseDatumEntity> resetData(List<CourseDatumEntity> list){
         for(int i = 0 ; i < list.size() ; i++){
             if(list.get(i).getExtensions().equals("DIR")){

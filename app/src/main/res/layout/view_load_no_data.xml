@@ -15,9 +15,17 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:src="@mipmap/icon_no_data"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无数据"
+            android:textColor="@color/text_other_color"
+            android:textSize="12sp"
+            android:id="@+id/loading_view_no_data_text"
+            />
     </LinearLayout>
 </FrameLayout>

@@ -24,6 +24,7 @@ import hise.hznu.istudy.api.RequestManager;
 import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CommetListEntity;
+import hise.hznu.istudy.widget.LoadView;
 
 public class CommentListActivity extends BaseActivity {
 
@@ -33,7 +34,8 @@ public class CommentListActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.lv_comment_list)
     ListView lvCommentList;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private String hupingId;
     private List<CommetListEntity> _dataList;
     private CommentListAdapter adapter;
@@ -48,6 +50,7 @@ public class CommentListActivity extends BaseActivity {
         params.put("testid",hupingId);
         RequestManager.getmInstance().apiPostData(AppConstant.QUERY_COMMENT_LIST,params,this,AppConstant
                 .POST_QUERY_COMMENT_LIST);
+        loadView.showLoading();
         _dataList = new ArrayList<CommetListEntity>();
     }
 
@@ -78,8 +81,14 @@ public class CommentListActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
+        loadView.clearLoad();
         _dataList = response.getListData(CommetListEntity.class);
-        adapter.UpdateView(_dataList);
+        if(_dataList.size() == 0){
+            loadView.showNoData();
+            loadView.setNoDataText("暂无互评任务！找几个朋友撸一把吧！哈哈哈哈....");
+        }else{
+            adapter.UpdateView(_dataList);
+        }
     }
 
     @OnClick(R.id.tv_back)

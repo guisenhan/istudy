@@ -26,6 +26,7 @@ import hise.hznu.istudy.app.AppConstant;
 import hise.hznu.istudy.base.BaseActivity;
 import hise.hznu.istudy.model.course.CommentCardEntity;
 import hise.hznu.istudy.model.course.CourseEntity;
+import hise.hznu.istudy.widget.LoadView;
 
 public class CommentAreaActivity extends BaseActivity {
 
@@ -45,7 +46,8 @@ public class CommentAreaActivity extends BaseActivity {
     ImageView ivRefresh;
     @BindView(R.id.iv_post_card)
     ImageView ivPostCard;
-
+    @BindView(R.id.load_view)
+    LoadView loadView;
     private List<CommentCardEntity> _dataList = new ArrayList<CommentCardEntity>();
     private TalkZoneAdapter adapter;
     private CourseEntity course;
@@ -71,6 +73,7 @@ public class CommentAreaActivity extends BaseActivity {
         params.put("page", "1");
         params.put("mode", "1");
         RequestManager.getmInstance().apiPostData(AppConstant.GET_FORUM, params, this, AppConstant.POST_GET_FORUM);
+        loadView.showLoading();
     }
 
     @Override
@@ -109,9 +112,16 @@ public class CommentAreaActivity extends BaseActivity {
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
         _dataList.clear();
+        loadView.clearLoad();
+
         _dataList = response.getListData(CommentCardEntity.class);
-        adapter.UpdateView(_dataList);
-        tvCommentNumber.setText("总共有" + _dataList.size() + "条");
+        if(_dataList.size() ==0){
+            loadView.showNoData();
+            loadView.setNoDataText("暂无帖子，我这些都是什么同学啊，连帖子都不发！");
+        }else{
+            adapter.UpdateView(_dataList);
+            tvCommentNumber.setText("总共有" + _dataList.size() + "条");
+        }
     }
 
 

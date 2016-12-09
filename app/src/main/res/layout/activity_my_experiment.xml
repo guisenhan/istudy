@@ -39,9 +39,19 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:background="@color/divider_color"/>
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv_experiment"
-        />
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_experiment"
+            />
+        <hise.hznu.istudy.widget.LoadView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/load_view"
+            ></hise.hznu.istudy.widget.LoadView>
+    </FrameLayout>
+
 </LinearLayout>
