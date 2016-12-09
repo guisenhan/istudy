@@ -47,7 +47,6 @@ public class ImageActivity extends BaseActivity {
             ImageLoaderUtils.getImageLoader().loadImage(url, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String s, View view) {
-                    Log.e("start","start");
                 }
 
                 @Override
@@ -65,7 +64,6 @@ public class ImageActivity extends BaseActivity {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, File file) {
-                            Log.e("filePath",file.getAbsolutePath());
                             try {
                                 FileInputStream  in = new FileInputStream(file);
                                 FileOutputStream out = new FileOutputStream(file1);
@@ -84,13 +82,11 @@ public class ImageActivity extends BaseActivity {
 
                 @Override
                 public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                    Log.e("onLoadingComplete","onLoadingComplete");
                     ivImage.setImageBitmap(bitmap);
                 }
 
                 @Override
                 public void onLoadingCancelled(String s, View view) {
-                    Log.e("onLoadingCancelled","onLoadingCancelled");
                 }
             });
     }

@@ -46,7 +46,6 @@ public class ChangePassActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-        Log.e("response",JSONObject.toJSONString(response));
         if(response.getRetcode()==0){
             MiscUtils.showMessageToast("修改成功");
             finish();

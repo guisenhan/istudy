@@ -114,10 +114,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onSuccess(JSONObject response, int actionId) {
-        Log.e("response", response.toString());
         switch (actionId) {
             case AppConstant.POST_LOGIN_ACTION:
-                Log.e("response", " " + response);
                 ApiResponse apiResponse = new ApiResponse(response);
 //                LoginModel login = new Gson().fromJson(response.toString(), new TypeToken<LoginModel>() {
 //                }.getType());

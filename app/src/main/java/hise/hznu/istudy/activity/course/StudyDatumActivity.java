@@ -78,7 +78,6 @@ public class StudyDatumActivity extends BaseActivity {
         lvDatum.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,final int i, long l) {
-                Log.e("file urls",""+_dataList.get(i).getUrl());
                  file1 = new File(AppConstant.FILE_STORED + _dataList.get(i).getFilename());
                 if(file1.exists()){
                     AppUtils.openFile(file1);
@@ -114,9 +113,7 @@ public class StudyDatumActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-
         _dataList = response.getListData(CourseDatumEntity.class);
-        Log.e("response",JSONObject.toJSONString(response));
         adapter.UpdateView(resetData(_dataList));
         tvTitle.setText("学习资料（共"+_dataList.size()+"个）");
     }

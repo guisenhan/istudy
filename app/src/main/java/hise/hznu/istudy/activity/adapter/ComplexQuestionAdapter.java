@@ -373,7 +373,6 @@ public class ComplexQuestionAdapter extends BaseAdapter {
             view.tvTestContent.setText(Html.fromHtml(test.getContent()));
 
             if(MiscUtils.isNotEmpty(answer)){
-                Log.e("answer"," "+ answer);
                 List<String> mans = new ArrayList<String>();
                 for (int i= 0 ; i < complexAnswer.get(position).split("&&&").length;i++){
                     if(MiscUtils.isNotEmpty(complexAnswer.get(position).split("&&&")[i])){

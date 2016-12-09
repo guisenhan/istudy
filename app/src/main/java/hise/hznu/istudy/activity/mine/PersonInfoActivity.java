@@ -141,7 +141,6 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
             case AppConstant.POST_UPLOAD_FILE:
                 break;
             case AppConstant.POST_SAVE_PERSON_INFO:
-                Log.e("response","" +JSONObject.toJSONString(response));
                 if (response.getRetcode() == 0) {
                     if(dialog!= null&&dialog.isShowing()){
                         dialog.dismiss();
@@ -285,13 +284,11 @@ public class PersonInfoActivity extends BaseActivity implements EasyPermissions.
                         (200,200).start(this);
             }
         } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
-            Log.e("path"," exe");
             if (data != null) {
                 Uri uri = MCrop.getOutput(data);
                 if (uri == null) {
                     UIUtils.showToast("选取失败");
                 } else {
-                    Log.e("path"," " +uri.getPath());
                     String path = uri.getPath();
                     avatarClipResult = new File(path);
                     ImageLoaderUtils.getImageLoader().displayImage("file://" + path, ivUserPhoto);

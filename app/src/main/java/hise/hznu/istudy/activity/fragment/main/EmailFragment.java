@@ -87,7 +87,6 @@ public class EmailFragment extends BaseFragment {
         lvEmail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("type" , ""+type);
                 Intent intent = new Intent(getActivity(), EmailActivity.class);
                 if( type == 1 ){
                     intent.putExtra("email", _datalist.get(i));
@@ -114,7 +113,6 @@ public class EmailFragment extends BaseFragment {
                 _datalist.clear();
                 _datalist = apiResponse.getListData(EmailEntity.class);
                 adapter.UpdateView(_datalist);
-                Log.e("typesds",""+type);
                 break;
             case AppConstant.POST_QUERY_EMAIL_SEND:
                 lvEmail.setAdapter(emailSendAdapter);
@@ -122,7 +120,6 @@ public class EmailFragment extends BaseFragment {
                 type = 2;
                 _dataSend = apiResponse.getListData(SendEmailEntity.class);
                 emailSendAdapter.UpdateView(_dataSend);
-                Log.e("typesds",""+type);
                 break;
 
         }

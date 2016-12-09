@@ -70,14 +70,12 @@ public class RequestManager {
     }
 
     public ApiJsonLoadControler apiPostData(String url,JSONObject jsonObject,final ApiRequestListener requestListener,int actionId){
-       // Log.e("jsonobject"," "+jsonObject.toString());
 
        // String url1 = AppConstant.SERVER_URL +url;
         /*
         * 在这里根据接口的要求规范进行相应的处理 ，比如添加head 和map的字符串化
         * */
         String authenToken = MiscUtils.getSharepreferenceValue("token","tokens","");
-        Log.e("authtoken",""+authenToken);
         jsonObject.put("authtoken", authenToken);
         return this.postJsonRequest(url,JSONObject.toJSONString(jsonObject),jsonObject,null,new ApiListenerHolder(requestListener),false,TIMEOUT_COUNT,RETRY_TIMES,actionId);
     }
@@ -95,7 +93,6 @@ public class RequestManager {
             request =new ApiJsonRequest(Request.Method.GET,url,params,loadContrller,loadContrller);
         }
 
-        Log.e("url"," " + generateGetUrl(url,params1));
         request.setShouldCache(shouleCacher);
         if(headers!=null && !headers.isEmpty()){
             request.setHeaders(headers);

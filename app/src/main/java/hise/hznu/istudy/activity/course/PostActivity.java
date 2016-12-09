@@ -56,8 +56,6 @@ public class PostActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        Log.e("content","" + comment.getContent());
-      //  tvContent.setText(Html.fromHtml(comment.getContent(),imgGetter,null));
         tvContent.loadDataWithBaseURL(null,comment.getContent(), "text/html", "utf-8", null);
     }
     @Override

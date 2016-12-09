@@ -78,9 +78,7 @@ public class CommentListActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-        Log.e("response",""+JSONObject.toJSONString(response));
         _dataList = response.getListData(CommetListEntity.class);
-        Log.e("dataListSize"," " +_dataList.size());
         adapter.UpdateView(_dataList);
     }
 

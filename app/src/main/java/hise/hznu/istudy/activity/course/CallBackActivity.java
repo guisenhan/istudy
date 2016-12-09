@@ -197,13 +197,11 @@ public class CallBackActivity extends BaseActivity implements EasyPermissions.Pe
                                 (200,200).start(this);
             }
         } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
-            Log.e("path"," exe");
             if (data != null) {
                 Uri uri = MCrop.getOutput(data);
                 if (uri == null) {
                     UIUtils.showToast("选取失败");
                 } else {
-                    Log.e("path"," " +uri.getPath());
                     String path = uri.getPath();
                     //上传图像
                     doUpLoad(path);

@@ -22,7 +22,6 @@ public class StartActivity extends BaseActivity {
         super.initData();
         timer= new Timer(true);
         String authenToken = MiscUtils.getSharepreferenceValue("token","tokens","");
-        Log.e("authtoken",""+authenToken);
         timerTask = new TimerTask() {
             @Override
             public void run() {

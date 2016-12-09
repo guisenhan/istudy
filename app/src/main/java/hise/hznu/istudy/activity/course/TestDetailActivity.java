@@ -376,7 +376,6 @@ public class TestDetailActivity extends BaseActivity
                     answerEntity.setTestid(testId);
                     answerEntity.setQuestionid(_questionList.get(bProblem).getId());
                     answerEntity.setAnswer("A");
-                    Log.e("temp",""+temp);
                     if(temp != -1){
                         _answerList.set(temp,answerEntity);
                     }else{
@@ -509,7 +508,6 @@ public class TestDetailActivity extends BaseActivity
                 }
                 break;
             case AppConstant.POST_COMMIT_TEST_RESULT:
-                Log.e("result", "" + JSONObject.toJSONString(response));
                 if (response.getRetcode() == 0) {
                     MiscUtils.showMessageToast(response.getMessage());
                 } else {
@@ -519,7 +517,6 @@ public class TestDetailActivity extends BaseActivity
             case AppConstant.POST_AUTO_COMMIT_RESULT:
                 //阅卷的地方 代码优化空间很大，XML文件挖得坑 只能这么写了 等改版的时候在优化
                 if (response.getRetcode() == 0) {
-                    Log.e("response",JSONObject.toJSONString(response));
                     judge = response.getInfo(JudgeTestEntity.class);
                     if(_questionList.get(bProblem).getQuestionType().equals("SINGLE_CHIOCE")||_questionList.get(bProblem).getQuestionType().equals("JUDGE")){
                         llChoiceAnswer.setVisibility(View.VISIBLE);
@@ -604,7 +601,6 @@ public class TestDetailActivity extends BaseActivity
                 _questionList.add(question);
             }
         }
-        Log.e("answer",JSONObject.toJSONString(_answerList));
     }
 
     private void initTestView() {
@@ -752,8 +748,6 @@ public class TestDetailActivity extends BaseActivity
                 break;
             }
         }
-        Log.e("fb",fb);
-
         switch (getBlankNumber(test.getStrandanswer())) {
             case 1:
                 if(fb.split("&&&").length >0 && MiscUtils.isNotEmpty(fb)){
@@ -1318,13 +1312,11 @@ public class TestDetailActivity extends BaseActivity
                                 (200,200).start(this);
             }
         } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
-            Log.e("path"," exe");
             if (data != null) {
                 Uri uri = MCrop.getOutput(data);
                 if (uri == null) {
                     UIUtils.showToast("选取失败");
                 } else {
-                    Log.e("path"," " +uri.getPath());
                     String path = uri.getPath();
                     //上传图像
                     doUpLoad(path);
@@ -1348,7 +1340,6 @@ public class TestDetailActivity extends BaseActivity
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             UpLoadFileEntity upLoadFileEntity =(UpLoadFileEntity) msg.obj;
-            Log.e("uploadUrk",JSONObject.toJSONString(upLoadFileEntity));
             reEditor.insertImage(upLoadFileEntity.getUploadedurl(), upLoadFileEntity.getUploadedfilename());
         }
     };

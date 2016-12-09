@@ -64,7 +64,6 @@ public class ContactActivity extends BaseActivity {
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-        Log.e("response", JSONObject.toJSONString(response));
         _dataList = response.getListData(ContacterEntity.class);
         adapter.UpdateView(_dataList);
     }

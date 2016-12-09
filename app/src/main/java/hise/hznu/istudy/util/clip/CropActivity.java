@@ -195,12 +195,10 @@ public class CropActivity extends AppCompatActivity {
                 outputStream = getContentResolver().openOutputStream(mOutputUri);
                 croppedBitmap.compress(mCompressFormat, mCompressQuality, outputStream);
                 croppedBitmap.recycle();
-                Log.e("saveImage","" + mOutputUri.getPath());
                 setResultUri(mOutputUri);
                 finish();
             }
         } catch (Exception e) {
-            Log.e("Exception", e.getMessage());
             setResultException(e);
             finish();
 

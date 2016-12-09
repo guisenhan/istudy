@@ -94,7 +94,6 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
     @Override
     public void onApiresponseSuccess(ApiResponse response, int actionId) {
         super.onApiresponseSuccess(response, actionId);
-        Log.e("response",""+JSONObject.toJSONString(response));
         if(response.getRetcode() == 0 ){
             MiscUtils.showMessageToast(response.getMessage());
             finish();
@@ -173,13 +172,11 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
                                 (200,200).start(this);
             }
         } else if ( resultCode == RESULT_OK && requestCode == MCrop.REQUEST_CROP) {
-            Log.e("path"," exe");
             if (data != null) {
                 Uri uri = MCrop.getOutput(data);
                 if (uri == null) {
                     UIUtils.showToast("选取失败");
                 } else {
-                    Log.e("path"," " +uri.getPath());
                     String path = uri.getPath();
                     doUpLoad(path);
                 }
@@ -203,7 +200,6 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             UpLoadFileEntity upLoadFileEntity =(UpLoadFileEntity) msg.obj;
-            Log.e("uploadUrk",JSONObject.toJSONString(upLoadFileEntity));
             reEditor.insertImage(upLoadFileEntity.getUploadedurl(), upLoadFileEntity.getUploadedfilename());
         }
     };

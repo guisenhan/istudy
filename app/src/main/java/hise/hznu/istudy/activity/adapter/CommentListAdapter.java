@@ -48,7 +48,6 @@ public class CommentListAdapter extends BaseAdapter {
             this.notifyDataSetChanged();
         }
         _dataList.addAll(newList);
-        Log.e("update",_dataList.size()+"");
         this.notifyDataSetChanged();
     }
 
@@ -71,7 +70,6 @@ public class CommentListAdapter extends BaseAdapter {
         } else {
             view = (ViewHolder) convertView.getTag();
         }
-        Log.e("String GetView", "getView");
         view.tvNumber.setText(""+position);
         view.tvTester.setText(_dataList.get(position).getTestername());
         view.tvScore.setText(_dataList.get(position).getScore());

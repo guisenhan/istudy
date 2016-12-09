@@ -54,7 +54,6 @@ public class BitmapUtils {
         try {
             bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
         } catch (OutOfMemoryError var5) {
-            Log.e("ESA", "rotateBitmapByDegree decodeFile OutOfMemoryError." + var5.getMessage());
         }
 
         if(bitmap == null) {

@@ -53,7 +53,6 @@ public class AsyHttpClient {
                     super.onSuccess(statusCode, headers, response);
                     Log.i("request success", "url:"+url +" response:" + response);
                    ApiResponse response1 = new ApiResponse(JSON.parseObject(response.toString()));
-                    Log.e("response1", com.alibaba.fastjson.JSONObject.toJSONString(response1));
                     Message message = new Message();
                     message.obj = response1.getInfo(UpLoadFileEntity.class);
                     handler.sendMessage(message);
