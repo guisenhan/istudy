@@ -14,6 +14,8 @@ import android.view.Window;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.pgyersdk.feedback.PgyFeedbackShakeManager;
 
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
         if(getIntent() != null && getIntent().getExtras() != null){
             initExtras(getIntent().getExtras());
         }
+        PgyCrashManager.register(this);
 //      EventBus.getDefault().register(this);
         //添加activity到堆栈中
         AppManager.getInstance().addActivity(this);
@@ -80,11 +83,22 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
     @Override
     protected void onPause() {
         super.onPause();
+        PgyFeedbackShakeManager.unregister();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // 自定义摇一摇的灵敏度，默认为950，数值越小灵敏度越高。
+        PgyFeedbackShakeManager.setShakingThreshold(800);
+
+        // 以对话框的形式弹出
+        PgyFeedbackShakeManager.register(this);
+
+        // 以Activity的形式打开，这种情况下必须在AndroidManifest.xml配置FeedbackActivity
+        // 打开沉浸式,默认为false
+        // FeedbackActivity.setBarImmersive(true);
+        PgyFeedbackShakeManager.register(this, false);
     }
 
     @Override
@@ -92,6 +106,7 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
         // 注销事件总线对象
 //        EventBus.getDefault().unregister(this);
         // 关闭时在Activity中删除
+        PgyCrashManager.unregister();
         AppManager.getInstance().removeActivty(this);
         super.onDestroy();
     }

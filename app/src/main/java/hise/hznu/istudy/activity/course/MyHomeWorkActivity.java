@@ -41,7 +41,6 @@ public class MyHomeWorkActivity extends BaseActivity implements View.OnClickList
     protected int initLayout() {
         return R.layout.activity_my_home_work;
     }
-
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);

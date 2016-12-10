@@ -1,8 +1,14 @@
 package hise.hznu.istudy.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 
 
+import com.pgyersdk.javabean.AppBean;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
 import com.shizhefei.view.indicator.FixedIndicatorView;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
@@ -37,6 +43,37 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+        PgyUpdateManager.register(MainActivity.this,
+                new UpdateManagerListener() {
+
+                    @Override
+                    public void onUpdateAvailable(final String result) {
+                        Log.e("result",result);
+                        // 将新版本信息封装到AppBean中
+                        final AppBean appBean = getAppBeanFromString(result);
+                        Log.e("url",appBean.getDownloadURL());
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("更新")
+                                .setMessage(appBean.getReleaseNote())
+                                .setNegativeButton(
+                                        "确定",
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(
+                                                    DialogInterface dialog,
+                                                    int which) {
+                                                startDownloadTask(
+                                                        MainActivity.this,
+                                                        appBean.getDownloadURL());
+                                            }
+                                        }).show();
+                    }
+
+                    @Override
+                    public void onNoUpdateAvailable() {
+                    }
+                });
     }
 
     @Override
