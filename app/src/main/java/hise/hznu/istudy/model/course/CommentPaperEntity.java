@@ -39,8 +39,16 @@ public class CommentPaperEntity implements Serializable{
     private String score;
     private String strandanswer;
     private String isauthorvisible;
-    private String comment;
+    private String comments;
     private List<CommentRuleEntity> rules;
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     public List<FileEntity> getAnswerfiles() {
         return answerfiles;
@@ -66,13 +74,6 @@ public class CommentPaperEntity implements Serializable{
         this.answerext = answerext;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public String getContent() {
         return content;

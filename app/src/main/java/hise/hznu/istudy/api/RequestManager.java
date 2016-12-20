@@ -87,6 +87,7 @@ public class RequestManager {
         }
         ApiJsonRequest request;
         final ApiJsonLoadControler loadContrller = new ApiJsonLoadControler(requestListener,actionId);
+        Log.e("url"," " +generateGetUrl(url,params1));
         if(params!=null){
             request = new ApiJsonRequest(Request.Method.GET,generateGetUrl(url,params1),params,loadContrller,loadContrller);
         }else{

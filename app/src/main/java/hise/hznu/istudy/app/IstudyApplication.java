@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
-import com.pgyersdk.crash.PgyCrashManager;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
@@ -24,7 +23,6 @@ public class IStudyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        PgyCrashManager.register(this);
         init();
     }
 

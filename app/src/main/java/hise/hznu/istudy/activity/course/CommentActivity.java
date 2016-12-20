@@ -102,10 +102,10 @@ public class CommentActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        adapter = new CommentRuleAdapter(this);
+
         additionalAdapter = new AdditionalAdapter(this);
         gvFile.setAdapter(additionalAdapter);
-        lvComment.setAdapter(adapter);
+
         gvFile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -123,7 +123,6 @@ public class CommentActivity extends BaseActivity {
             case AppConstant.POST_SUBMIT_HUPING:
                 if (response.getRetcode() == 0) {
                     MiscUtils.showMessageToast(response.getMessage());
-                    finish();
                 }
                 break;
             case AppConstant.POST_QUERY_USER_TESTER_COMMENT:
@@ -139,10 +138,17 @@ public class CommentActivity extends BaseActivity {
     }
 
     private void setContent(CommentPaperEntity commentPaperEntity) {
+        if(MiscUtils.isNotEmpty(commentPaperEntity.getComments()))
+            edComment.setText(commentPaperEntity.getComments());
+        else{
+            edComment.setText("");
+        }
         tvCommentTitle.setText(Html.fromHtml(commentPaperEntity.getContent(),imgGetter,null));
         if (MiscUtils.isNotEmpty(commentPaperEntity.getAnswer())) {
             tvStudentAnswer.setText(Html.fromHtml(commentPaperEntity.getAnswer(),imgGetter,null));
         } else { llAnswer.setVisibility(View.GONE); }
+        adapter = new CommentRuleAdapter(this);
+        lvComment.setAdapter(adapter);
         adapter.UpdateView(commentPaperEntity.getRules());
         additionalAdapter.UpdateView(commentPaperEntity.getAnswerfiles());
     }
