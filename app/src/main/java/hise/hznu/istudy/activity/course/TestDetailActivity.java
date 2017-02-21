@@ -144,14 +144,8 @@ public class TestDetailActivity extends BaseActivity
     @BindView(R.id.tv_question_answer_title)
     TextView tvQuestionAnswerTitle;
     //这是富文本编辑的
-    @BindView(R.id.action_undo)
-    ImageButton actionUndo;
-    @BindView(R.id.action_redo)
-    ImageButton actionRedo;
     @BindView(R.id.action_insert_image)
     ImageButton actionInsertImage;
-    @BindView(R.id.action_insert_link)
-    ImageButton actionInsertLink;
     @BindView(R.id.re_editor)
     RichEditor reEditor;
     @BindView(R.id.tv_preview)
@@ -288,6 +282,7 @@ public class TestDetailActivity extends BaseActivity
         slTestChoose.setVisibility(View.GONE);
         slTestChoose.setVisibility(View.GONE);
         llTestType.setVisibility(View.GONE);
+        reEditor.setEditorHeight(300);
         aclLoadView.setAnimationListener(new AnimatedCircleLoadingView.AnimationListener() {
 
             @Override
@@ -992,8 +987,8 @@ public class TestDetailActivity extends BaseActivity
             }
         }
     }
-    @OnClick({R.id.iv_left_arrow, R.id.iv_right_arrow, R.id.action_undo, R.id.action_redo, R.id.action_insert_image,
-            R.id.action_insert_link, R.id.iv_save, R.id.iv_back, R.id.tv_auto_commit})
+    @OnClick({R.id.iv_left_arrow, R.id.iv_right_arrow, R.id.action_insert_image,
+            R.id.iv_save, R.id.iv_back, R.id.tv_auto_commit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left_arrow:
@@ -1066,12 +1061,7 @@ public class TestDetailActivity extends BaseActivity
                         MiscUtils.showMessageToast("没有更多了！");
                     }
                 break;
-            case R.id.action_undo:
-                reEditor.undo();
-                break;
-            case R.id.action_redo:
-                reEditor.redo();
-                break;
+
             case R.id.action_insert_image:
                 pickImage();
                 //插入图片到富文本框

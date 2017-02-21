@@ -127,6 +127,7 @@ public class CallBackActivity extends BaseActivity implements EasyPermissions.Pe
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         mlvComment.setAdapter(adapter);
+        reEditor.setEditorHeight(300);
     }
 
 

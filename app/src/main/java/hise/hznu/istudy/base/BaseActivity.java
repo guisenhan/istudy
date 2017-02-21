@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.umeng.analytics.MobclickAgent;
 
 
 import butterknife.ButterKnife;
@@ -75,11 +76,13 @@ public class BaseActivity extends FragmentActivity implements RequestManager.Api
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
 //        // 自定义摇一摇的灵敏度，默认为950，数值越小灵敏度越高。
 //        PgyFeedbackShakeManager.setShakingThreshold(800);
 //

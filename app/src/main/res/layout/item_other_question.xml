@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:orientation="vertical"
 			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-	android:padding="11dp"
-	>
+			  android:layout_height="wrap_content"
+			  android:padding="11dp"
+	          android:background="@color/unit_background_color">
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -13,20 +13,20 @@
 		android:textColor="@color/text_important_color"
 		android:id="@+id/tv_question_answer_title"
 		/>
-	<HorizontalScrollView
+	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/colorPrimary"
-		android:layout_marginTop="20dp"
+		android:minHeight="300dp"
 		>
-
 		<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:gravity="center_vertical"
+			android:background="@color/colorPrimary"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true"
 			>
-
 			<ImageButton
 				android:id="@+id/action_undo"
 				android:layout_width="48dp"
@@ -63,11 +63,12 @@
 				android:src="@mipmap/icon_insert_link"
 				/>
 		</LinearLayout>
-	</HorizontalScrollView>
-	<jp.wasabeef.richeditor.RichEditor
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/re_editor"
-		android:minHeight="300dp"
-		/>
+		<jp.wasabeef.richeditor.RichEditor
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/re_editor"
+			android:minHeight="300dp"
+			/>
+	</RelativeLayout>
+
 </LinearLayout>

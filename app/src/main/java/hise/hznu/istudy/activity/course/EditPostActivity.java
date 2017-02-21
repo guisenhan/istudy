@@ -89,6 +89,7 @@ public class EditPostActivity extends BaseActivity implements EasyPermissions.Pe
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        reEditor.setEditorHeight(300);
     }
 
     @Override

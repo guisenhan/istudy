@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.squareup.leakcanary.RefWatcher;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class IStudyApplication extends Application{
         heightPix = getResources().getDisplayMetrics().heightPixels;
         widthDp = (int)(widthPix/scale);
         RequestManager.init(this);
+        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this,"58aa488f4ad15644ac002964",
+                "hznu");
+        MobclickAgent.startWithConfigure(config);
+
         AppConfig.init(this);
     }
 

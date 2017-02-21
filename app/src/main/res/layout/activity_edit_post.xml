@@ -51,30 +51,32 @@
 				android:layout_height="wrap_content"
 				android:padding="11dp"
 				android:hint="标题"
-				android:layout_marginLeft="11dp"
-				android:layout_marginRight="11dp"
 				android:background="@null"
 				android:layout_marginTop="15dp"
 				android:id="@+id/ed_title"
 				android:textSize="14sp"
 				/>
-
-			<HorizontalScrollView
+			<RelativeLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:background="@color/colorPrimary"
-				android:layout_marginTop="10dp"
+				android:minHeight="300dp"
+				android:padding="11dp"
+				android:background="@color/unit_background_color"
 				>
-
+				<jp.wasabeef.richeditor.RichEditor
+					android:layout_width="match_parent"
+					android:id="@+id/re_editor"
+					android:padding="11dp"
+					android:layout_height="wrap_content"/>
 				<LinearLayout
 					android:orientation="horizontal"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
+					android:background="@color/colorPrimary"
+					android:layout_alignParentBottom="true"
+					android:layout_alignParentRight="true"
 					>
-
-
-
 					<ImageButton
 						android:id="@+id/action_insert_image"
 						android:layout_width="48dp"
@@ -83,17 +85,9 @@
 						android:contentDescription="@null"
 						android:src="@mipmap/icon_insert_image"
 						/>
-
-
 				</LinearLayout>
-			</HorizontalScrollView>
-			<jp.wasabeef.richeditor.RichEditor
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:id="@+id/re_editor"
-				android:padding="11dp"
-				android:minHeight="300dp"
-				/>
+			</RelativeLayout>
+
 			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="40dp"

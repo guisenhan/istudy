@@ -18,6 +18,7 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/iv_back"
 			android:src="@mipmap/arrow_left"
+			android:layout_centerVertical="true"
 			/>
 		<TextView
 			android:layout_width="wrap_content"
@@ -38,7 +39,6 @@
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
 			android:textSize="16sp"
-			android:padding="5dp"
 			/>
 
 	</RelativeLayout>
@@ -54,18 +54,28 @@
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
 			>
-			<HorizontalScrollView
+			<RelativeLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:background="@color/colorPrimary"
-				android:layout_marginTop="10dp"
+				android:minHeight="300dp"
+				android:padding="11dp"
+				android:background="@color/unit_background_color"
 				>
-
+				<jp.wasabeef.richeditor.RichEditor
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:id="@+id/re_editor"
+					android:padding="11dp"
+					android:minHeight="300dp"
+					/>
 				<LinearLayout
 					android:orientation="horizontal"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
+					android:background="@color/colorPrimary"
+					android:layout_alignParentBottom="true"
+					android:layout_alignParentRight="true"
 					>
 					<ImageButton
 						android:id="@+id/action_insert_image"
@@ -76,14 +86,9 @@
 						android:src="@mipmap/icon_insert_image"
 						/>
 				</LinearLayout>
-			</HorizontalScrollView>
-			<jp.wasabeef.richeditor.RichEditor
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:id="@+id/re_editor"
-				android:padding="11dp"
-				android:minHeight="300dp"
-				/>
+			</RelativeLayout>
+
+
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
